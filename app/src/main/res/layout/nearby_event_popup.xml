@@ -42,7 +42,8 @@
         android:textSize="12sp"
         android:textAllCaps="false"
         android:text="@string/popup_event_1"
-        android:gravity="left|center_vertical"/>
+        android:gravity="left|center_vertical"
+        android:backgroundTint="@color/grey" />
     <Button
         android:id="@+id/event_dist_1"
         android:layout_width="wrap_content"
@@ -52,7 +53,8 @@
         android:textAllCaps="false"
         android:gravity="right|center_vertical"
         android:layout_alignParentRight="true"
-        android:text="@string/popup_event_dist"/>
+        android:text="@string/popup_event_dist"
+        android:backgroundTint="@color/grey" />
 
     <!-- Existing Event 2 -->
     <Button
@@ -63,7 +65,8 @@
         android:textSize="12sp"
         android:textAllCaps="false"
         android:text="@string/popup_event_2"
-        android:gravity="left|center_vertical"/>
+        android:gravity="left|center_vertical"
+        android:backgroundTint="@color/grey"/>
     <Button
         android:id="@+id/event_dist_2"
         android:layout_width="wrap_content"
@@ -73,7 +76,8 @@
         android:textAllCaps="false"
         android:gravity="right|center_vertical"
         android:layout_alignParentRight="true"
-        android:text="@string/popup_event_dist"/>
+        android:text="@string/popup_event_dist"
+        android:backgroundTint="@color/grey"/>
 
     <!-- Existing Event 3 -->
     <Button
@@ -84,7 +88,8 @@
         android:textSize="12sp"
         android:textAllCaps="false"
         android:text="@string/popup_event_3"
-        android:gravity="left|center_vertical"/>
+        android:gravity="left|center_vertical"
+        android:backgroundTint="@color/grey"/>
     <Button
         android:id="@+id/event_dist_3"
         android:layout_width="wrap_content"
@@ -94,7 +99,8 @@
         android:textAllCaps="false"
         android:gravity="right|center_vertical"
         android:layout_alignParentRight="true"
-        android:text="@string/popup_event_dist"/>
+        android:text="@string/popup_event_dist"
+        android:backgroundTint="@color/grey"/>
 
     <!-- Existing Event 4 -->
     <Button
@@ -105,7 +111,8 @@
         android:textSize="12sp"
         android:textAllCaps="false"
         android:text="@string/popup_event_4"
-        android:gravity="left|center_vertical"/>
+        android:gravity="left|center_vertical"
+        android:backgroundTint="@color/grey"/>
     <Button
         android:id="@+id/event_dist_4"
         android:layout_width="wrap_content"
@@ -115,7 +122,8 @@
         android:textAllCaps="false"
         android:gravity="right|center_vertical"
         android:layout_alignParentRight="true"
-        android:text="@string/popup_event_dist"/>
+        android:text="@string/popup_event_dist"
+        android:backgroundTint="@color/grey"/>
 
     <!-- Existing Event 5 -->
     <Button
@@ -126,7 +134,8 @@
         android:textSize="12sp"
         android:textAllCaps="false"
         android:text="@string/popup_event_5"
-        android:gravity="left|center_vertical"/>
+        android:gravity="left|center_vertical"
+        android:backgroundTint="@color/grey"/>
     <Button
         android:id="@+id/event_dist_5"
         android:layout_width="wrap_content"
@@ -136,7 +145,8 @@
         android:textAllCaps="false"
         android:gravity="right|center_vertical"
         android:layout_alignParentRight="true"
-        android:text="@string/popup_event_dist"/>
+        android:text="@string/popup_event_dist"
+        android:backgroundTint="@color/grey"/>
 
     <!-- Confirmation Subtitle -->
     <TextView
