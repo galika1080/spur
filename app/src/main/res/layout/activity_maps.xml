@@ -5,20 +5,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <ImageView
-        android:id="@+id/imageView"
+    <HorizontalScrollView
+        android:id="@+id/filterScrollView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/funkycarpet"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/filter_linlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_social"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Social"
+                app:icon="@drawable/ic_social" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Food"
+                app:icon="@drawable/ic_food" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_shopping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shopping"
+                app:icon="@drawable/ic_shopping" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_religion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Religion"
+                app:icon="@drawable/ic_religion" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/imageView"
+        android:layout_below="@id/filterScrollView"
         tools:context=".MapsActivity" />
 
 </RelativeLayout>
