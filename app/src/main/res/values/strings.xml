@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Spur</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="popup_title">Heads up!</string>
+    <string name="popup_subtitle_1">You could be at an existing event:</string>
+    <string name="popup_subtitle_2">Are you sure you want to add a new one?</string>
+    <string name="popup_button_yes">Yes, it\'s a different event</string>
+    <string name="popup_button_no">Nevermind</string>
+    <string name="popup_event_1">Nearby Event 1</string>
+    <string name="popup_event_2">Nearby Event 2</string>
+    <string name="popup_event_3">Nearby Event 3</string>
+    <string name="popup_event_4">Nearby Event 4</string>
+    <string name="popup_event_5">Nearby Event 5</string>
+    <string name="popup_event_dist">0.00 mi</string>
 </resources>
