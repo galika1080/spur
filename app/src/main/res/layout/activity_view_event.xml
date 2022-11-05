@@ -1,6 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/black">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/EventView"
+        android:scaleType="centerCrop"
+        android:src="@drawable/map" />
+
+    <LinearLayout
+        android:id="@+id/EventView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/EventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Event Name"
+            android:textSize="40sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp">
+
+            <Button
+                android:id="@+id/Tag1"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/black"
+                android:gravity="center"
+                android:outlineProvider="background"
+                android:text="Tag1"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:icon="@drawable/"
+                app:iconPadding="0dp"
+                app:iconSize="50dp" />
+
+            <Button
+                android:id="@+id/Tag2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/black"
+                android:gravity="center"
+                android:outlineProvider="background"
+                android:text="Tag2"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:icon="@drawable/ic_launcher_foreground"
+                app:iconPadding="0dp"
+                app:iconSize="50sp" />
+
+            <Button
+                android:id="@+id/Tag3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/black"
+                android:gravity="center"
+                android:outlineProvider="background"
+                android:text="Tag3"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:icon="@drawable/ic_launcher_foreground"
+                app:iconPadding="0dp"
+                app:iconSize="50sp" />
+
+            <Button
+                android:id="@+id/DistanceBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/white"
+                android:gravity="center"
+                android:outlineProvider="background"
+                android:text="0.0 mi"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:icon="@drawable/ic_launcher_foreground"
+                app:iconPadding="0dp"
+                app:iconSize="50sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Event description"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Title" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Description" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
