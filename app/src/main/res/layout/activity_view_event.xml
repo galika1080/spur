@@ -27,12 +27,15 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:text="Event Name"
-            android:textSize="40sp" />
+            android:textSize="35sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical">
 
             <Button
                 android:id="@+id/tag_1"
@@ -80,9 +83,7 @@
                 android:id="@+id/distance_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp"
-
+                android:layout_marginLeft="20dp"
                 android:backgroundTint="@color/white"
                 android:gravity="center"
                 android:outlineProvider="background"
@@ -96,31 +97,39 @@
             android:id="@+id/event_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
-            android:text="Event description"
+            android:layout_marginRight="10dp"
+            android:text="Event description. Event description. Event description. Event description. Event description. Event description. Event description. Event ."
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <View
-            android:layout_width="320dp"
+            android:layout_width="360dp"
             android:layout_height="2dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
                     android:text="Is this event happening right now?" />
 
                 <LinearLayout
@@ -142,7 +151,7 @@
                         android:id="@+id/confirm_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="45dp"
+                        android:layout_marginLeft="25dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/ic_circle_button_check"
                         app:backgroundTint="@color/white"
@@ -151,36 +160,60 @@
                         app:iconTint="#000000" />
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:gravity="center_horizontal"
-                    android:text="Last confirmed: Just now"
-                    android:textColor="#757474" />
+                    android:layout_marginBottom="5dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Last confirmed: "
+                        android:textColor="#757474" />
+                    <TextView
+                        android:id="@+id/last_confirmed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Just now"
+                        android:textColor="#757474" />
+                </LinearLayout>
+
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="50dp"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="Reported by: User 101"
-                     />
+                    android:layout_gravity="center_horizontal"
+                    android:text="Reported by:"
+                    android:textColor="#757474" />
 
-                <Button
-                    android:layout_marginTop="15dp"
+                <TextView
+                    android:id="@+id/reporter_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="400 points"/>
+                    android:layout_gravity="center_horizontal"
+                    android:text="User 131"
+                    android:textColor="#757474" />
+
+                <Button
+                    android:id="@+id/reporter_points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textSize="13sp"
+                    android:text="400 points" />
 
             </LinearLayout>
 
