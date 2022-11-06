@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/border_box"
         android:orientation="vertical">
 
         <TextView
@@ -27,6 +28,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:text="Event Name"
+            android:textColor="@color/black"
             android:textSize="35sp" />
 
         <LinearLayout
@@ -43,10 +45,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:backgroundTint="@color/black"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="Tag1"
                 android:textColor="@color/white"
-                android:textSize="10sp"
+                android:textSize="12.5sp"
                 app:icon="@drawable/ic_social"
                 app:iconPadding="5dp"
                 app:iconSize="15dp" />
@@ -57,10 +60,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:backgroundTint="@color/black"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="Tag2"
                 android:textColor="@color/white"
-                android:textSize="10sp"
+                android:textSize="12.5sp"
                 app:icon="@drawable/ic_social"
                 app:iconPadding="5dp"
                 app:iconSize="15dp" />
@@ -71,10 +75,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:backgroundTint="@color/black"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="Tag3"
                 android:textColor="@color/white"
-                android:textSize="10sp"
+                android:textSize="12.5sp"
                 app:icon="@drawable/ic_social"
                 app:iconPadding="5dp"
                 app:iconSize="15dp" />
@@ -85,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:backgroundTint="@color/white"
+                android:clickable="false"
                 android:gravity="center"
                 android:outlineProvider="background"
                 android:text="0.00 mi"
@@ -97,8 +103,8 @@
             android:id="@+id/event_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:text="Event description. Event description. Event description. Event description. Event description. Event description. Event description. Event ."
             android:textColor="@color/black"
@@ -108,8 +114,8 @@
             android:layout_width="360dp"
             android:layout_height="2dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="25dp"
             android:layout_marginBottom="10dp"
             android:background="@color/black" />
 
@@ -117,62 +123,67 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            >
+            android:layout_marginRight="20dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Is this event happening right now?"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:text="Is this event happening right now?" />
+                    android:textSize="13sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp">
 
-                    <Button
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/refute_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/ic_circle_button_X"
-                        app:backgroundTint="@color/white"
-                        app:icon="?android:attr/listChoiceIndicatorSingle"
-                        app:iconGravity="textStart"
-                        app:iconTint="#000000" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="15dp"
+                        android:backgroundTint="#FB3F4E"
+                        android:src="@drawable/x"
+                        app:backgroundTint="#000000"
+                        app:borderWidth="1dp"
+                        app:maxImageSize="25dp"
+                        app:rippleColor="#B8273C" />
 
-                    <Button
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/confirm_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/ic_circle_button_check"
-                        app:backgroundTint="@color/white"
-                        app:icon="?android:attr/textCheckMark"
-                        app:iconGravity="textStart"
-                        app:iconTint="#000000" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#B6E82B"
+                        android:src="@drawable/check"
+                        app:backgroundTint="#000000"
+                        app:borderWidth="1dp"
+                        app:maxImageSize="35dp"
+                        app:rippleColor="#7A9C1D" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Last confirmed: "
                         android:textColor="#757474" />
+
                     <TextView
                         android:id="@+id/last_confirmed"
                         android:layout_width="wrap_content"
@@ -188,7 +199,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="60dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -212,8 +223,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/grey"
+                    android:clickable="false"
+                    android:text="400 pts"
                     android:textSize="13sp"
-                    android:text="400 points" />
+                    app:icon="@drawable/points_star"
+                    app:iconSize="35dp" />
 
             </LinearLayout>
 
