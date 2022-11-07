@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/black">
+    android:backgroundTint="@color/white">
 
     <ImageView
         android:layout_width="match_parent"
@@ -26,8 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:text="Event Name"
             android:textColor="@color/black"
             android:textSize="40sp" />
@@ -37,8 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center_vertical">
 
             <com.google.android.material.button.MaterialButton
@@ -58,7 +58,7 @@
                 app:iconPadding="5dp"
                 app:iconSize="20dp"
                 app:iconTint="@color/black"
-                app:strokeColor="@color/black" />
+                app:strokeColor="@color/social" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/tag_2"
@@ -77,7 +77,7 @@
                 app:iconPadding="5dp"
                 app:iconSize="20dp"
                 app:iconTint="@color/black"
-                app:strokeColor="@color/black" />
+                app:strokeColor="@color/food" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/tag_3"
@@ -96,7 +96,7 @@
                 app:iconPadding="5dp"
                 app:iconSize="20dp"
                 app:iconTint="@color/black"
-                app:strokeColor="@color/black" />
+                app:strokeColor="@color/shopping" />
 
 
             <Button
@@ -164,11 +164,13 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="15dp"
+                        android:background="@color/white"
                         android:backgroundTint="#FB3F4E"
                         android:elevation="0dp"
                         android:src="@drawable/x"
+                        android:tint="@color/white"
                         app:backgroundTint="#000000"
-                        app:borderWidth="2dp"
+                        app:borderWidth="0dp"
                         app:elevation="0dp"
                         app:maxImageSize="25dp"
                         app:rippleColor="#B8273C" />
@@ -183,7 +185,7 @@
                         android:elevation="0dp"
                         android:src="@drawable/check"
                         app:backgroundTint="#000000"
-                        app:borderWidth="2dp"
+                        app:borderWidth="0dp"
                         app:elevation="0dp"
                         app:maxImageSize="35dp"
                         app:rippleColor="#7A9C1D" />
@@ -194,24 +196,22 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="2.5dp"
-                    android:orientation="horizontal"
                     android:gravity="center"
-                    >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="40dp"
-                        android:text="0"
                         android:layout_gravity="center_vertical"
-                        />
+                        android:layout_marginRight="40dp"
+                        android:text="0" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
                         android:layout_gravity="center_vertical"
-                        android:text="0"
-                        />
+                        android:layout_marginLeft="40dp"
+                        android:text="0" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -262,7 +262,8 @@
                     android:textColor="#757474" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/reporter_points"                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/reporter_points"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -271,15 +272,16 @@
                     android:clickable="false"
                     android:gravity="center"
                     android:text="0 pts"
+                    android:textAllCaps="false"
                     android:textColor="@color/grey"
                     android:textSize="13sp"
                     app:cornerRadius="100dp"
-                    android:textAllCaps="false"
                     app:icon="@drawable/points_star"
+                    app:iconGravity="textStart"
                     app:iconPadding="5dp"
                     app:iconSize="25dp"
                     app:iconTint="@color/grey"
-                    app:strokeColor="@color/grey" />
+                    app:strokeColor="@color/black" />
 
             </LinearLayout>
 
