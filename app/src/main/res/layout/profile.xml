@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/eventButton"
@@ -36,8 +36,7 @@
         android:id="@+id/middle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/navi"
-        android:layout_marginTop="75dp">
+        android:layout_marginTop="100dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/profilePic"
@@ -215,8 +214,7 @@
         android:layout_alignParentBottom="true"
         android:text="Log out"
         android:layout_centerHorizontal="true"
-        android:layout_margin="75dp">
+        android:layout_margin="130dp">
     </Button>
-
 
 </RelativeLayout>
