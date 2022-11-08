@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Spur</string>
     <string name="title_activity_maps">MapsActivity</string>
+
     <string-array name="tags_array">
         <item>Food</item>
         <item>Shopping</item>
@@ -14,6 +15,25 @@
     <string name="event_name">Event Name<font color='#FF0000'>*</font></string>
     <string name="tags_label">Tags (Choose 1-3)<font color='#FF0000'>*</font></string>
     <string name="desc_label">Event Description<font color='#FF0000'>*</font></string>
-</resources>
 
+
+
+    <string name="popup_title">Heads up!</string>
+    <string name="popup_subtitle_1">You could be at an existing event:</string>
+    <string name="popup_subtitle_2">Are you sure you want to add a new one?</string>
+    <string name="popup_button_yes">Yes, it\'s a different event</string>
+    <string name="popup_button_no">Nevermind</string>
+    <string name="popup_event_1">Nearby Event 1</string>
+    <string name="popup_event_2">Nearby Event 2</string>
+    <string name="popup_event_3">Nearby Event 3</string>
+    <string name="popup_event_4">Nearby Event 4</string>
+    <string name="popup_event_5">Nearby Event 5</string>
+    <string name="popup_event_dist">0.00 mi</string>
+    <string name="points_popup_title">Points System Overview</string>
+    <string name="points_popup_explanation">Earn points by being active in the app</string>
+    <string name="points_daily">+1 for daily check-in</string>
+    <string name="points_confirm_deny">+10 for confirming/denying existing events</string>
+    <string name="points_adding_event">+70 for adding an event with 2+ confirmations</string>
+    <string name="points_understood">Got it!</string>
+</resources>
 

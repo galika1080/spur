@@ -8,6 +8,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.globalgang.spur.databinding.ActivityMapsBinding;
@@ -58,8 +59,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng quad = new LatLng(40.1074821,-88.2265963);
+        LatLng quad2 = new LatLng(40.108308, -88.227017);
+        LatLng quad3 = new LatLng(40.108111, -88.227671);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(quad));
+
+        mMap.addMarker(new MarkerOptions()
+                .position(quad)
+                .title("Food truck!")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_food)));
+
+        mMap.addMarker(new MarkerOptions()
+                .position(quad2)
+                .title("Social event!")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_social)));
+
+        mMap.addMarker(new MarkerOptions()
+                .position(quad3)
+                .title("Prayer group!")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_religion)));
+
     }
 }
