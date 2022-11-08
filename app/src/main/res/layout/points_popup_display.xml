@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="15dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:background="@drawable/border_box">
+
+        <!-- Popup Title -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/title"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/white"
+            android:clickable="false"
+            android:gravity="center"
+            android:text="@string/points_popup_title"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:icon="@drawable/points_star"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="25dp"
+            app:iconTint="@color/black" />
+<!--
+        <TextView
+            android:id="@+id/popup_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="@string/points_popup_title" />
+-->
+        <!-- Existing Event Subtitle -->
+
+        <!-- +1 point description -->
+        <TextView
+            android:id="@+id/popup_subtitle_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/points_popup_explanation"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/popup_event_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_subtitle_1"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:text="@string/points_daily"
+            android:gravity="left|center_vertical"
+            android:backgroundTint="@color/grey" />
+
+        <!-- +10 point description -->
+        <Button
+            android:id="@+id/popup_event_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_1"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:text="@string/points_confirm_deny"
+            android:gravity="left|center_vertical"
+            android:backgroundTint="@color/grey"/>
+
+        <!-- +70 point description -->
+        <Button
+            android:id="@+id/popup_event_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_2"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:text="@string/points_adding_event"
+            android:textColor="@color/black"
+            android:gravity="left|center_vertical"
+            android:backgroundTint="@color/grey"/>
+
+        <!-- Got IT button -->
+        <Button
+            android:id="@+id/popup_button_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="229dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/green"
+            android:text="@string/points_understood"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+
