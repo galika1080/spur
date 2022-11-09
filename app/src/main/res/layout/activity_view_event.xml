@@ -190,7 +190,6 @@
                         app:maxImageSize="35dp"
                         app:rippleColor="#7A9C1D" />
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
