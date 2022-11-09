@@ -2,6 +2,7 @@ package com.globalgang.spur;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,6 +26,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
+    private enum AppState {
+        FullscreenMap,
+        EventDetails,
+        Reporting,
+        ReportPopup,
+        PointsPopup
+    }
+
+    private AppState currentState = AppState.FullscreenMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +49,65 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         //Obtain the dropdown id for reporting screen
-        Spinner spinnerTags=findViewById(R.id.tags_spinner);
         ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this, R.array.tags_array, android.R.layout.simple_spinner_item);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerTags.setAdapter(adapter);
+        // @TODO: change this, the social button shouldn't show the event details popup
+        binding.btnFilterSocial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentState = AppState.EventDetails;
+                updateVisibility();
+            }
+        });
+
+
+        // report event button
+        binding.btnAddEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentState = AppState.ReportPopup;
+                updateVisibility();
+            }
+        });
+
+
+        // yes and no buttons on "heads up, nearby events" popup
+        binding.popupButtonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentState = AppState.Reporting; // @TODO: add layout for reporting
+                updateVisibility();
+            }
+        });
+
+        binding.popupButtonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentState = AppState.FullscreenMap; // @TODO: add layout for reporting
+                updateVisibility();
+            }
+        });
+
+    }
+
+    private void updateVisibility() {
+        if (currentState == AppState.EventDetails) {
+            binding.eventView.setVisibility(View.VISIBLE);
+            binding.filterScrollView.setVisibility(View.GONE);
+        } else {
+            binding.eventView.setVisibility(View.GONE);
+        }
+
+        if (currentState == AppState.FullscreenMap) {
+            binding.filterScrollView.setVisibility(View.VISIBLE);
+            binding.navi.setVisibility(View.VISIBLE);
+        }
+
+        if (currentState == AppState.ReportPopup) {
+            binding.reportPopup.setVisibility(View.VISIBLE);
+        } else {
+            binding.reportPopup.setVisibility(View.GONE);
+        }
     }
 
     /**
