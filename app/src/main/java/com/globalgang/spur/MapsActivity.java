@@ -11,6 +11,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.globalgang.spur.databinding.ActivityMapsBinding;
 import androidx.appcompat.app.AppCompatActivity;
@@ -109,6 +110,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        mMap.setOnMapClickListener((LatLng loc) -> {
+            currentState = AppState.FullscreenMap;
+            updateVisibility();
+        });
+
+        mMap.setOnMarkerClickListener((Marker m) -> {
+            currentState = AppState.EventDetails;
+            updateVisibility();
+
+            return true;
+        });
 
         // Add a marker in Sydney and move the camera
         LatLng quad = new LatLng(40.1074821,-88.2265963);
