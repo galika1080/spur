@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -66,6 +67,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this, R.array.tags_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerTags.setAdapter(adapter);
+
+        //Change No. Yes and No. No
+        int myPoints = 1;
+        TextView no_confirmation = findViewById(R.id.event_num_yes);
+        no_confirmation.setText(Integer.toString(myPoints));
 
         // @TODO: change this, the social button shouldn't show the event details popup
         binding.btnFilterSocial.setOnClickListener((View v) -> {

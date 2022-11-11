@@ -20,6 +20,7 @@ public interface EventDao {
             "loc_lat LIKE :latitude AND " +
             "loc_long LIKE :longitude " +
             "LIMIT 1")
+
     Event getByNameLocation(String name, double latitude, double longitude);
 
     @Insert
@@ -27,4 +28,6 @@ public interface EventDao {
 
     @Delete
     void delete(Event user);
+
+
 }

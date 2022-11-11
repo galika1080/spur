@@ -7,3 +7,10 @@ import androidx.room.RoomDatabase;
 public abstract class AppDatabase extends RoomDatabase {
     public abstract EventDao eventDao();
 }
+
+//@Database(entities = {Event.class, Userdao.class}, version = 1)
+//public abstract class AppDatabase extends RoomDatabase {
+//    public abstract EventDao eventDao();
+//     public abstract Userdao userDao();
+//}
+
