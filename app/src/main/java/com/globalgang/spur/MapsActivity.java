@@ -5,15 +5,21 @@ import androidx.fragment.app.FragmentActivity;
 import android.opengl.Visibility;
 import android.os.Bundle;
 
+import com.globalgang.spur.eventdb.AppDatabase;
+import com.globalgang.spur.eventdb.Event;
+import com.globalgang.spur.eventdb.EventDao;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.globalgang.spur.databinding.ActivityMapsBinding;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +31,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+
+    private EventDao events;
 
     private enum AppState {
         FullscreenMap,
@@ -39,6 +47,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "spur-db").allowMainThreadQueries().build();
+        events = db.eventDao();
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -55,40 +67,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         spinnerTags.setAdapter(adapter);
 
         // @TODO: change this, the social button shouldn't show the event details popup
-        binding.btnFilterSocial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentState = AppState.EventDetails;
-                updateVisibility();
-            }
+        binding.btnFilterSocial.setOnClickListener((View v) -> {
+            currentState = AppState.EventDetails;
+            updateVisibility();
         });
 
 
-        // report popup button
-        binding.btnAddEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                currentState = AppState.ReportPopup;
-                updateVisibility();
-            }
+        // report event button
+        binding.btnAddEvent.setOnClickListener((View v) -> {
+            currentState = AppState.ReportPopup;
+            updateVisibility();
         });
-
 
         // yes and no buttons on "heads up, nearby events" popup
-        binding.popupButtonYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                currentState = AppState.Reporting; // @TODO: add layout for reporting //reporting screen has been added
-                updateVisibility();
-            }
+        binding.popupButtonYes.setOnClickListener((View v) -> {
+            currentState = AppState.Reporting; // @TODO: add layout for reporting
+            updateVisibility();
         });
 
-        binding.popupButtonNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                currentState = AppState.FullscreenMap;
-                updateVisibility();
-            }
+        binding.popupButtonNo.setOnClickListener((View v) -> {
+            currentState = AppState.FullscreenMap; // @TODO: add layout for reporting
+            updateVisibility();
         });
 
         //clicking on submit button on report screen take you back to the main map screen
@@ -132,6 +131,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    private void addEvent(Event e) {
+        events.insertAll(e);
+
+        populateEventInfo(e);
+        displayEventMarker(e);
+    }
+
+    private void populateEventInfo(Event e) {
+        binding.eventName.setText(e.title);
+        binding.eventDescription.setText(e.description);
+        binding.eventNumNo.setText(Integer.toString(e.numDislikes));
+        binding.eventNumYes.setText(Integer.toString(e.numLikes));
+    }
+
+    private void displayEventMarker(Event e) {
+        Event resolvedEvent = events.getByNameLocation(e.title, e.latitude, e.longitude);
+        int id = resolvedEvent.id;
+
+        LatLng eventLoc = new LatLng(e.latitude, e.longitude);
+        Marker eventMarker = mMap.addMarker(new MarkerOptions()
+                .position(eventLoc)
+                .title(e.title)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_food)));
+
+        eventMarker.setTag(id);
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -145,26 +171,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.setOnMapClickListener((LatLng loc) -> {
+            currentState = AppState.FullscreenMap;
+            updateVisibility();
+        });
+
+        mMap.setOnMarkerClickListener((Marker m) -> {
+            Event event = events.getById((int) m.getTag());
+            populateEventInfo(event);
+
+            currentState = AppState.EventDetails;
+            updateVisibility();
+
+            return true;
+        });
+
         // Add a marker in Sydney and move the camera
         LatLng quad = new LatLng(40.1074821,-88.2265963);
-        LatLng quad2 = new LatLng(40.108308, -88.227017);
-        LatLng quad3 = new LatLng(40.108111, -88.227671);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(quad));
 
-        mMap.addMarker(new MarkerOptions()
-                .position(quad)
-                .title("Food truck!")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_food)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(quad, 14f));
 
-        mMap.addMarker(new MarkerOptions()
-                .position(quad2)
-                .title("Social event!")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_social)));
+        Event exampleEvent1 = new Event();
+        exampleEvent1.author = "userGuy123";
+        exampleEvent1.description = "This is an event. You should pull up.";
+        exampleEvent1.title = "Super secret social stuff";
+        exampleEvent1.latitude = 40.1074821; exampleEvent1.longitude = -88.2265963;
 
-        mMap.addMarker(new MarkerOptions()
-                .position(quad3)
-                .title("Prayer group!")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_religion)));
+        Event exampleEvent2 = new Event();
+        exampleEvent2.author = "anotherUser";
+        exampleEvent2.description = "Tons of food!";
+        exampleEvent2.title = "Bake sale on the quad";
+        exampleEvent2.latitude = 40.108308; exampleEvent2.longitude = -88.227017;
 
+        addEvent(exampleEvent1);
+        addEvent(exampleEvent2);
     }
 }

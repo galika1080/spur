@@ -207,7 +207,10 @@
             android:id="@+id/filter_linlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:background="#75C5C5C5"
+            android:orientation="horizontal"
+            android:paddingTop="2dp"
+            android:paddingBottom="3dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_filter_all"
@@ -216,6 +219,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/grey"
+                android:elevation="10dp"
                 android:text="All"
                 android:textColor="@color/black"
                 app:iconTint="@color/black" />
@@ -227,6 +231,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/social"
+                android:elevation="10dp"
                 android:text="Social"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_social"
@@ -239,6 +244,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/food"
+                android:elevation="10dp"
                 android:text="Food"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_food"
@@ -251,6 +257,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/shopping"
+                android:elevation="10dp"
                 android:text="Shopping"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_shopping"
@@ -263,6 +270,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/professional"
+                android:elevation="10dp"
                 android:text="Career"
                 android:textColor="@color/black"
                 app:icon="@drawable/briefcase"
@@ -275,6 +283,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/religion"
+                android:elevation="10dp"
                 android:text="Religion"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_religion"
@@ -287,6 +296,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/performance"
+                android:elevation="10dp"
                 android:text="Performance"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_performance"
@@ -299,6 +309,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/activism"
+                android:elevation="10dp"
                 android:text="Activism"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_activism"
@@ -311,6 +322,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/misc"
+                android:elevation="10dp"
                 android:text="Miscellaneous"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_misc"
@@ -327,8 +339,6 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/navi"
-        android:layout_below="@id/filterScrollView"
         tools:context=".MapsActivity" />
 
 
@@ -490,6 +500,31 @@
             android:text="Event description. Event description. Event description. Event description. Event description. Event description. Event description. Event ."
             android:textColor="@color/black"
             android:textSize="16sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Location: "
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/event_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Siebel Room 1213"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <View
             android:layout_width="340dp"
@@ -566,6 +601,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/event_num_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -573,6 +609,7 @@
                         android:text="0" />
 
                     <TextView
+                        android:id="@+id/event_num_yes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
