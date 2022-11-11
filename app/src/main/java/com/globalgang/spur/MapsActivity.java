@@ -91,7 +91,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
                 if (!event.tags.contains("social")) {
-                    eventMarkers.get(i).hideInfoWindow();
+                    eventMarkers.get(i).setVisible(false);
+                } else {
+                    eventMarkers.get(i).setVisible(true);
                 }
             }
         });
