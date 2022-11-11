@@ -11,6 +11,7 @@
         android:id="@+id/report_popup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:background="@drawable/border_box"
         android:elevation="30dp"
         android:padding="15dp"
@@ -47,6 +48,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
             android:text="@string/popup_event_1"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
@@ -59,6 +61,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="@string/popup_event_dist"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
@@ -71,6 +74,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
             android:text="@string/popup_event_2"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
@@ -83,6 +87,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="@string/popup_event_dist"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
@@ -95,6 +100,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
             android:text="@string/popup_event_3"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
@@ -107,6 +113,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="@string/popup_event_dist"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
@@ -119,6 +126,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
             android:text="@string/popup_event_4"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
@@ -131,6 +139,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="@string/popup_event_dist"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
@@ -143,6 +152,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
             android:text="@string/popup_event_5"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
@@ -155,6 +165,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="@string/popup_event_dist"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
@@ -178,6 +189,7 @@
             android:layout_marginRight="10dp"
             android:backgroundTint="@color/green"
             android:text="@string/popup_button_yes"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <!-- No button -->
@@ -190,6 +202,7 @@
             android:layout_toRightOf="@id/popup_button_yes"
             android:backgroundTint="@color/black"
             android:text="@string/popup_button_no"
+            android:textColor="@color/white"
             android:textSize="12sp" />
     </RelativeLayout>
     <!--popup event details ends here -->
