@@ -14,9 +14,7 @@
     </string-array>
     <string name="event_name">Event Name<font color='#FF0000'>*</font></string>
     <string name="tags_label">Tags (Choose 1-3)<font color='#FF0000'>*</font></string>
-    <string name="desc_label">Event Description<font color='#FF0000'>*</font></string>
-
-
+    <string name="desc_label">Event Description (Max 140 char.)<font color='#FF0000'>*</font></string>
 
     <string name="popup_title">Heads up!</string>
     <string name="popup_subtitle_1">You could be at an existing event:</string>
