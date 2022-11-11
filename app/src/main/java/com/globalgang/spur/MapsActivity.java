@@ -33,7 +33,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ReportPopup,
         PointsPopup
     }
-
+    //initialising the state to FullScreenMap (filters + bottom bav bar)
     private AppState currentState = AppState.FullscreenMap;
 
     @Override
@@ -49,7 +49,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         //Obtain the dropdown id for reporting screen
+        Spinner spinnerTags = findViewById(R.id.reporting_spinner_for_primary_tag_dropdown);
         ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this, R.array.tags_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerTags.setAdapter(adapter);
 
         // @TODO: change this, the social button shouldn't show the event details popup
         binding.btnFilterSocial.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        // report event button
+        // report popup button
         binding.btnAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.popupButtonYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentState = AppState.Reporting; // @TODO: add layout for reporting
+                currentState = AppState.Reporting; // @TODO: add layout for reporting //reporting screen has been added
                 updateVisibility();
             }
         });
@@ -83,11 +86,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.popupButtonNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentState = AppState.FullscreenMap; // @TODO: add layout for reporting
+                currentState = AppState.FullscreenMap;
                 updateVisibility();
             }
         });
 
+        //clicking on submit button on report screen take you back to the main map screen
+        binding.reportingSubmitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                currentState = AppState.FullscreenMap;
+                updateVisibility();
+            }
+        });
     }
 
     private void updateVisibility() {
@@ -108,6 +119,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             binding.reportPopup.setVisibility(View.GONE);
         }
+
+        if(currentState == AppState.Reporting) {
+            binding.reportingPrimaryLL.setVisibility(View.VISIBLE);
+            binding.filterScrollView.setVisibility(View.GONE);
+            binding.navi.setVisibility(View.GONE);
+            binding.btnAddEvent.setVisibility(View.GONE);
+        } else {
+            binding.reportingPrimaryLL.setVisibility(View.GONE);
+        }
+
     }
 
     /**
