@@ -98,6 +98,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 updateVisibility();
             }
         });
+
+        // click profile button
+        binding.profileButton.setOnClickListener((View v) -> {
+
+        });
+
     }
 
     private void updateVisibility() {
@@ -120,7 +126,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.reportPopup.setVisibility(View.GONE);
         }
 
-        if(currentState == AppState.Reporting) {
+        if (currentState == AppState.Reporting) {
             binding.reportingPrimaryLL.setVisibility(View.VISIBLE);
             binding.filterScrollView.setVisibility(View.GONE);
             binding.navi.setVisibility(View.GONE);
