@@ -27,6 +27,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.Collections;
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -39,7 +42,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         EventDetails,
         Reporting,
         ReportPopup,
-        PointsPopup
+        PointsPopup,
+        ProfileView
     }
     //initialising the state to FullScreenMap (filters + bottom bav bar)
     private AppState currentState = AppState.FullscreenMap;
@@ -68,8 +72,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // @TODO: change this, the social button shouldn't show the event details popup
         binding.btnFilterSocial.setOnClickListener((View v) -> {
-            currentState = AppState.EventDetails;
-            updateVisibility();
+            currentState = AppState.FullscreenMap;
+            List<Event> current_events = events.getAll();
+            List<Event> social_events = Collections.emptyList();
+            for (int i = 0; i < current_events.size(); i++) {
+                if (current_events.get(i).tags.contains("social")) {
+                    social_events.add(current_events.get(i));
+                }
+            }
+
         });
 
 
@@ -95,6 +106,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view){
                 currentState = AppState.FullscreenMap;
+                updateVisibility();
+            }
+        });
+
+        //clicking on profile button will take you to profile screen
+        binding.profileButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                currentState = AppState.ProfileView;
                 updateVisibility();
             }
         });
@@ -127,6 +147,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.btnAddEvent.setVisibility(View.GONE);
         } else {
             binding.reportingPrimaryLL.setVisibility(View.GONE);
+        }
+
+        // @TODO: move profile.xml code to activity_maps.xml and set visibility
+        //update to profile view
+        if(currentState == AppState.ProfileView) {
+            //profile state, show layout as visible
+
         }
 
     }
