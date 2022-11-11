@@ -384,8 +384,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="Event"></Button>
-
+            android:text="Event" />
 
         <Button
             android:id="@+id/profileButton"
@@ -394,7 +393,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:text="Profile"></Button>
+            android:text="Profile" />
 
     </LinearLayout>
 
