@@ -1,5 +1,7 @@
 package com.globalgang.spur;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import android.opengl.Visibility;
@@ -27,8 +29,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -52,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        eventMarkers = new ArrayList<>();
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "spur-db").allowMainThreadQueries().build();
@@ -72,10 +79,66 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         spinnerTags.setAdapter(adapter);
 
         // @TODO: change this, the social button shouldn't show the event details popup
+        binding.btnFilterFood.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("food")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
         binding.btnFilterSocial.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
                 if (!event.tags.contains("social")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterShopping.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("shopping")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterProfessional.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("professional")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterPerformance.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("performance")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterActivism.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("activism")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterReligion.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("religion")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterMisc.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("misc")) {
                     eventMarkers.get(i).hideInfoWindow();
                 }
             }
