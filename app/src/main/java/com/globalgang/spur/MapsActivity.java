@@ -112,6 +112,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (currentState == AppState.FullscreenMap) {
             binding.filterScrollView.setVisibility(View.VISIBLE);
             binding.navi.setVisibility(View.VISIBLE);
+            binding.btnAddEvent.setVisibility(View.VISIBLE);
         }
 
         if (currentState == AppState.ReportPopup) {
