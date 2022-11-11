@@ -36,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ActivityMapsBinding binding;
 
     private EventDao events;
+    private List<Marker> eventMarkers;
 
     private enum AppState {
         FullscreenMap,
@@ -72,15 +73,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // @TODO: change this, the social button shouldn't show the event details popup
         binding.btnFilterSocial.setOnClickListener((View v) -> {
-            currentState = AppState.FullscreenMap;
-            List<Event> current_events = events.getAll();
-            List<Event> social_events = Collections.emptyList();
-            for (int i = 0; i < current_events.size(); i++) {
-                if (current_events.get(i).tags.contains("social")) {
-                    social_events.add(current_events.get(i));
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("social")) {
+                    eventMarkers.get(i).hideInfoWindow();
                 }
             }
-
         });
 
 
@@ -183,6 +181,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_food)));
 
         eventMarker.setTag(id);
+        eventMarkers.add(eventMarker);
     }
 
     /**
