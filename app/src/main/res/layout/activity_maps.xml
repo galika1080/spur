@@ -729,7 +729,8 @@
             android:layout_height= "match_parent"
             android:gravity="left"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="10dp"
+            android:maxLength="40"/>
 
         <TextView
             android:id="@+id/reporting_add_description_label"
@@ -758,7 +759,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="10dp"
-            android:text="Location" />
+            android:text="Location (Max 50 char.)" />
 
         <EditText
             android:id="@+id/reporting_location_text_input"
@@ -766,7 +767,8 @@
             android:layout_height= "match_parent"
             android:gravity="left"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="10dp"
+            android:maxLength="50"/>
 
 
         <TextView
