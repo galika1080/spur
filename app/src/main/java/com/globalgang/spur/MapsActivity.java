@@ -43,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     //initialising the state to FullScreenMap (filters + bottom bav bar)
     private AppState currentState = AppState.FullscreenMap;
+    private boolean seen_points_popup = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +69,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // @TODO: change this, the social button shouldn't show the event details popup
         binding.btnFilterSocial.setOnClickListener((View v) -> {
-            currentState = AppState.EventDetails;
+            if (!seen_points_popup) {
+                currentState = AppState.PointsPopup;
+            }
+            else {
+                currentState = AppState.EventDetails;
+            }
             updateVisibility();
+        });
+
+        // got it button
+        /*
+        * I'm thinking that maybe when you click on event details it should show the points popup
+        * for the first time (case 1)
+        * or
+        * it could be the first screen when you open the app (case 2)
+        */
+        binding.got_it_button.setOnClickListener((View v) -> { // case 1
+           currentState = AppState.EventDetails;
         });
 
 
@@ -119,13 +136,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.reportPopup.setVisibility(View.GONE);
         }
 
-        if(currentState == AppState.Reporting) {
+        if (currentState == AppState.Reporting) {
             binding.reportingPrimaryLL.setVisibility(View.VISIBLE);
             binding.filterScrollView.setVisibility(View.GONE);
             binding.navi.setVisibility(View.GONE);
             binding.btnAddEvent.setVisibility(View.GONE);
         } else {
             binding.reportingPrimaryLL.setVisibility(View.GONE);
+        }
+
+        if (currentState == AppState.PointsPopup) {
+            binding.pointsPopup.setVisibility(View.VISIBLE);
+        } else {
+            binding.pointsPopup.setVisibility(View.GONE);
         }
 
     }
