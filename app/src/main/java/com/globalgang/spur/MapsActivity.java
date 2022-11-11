@@ -85,8 +85,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         * or
         * it could be the first screen when you open the app (case 2)
         */
-        binding.got_it_button.setOnClickListener((View v) -> { // case 1
+        binding.gotItButton.setOnClickListener((View v) -> { // case 1
            currentState = AppState.EventDetails;
+           updateVisibility();
         });
 
 
