@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:theme="@style/Theme.Material3.Light">
 
+    <!--popup event XML details starts here-->
     <RelativeLayout
         android:id="@+id/report_popup"
         android:layout_width="wrap_content"
@@ -191,6 +192,9 @@
             android:text="@string/popup_button_no"
             android:textSize="12sp" />
     </RelativeLayout>
+    <!--popup event details ends here -->
+
+    <!--filter details start here -->
 
     <HorizontalScrollView
         android:id="@+id/filterScrollView"
@@ -326,6 +330,9 @@
 
         </LinearLayout>
     </HorizontalScrollView>
+    <!--filter details end here -->
+
+    <!--map XML can be seen here -->
 
     <fragment
         android:id="@+id/map"
@@ -333,6 +340,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MapsActivity" />
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_event"
@@ -376,6 +385,7 @@
 
     </LinearLayout>
 
+    <!--Event Details LL starts from here-->
     <LinearLayout
         android:id="@+id/event_view"
         android:layout_width="match_parent"
@@ -656,5 +666,219 @@
         </LinearLayout>
 
     </LinearLayout>
+    <!--Event details LL ends here -->
+
+    <!--Adding the Report screen LL here -->
+    <LinearLayout
+        android:id="@+id/reporting_primary_LL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:background="#B88787"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:id = "@+id/reporting_add_an_event_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="25sp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="Add an Event" />
+
+        <TextView
+            android:id="@+id/reporting_event_name_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/event_name" />
+
+        <EditText
+            android:id="@+id/reporting_event_name_text_input"
+            android:layout_width="match_parent"
+            android:layout_height= "match_parent"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <TextView
+            android:id="@+id/reporting_add_description_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/desc_label" />
+
+        <EditText
+            android:id="@+id/reporting_event_description_text_input"
+            android:layout_width="match_parent"
+            android:layout_height= "match_parent"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:maxLength="140"/>
+
+        <TextView
+            android:id="@+id/reporting_location_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="Location" />
+
+        <EditText
+            android:id="@+id/reporting_location_text_input"
+            android:layout_width="match_parent"
+            android:layout_height= "match_parent"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+
+        <TextView
+            android:id="@+id/reporting_tags_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tags_label" />
+
+        <GridLayout
+            android:id="@+id/reporting_grid_view_for_tag_checkboxes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:columnCount="2"
+            android:rowCount="4">
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_marginTop="6dp"
+                app:icon="@drawable/funkycarpet"
+                android:text="Food"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_marginTop="6dp"
+                android:text="Shopping"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_marginTop="6dp"
+                android:text="Activism"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_marginTop="6dp"
+                android:text="Social"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_marginTop="6dp"
+                android:text="Religion"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_marginTop="6dp"
+                android:text="Professional"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:layout_marginTop="6dp"
+                android:text="Performance"
+                android:textSize="10sp" />
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:layout_marginTop="6dp"
+                android:text="Miscellaneous"
+                android:textSize="10sp" />
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/reporting_primary_tag_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="Primary Tag (Shows up on the Map)" />
+
+        <Spinner
+            android:id="@+id/reporting_spinner_for_primary_tag_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="10dp"
+            android:spinnerMode="dropdown"
+            />
+
+        <Button
+            android:id="@+id/reporting_submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/black"
+            android:text="Submit"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+    <!--reporting screen XML ends here -->
 
 </RelativeLayout>

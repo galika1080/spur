@@ -41,7 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ReportPopup,
         PointsPopup
     }
-
+    //initialising the state to FullScreenMap (filters + bottom bav bar)
     private AppState currentState = AppState.FullscreenMap;
 
     @Override
@@ -61,7 +61,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         //Obtain the dropdown id for reporting screen
+        Spinner spinnerTags = findViewById(R.id.reporting_spinner_for_primary_tag_dropdown);
         ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this, R.array.tags_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerTags.setAdapter(adapter);
 
         // @TODO: change this, the social button shouldn't show the event details popup
         binding.btnFilterSocial.setOnClickListener((View v) -> {
@@ -69,12 +72,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             updateVisibility();
         });
 
+
         // report event button
         binding.btnAddEvent.setOnClickListener((View v) -> {
             currentState = AppState.ReportPopup;
             updateVisibility();
         });
-
 
         // yes and no buttons on "heads up, nearby events" popup
         binding.popupButtonYes.setOnClickListener((View v) -> {
@@ -87,6 +90,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             updateVisibility();
         });
 
+        //clicking on submit button on report screen take you back to the main map screen
+        binding.reportingSubmitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                currentState = AppState.FullscreenMap;
+                updateVisibility();
+            }
+        });
     }
 
     private void updateVisibility() {
@@ -107,6 +118,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             binding.reportPopup.setVisibility(View.GONE);
         }
+
+        if(currentState == AppState.Reporting) {
+            binding.reportingPrimaryLL.setVisibility(View.VISIBLE);
+            binding.filterScrollView.setVisibility(View.GONE);
+            binding.navi.setVisibility(View.GONE);
+            binding.btnAddEvent.setVisibility(View.GONE);
+        } else {
+            binding.reportingPrimaryLL.setVisibility(View.GONE);
+        }
+
     }
 
     private void addEvent(Event e) {
