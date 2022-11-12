@@ -55,6 +55,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //initialising the state to FullScreenMap (filters + bottom bav bar)
     private AppState currentState = AppState.FullscreenMap;
 
+    // one boolean variable to check whether all the text fields in Reporting Screen
+    // are filled by the user, properly or not.
+    boolean isAllFieldsCheckedReporting = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,6 +168,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             updateVisibility();
         });
 
+        /*
         //clicking on submit button on report screen take you back to the main map screen
         binding.reportingSubmitButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -172,6 +177,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 updateVisibility();
             }
         });
+         */
+
+        binding.reportingSubmitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                isAllFieldsCheckedReporting = CheckAllFields();
+
+                if (isAllFieldsCheckedReporting) {
+                    currentState = AppState.FullscreenMap;
+                    updateVisibility();
+                }
+            }
+        });
+
 
         //clicking on profile button will take you to profile screen
         binding.profileButton.setOnClickListener(new View.OnClickListener(){
@@ -248,6 +267,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         eventMarker.setTag(id);
         eventMarkers.add(eventMarker);
     }
+
+    private boolean CheckAllFields() {
+        if (binding.reportingEventNameTextInput.length() == 0) {
+            binding.reportingEventNameTextInput.setError("Event Name is required");
+            return false;
+        }
+
+        if (binding.reportingEventDescriptionTextInput.length() == 0) {
+            binding.reportingEventDescriptionTextInput.setError("Event Description is required");
+            return false;
+        }
+
+        if (binding.reportingLocationTextInput.length() == 0) {
+            binding.reportingLocationTextInput.setError("Location is required");
+            return false;
+        }
+
+        // after all validation return true.
+        return true;
+    }
+
 
     /**
      * Manipulates the map once available.
