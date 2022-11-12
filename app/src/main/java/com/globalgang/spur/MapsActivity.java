@@ -1,5 +1,7 @@
 package com.globalgang.spur;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import android.opengl.Visibility;
@@ -27,19 +29,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
     private EventDao events;
+    private List<Marker> eventMarkers;
 
     private enum AppState {
         FullscreenMap,
         EventDetails,
         Reporting,
         ReportPopup,
-        PointsPopup
+        PointsPopup,
+        ProfileView
     }
     //initialising the state to FullScreenMap (filters + bottom bav bar)
     private AppState currentState = AppState.FullscreenMap;
@@ -47,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        eventMarkers = new ArrayList<>();
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "spur-db").allowMainThreadQueries().build();
@@ -67,9 +79,71 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         spinnerTags.setAdapter(adapter);
 
         // @TODO: change this, the social button shouldn't show the event details popup
+        binding.btnFilterFood.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("food")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
         binding.btnFilterSocial.setOnClickListener((View v) -> {
-            currentState = AppState.EventDetails;
-            updateVisibility();
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("social")) {
+                    eventMarkers.get(i).setVisible(false);
+                } else {
+                    eventMarkers.get(i).setVisible(true);
+                }
+            }
+        });
+        binding.btnFilterShopping.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("shopping")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterProfessional.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("professional")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterPerformance.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("performance")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterActivism.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("activism")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterReligion.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("religion")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
+        });
+        binding.btnFilterMisc.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                Event event = events.getById((int) eventMarkers.get(i).getTag());
+                if (!event.tags.contains("misc")) {
+                    eventMarkers.get(i).hideInfoWindow();
+                }
+            }
         });
 
 
@@ -98,6 +172,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 updateVisibility();
             }
         });
+
+        //clicking on profile button will take you to profile screen
+        binding.profileButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                currentState = AppState.ProfileView;
+                updateVisibility();
+            }
+        });
     }
 
     private void updateVisibility() {
@@ -120,13 +203,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.reportPopup.setVisibility(View.GONE);
         }
 
-        if(currentState == AppState.Reporting) {
+        if (currentState == AppState.Reporting) {
             binding.reportingPrimaryLL.setVisibility(View.VISIBLE);
             binding.filterScrollView.setVisibility(View.GONE);
             binding.navi.setVisibility(View.GONE);
             binding.btnAddEvent.setVisibility(View.GONE);
         } else {
             binding.reportingPrimaryLL.setVisibility(View.GONE);
+        }
+
+        // @TODO: move profile.xml code to activity_maps.xml and set visibility
+        //update to profile view
+        if(currentState == AppState.ProfileView) {
+            //profile state, show layout as visible
+
         }
 
     }
@@ -156,6 +246,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_food)));
 
         eventMarker.setTag(id);
+        eventMarkers.add(eventMarker);
     }
 
     /**
