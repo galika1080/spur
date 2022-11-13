@@ -170,6 +170,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // yes and no buttons on "heads up, nearby events" popup
         binding.popupButtonYes.setOnClickListener((View v) -> {
+            onClear();
             currentState = AppState.Reporting; // @TODO: add layout for reporting
             updateVisibility();
         });
@@ -296,7 +297,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(CheckboxCounterTracker > 0 && CheckboxCounterTracker <4){
             return true;
         } else {
-            Toast.makeText(this,CheckboxCounterTracker + "No of Tags not within valid range" ,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,CheckboxCounterTracker + " No of Tags not within valid range" ,Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -311,7 +312,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 CheckboxCounterTracker--;
             }
         }
-        //System.out.println(CheckboxCounterTracker);
+        System.out.println(CheckboxCounterTracker);
     }
 
 
@@ -357,6 +358,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
+
+    private void onClear()
+    {
+
+        if (binding.reportingEventNameTextInput != null) binding.reportingEventNameTextInput.setText("");
+        if (binding.reportingEventDescriptionTextInput != null) binding.reportingEventDescriptionTextInput.setText("");
+        if (binding.reportingLocationTextInput != null) binding.reportingLocationTextInput.setText("");
+        if (binding.reportingCheckBox1.isChecked() == true) binding.reportingCheckBox1.setChecked(false);
+        if (binding.reportingCheckBox2.isChecked() == true) binding.reportingCheckBox2.setChecked(false);
+        if (binding.reportingCheckBox3.isChecked() == true) binding.reportingCheckBox3.setChecked(false);
+        if (binding.reportingCheckBox4.isChecked() == true) binding.reportingCheckBox4.setChecked(false);
+        if (binding.reportingCheckBox5.isChecked() == true) binding.reportingCheckBox5.setChecked(false);
+        if (binding.reportingCheckBox6.isChecked() == true) binding.reportingCheckBox6.setChecked(false);
+        if (binding.reportingCheckBox7.isChecked() == true) binding.reportingCheckBox7.setChecked(false);
+        if (binding.reportingCheckBox8.isChecked() == true) binding.reportingCheckBox8.setChecked(false);
+        CheckboxCounterTracker = 0;
+
+    }
+
 
     /**
      * Manipulates the map once available.
