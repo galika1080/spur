@@ -812,7 +812,8 @@
                 android:layout_marginTop="6dp"
                 app:icon="@drawable/funkycarpet"
                 android:text="Food"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
 
             <CheckBox
                 android:id="@+id/reporting_checkBox2"
@@ -822,7 +823,8 @@
                 android:layout_column="0"
                 android:layout_marginTop="6dp"
                 android:text="Shopping"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
 
             <CheckBox
                 android:id="@+id/reporting_checkBox3"
@@ -832,7 +834,8 @@
                 android:layout_column="0"
                 android:layout_marginTop="6dp"
                 android:text="Activism"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
 
             <CheckBox
                 android:id="@+id/reporting_checkBox4"
@@ -842,7 +845,8 @@
                 android:layout_column="0"
                 android:layout_marginTop="6dp"
                 android:text="Social"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
 
             <CheckBox
                 android:id="@+id/reporting_checkBox5"
@@ -852,7 +856,8 @@
                 android:layout_column="1"
                 android:layout_marginTop="6dp"
                 android:text="Religion"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
 
             <CheckBox
                 android:id="@+id/reporting_checkBox6"
@@ -862,7 +867,8 @@
                 android:layout_column="1"
                 android:layout_marginTop="6dp"
                 android:text="Professional"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
 
             <CheckBox
                 android:id="@+id/reporting_checkBox7"
@@ -872,7 +878,8 @@
                 android:layout_column="1"
                 android:layout_marginTop="6dp"
                 android:text="Performance"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
 
             <CheckBox
                 android:id="@+id/reporting_checkBox8"
@@ -882,7 +889,8 @@
                 android:layout_column="1"
                 android:layout_marginTop="6dp"
                 android:text="Miscellaneous"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
         </GridLayout>
 
         <TextView

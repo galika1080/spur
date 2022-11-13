@@ -1,5 +1,7 @@
 package com.globalgang.spur;
 
+import static com.globalgang.spur.BuildConfig.DEBUG;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
@@ -23,11 +25,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.CompoundButton;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,6 +64,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // one boolean variable to check whether all the text fields in Reporting Screen
     // are filled by the user, properly or not.
     boolean isAllFieldsCheckedReporting = false;
+    // one boolean variable to check whether all the tags in Reporting Screen
+    // are filled by the user, properly or not.
+    boolean isAllTagsCheckedReporting = false;
+
+    private int CheckboxCounterTracker = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,23 +179,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             updateVisibility();
         });
 
-        /*
-        //clicking on submit button on report screen take you back to the main map screen
-        binding.reportingSubmitButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                currentState = AppState.FullscreenMap;
-                updateVisibility();
-            }
-        });
-         */
 
+        //clicking on submit button on report screen take you back to the main map screen
+        //if the form has been filled properly
         binding.reportingSubmitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 isAllFieldsCheckedReporting = CheckAllFields();
-
-                if (isAllFieldsCheckedReporting) {
+                isAllTagsCheckedReporting = CheckAllTags();
+                if (isAllFieldsCheckedReporting && isAllTagsCheckedReporting) {
                     currentState = AppState.FullscreenMap;
                     updateVisibility();
                 }
@@ -288,6 +291,72 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return true;
     }
 
+    private boolean CheckAllTags() {
+
+        if(CheckboxCounterTracker > 0 && CheckboxCounterTracker <4){
+            return true;
+        } else {
+            Toast.makeText(this,CheckboxCounterTracker + "No of Tags not within valid range" ,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+    }
+
+    private void isCheckedOrNot(boolean isChecked) {
+        if (isChecked) {
+            CheckboxCounterTracker++;
+        }
+        else {
+            if (CheckboxCounterTracker > 0) {
+                CheckboxCounterTracker--;
+            }
+        }
+        //System.out.println(CheckboxCounterTracker);
+    }
+
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.reporting_checkBox1:
+                isCheckedOrNot(checked);
+                break;
+
+            case R.id.reporting_checkBox2:
+                isCheckedOrNot(checked);
+                break;
+
+
+            case R.id.reporting_checkBox3:
+                isCheckedOrNot(checked);
+                break;
+
+
+            case R.id.reporting_checkBox4:
+                isCheckedOrNot(checked);
+                break;
+
+            case R.id.reporting_checkBox5:
+                isCheckedOrNot(checked);
+                break;
+
+            case R.id.reporting_checkBox6:
+                isCheckedOrNot(checked);
+                break;
+
+            case R.id.reporting_checkBox7:
+                isCheckedOrNot(checked);
+                break;
+
+            case R.id.reporting_checkBox8:
+                isCheckedOrNot(checked);
+                break;
+
+        }
+    }
 
     /**
      * Manipulates the map once available.
