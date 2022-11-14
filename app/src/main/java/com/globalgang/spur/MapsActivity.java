@@ -755,8 +755,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Event exampleEvent2 = new Event();
         exampleEvent2.author = "anotherUser";
         exampleEvent2.description = "Tons of food!";
-        exampleEvent1.writtenLocation = "South of the Union, north quad";
+        exampleEvent2.writtenLocation = "South of the Union, north quad";
         exampleEvent2.title = "Bake sale on the quad";
+        exampleEvent2.primaryTag = "Food";
         exampleEvent2.latitude = 40.108308; exampleEvent2.longitude = -88.227017;
 
         googleMap.setMyLocationEnabled(true);
