@@ -1,7 +1,10 @@
 package com.globalgang.spur;
 
+import static com.globalgang.spur.BuildConfig.DEBUG;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.res.ColorStateList;
@@ -11,6 +14,8 @@ import android.os.Bundle;
 import com.globalgang.spur.eventdb.AppDatabase;
 import com.globalgang.spur.eventdb.Event;
 import com.globalgang.spur.eventdb.EventDao;
+import com.globalgang.spur.eventdb.User;
+import com.globalgang.spur.eventdb.UserDao;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,11 +29,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.CompoundButton;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,6 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private EventDao events;
     private List<Marker> eventMarkers;
 
+    private UserDao users;
+
     private enum AppState {
         FullscreenMap,
         EventDetails,
@@ -56,6 +67,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //initialising the state to FullScreenMap (filters + bottom bav bar)
     private AppState currentState = AppState.FullscreenMap;
 
+    // one boolean variable to check whether all the text fields in Reporting Screen
+    // are filled by the user, properly or not.
+    boolean isAllFieldsCheckedReporting = false;
+    // one boolean variable to check whether all the tags in Reporting Screen
+    // are filled by the user, properly or not.
+    boolean isAllTagsCheckedReporting = false;
+
+    private int CheckboxCounterTracker = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "spur-db").allowMainThreadQueries().build();
         events = db.eventDao();
+//        users = db.userDao();
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -75,11 +96,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Obtain the dropdown id for reporting screen
         Spinner spinnerTags = findViewById(R.id.reporting_spinner_for_primary_tag_dropdown);
-        ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this, R.array.tags_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerTags.setAdapter(adapter);
 
+        //init user profile
+        //populateUserInfo("rick");
+
         // filter buttons change marker visibility
+
         binding.btnFilterFood.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
@@ -193,7 +218,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
         // report event button
         binding.btnAddEvent.setOnClickListener((View v) -> {
             currentState = AppState.ReportPopup;
@@ -202,6 +226,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // yes and no buttons on "heads up, nearby events" popup
         binding.popupButtonYes.setOnClickListener((View v) -> {
+            onClear();
             currentState = AppState.Reporting; // @TODO: add layout for reporting
             updateVisibility();
         });
@@ -213,13 +238,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //clicking on submit button on report screen take you back to the main map screen
         //@TODO: clicking on submit button should take to event screen
+        //if the form has been filled properly
         binding.reportingSubmitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                currentState = AppState.FullscreenMap;
-                updateVisibility();
+                isAllFieldsCheckedReporting = CheckAllFields();
+                isAllTagsCheckedReporting = CheckAllTags();
+                if (isAllFieldsCheckedReporting && isAllTagsCheckedReporting) {
+                    currentState = AppState.FullscreenMap;
+                    updateVisibility();
+                }
             }
         });
+
+//        //clicking on confirm button should add points to user
+//        binding.confirmButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                addPoints("rick", 10);
+//                populateUserInfo("rick");
+//                String reporterId = binding.reporterId.getText().toString();
+//                addPoints(reporterId, 5);
+//            }
+//        });
+//
+//        //clicking on refute button should add points to user
+//        binding.refuteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                addPoints("rick", 10);
+//                populateUserInfo("rick");
+//                String reporterId = binding.reporterId.getText().toString();
+//                addPoints(reporterId, -5);
+//
+//            }
+//        });
 
         //clicking on profile button will take you to profile screen
         //@TODO: finish this
@@ -262,7 +315,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.reportPopup.setVisibility(View.GONE);
         }
 
-        if(currentState == AppState.Reporting) {
+        if (currentState == AppState.Reporting) {
             binding.reportingPrimaryLL.setVisibility(View.VISIBLE);
             binding.filterScrollView.setVisibility(View.GONE);
             binding.navi.setVisibility(View.GONE);
@@ -271,18 +324,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.reportingPrimaryLL.setVisibility(View.GONE);
         }
 
-        // @TODO: move profile.xml code to activity_maps.xml and set visibility
-        //update to profile view
-        if(currentState == AppState.ProfileView) {
-            //profile state, show layout as visible
-
+        // update to profile view
+        if (currentState == AppState.ProfileView) {
+            // profile state, show layout as visible
+            binding.profileView.setVisibility(View.VISIBLE);
+        } else {
+            binding.profileView.setVisibility(View.GONE);
         }
 
         // @TODO: move points_popup_display.xml code to activity_maps.xml and set visibility
-        if(currentState == AppState.PointsPopup) {
+        if (currentState == AppState.PointsPopup) {
             //popup describing points system (should popup evertime user logs in?)
         }
-
     }
 
     private void addEvent(Event e) {
@@ -319,7 +372,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag1.setBackgroundColor(getColor(R.color.shopping));
         } else if (e.primaryTag == "Professional") {
             binding.tag1.setText(e.primaryTag);
-            binding.tag1.setIcon(getDrawable(R.drawable.ic_professional));
+            binding.tag1.setIcon(getDrawable(R.drawable.ic_shopping));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag1.setBackgroundColor(getColor(R.color.professional));
         } else if (e.primaryTag == "Performance") {
@@ -363,7 +416,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag2.setBackgroundColor(getColor(R.color.shopping));
         } else if (e.secondaryTag == "Professional") {
             binding.tag2.setText(e.secondaryTag);
-            binding.tag2.setIcon(getDrawable(R.drawable.ic_professional));
+            binding.tag2.setIcon(getDrawable(R.drawable.ic_shopping));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag2.setBackgroundColor(getColor(R.color.professional));
         } else if (e.secondaryTag == "Performance") {
@@ -407,7 +460,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag3.setBackgroundColor(getColor(R.color.shopping));
         } else if (e.tertiaryTag == "Professional") {
             binding.tag3.setText(e.tertiaryTag);
-            binding.tag3.setIcon(getDrawable(R.drawable.ic_professional));
+            binding.tag3.setIcon(getDrawable(R.drawable.ic_shopping));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag3.setBackgroundColor(getColor(R.color.professional));
         } else if (e.tertiaryTag == "Performance") {
@@ -451,6 +504,130 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         eventMarker.setTag(id);
         eventMarkers.add(eventMarker);
     }
+
+    private boolean CheckAllFields() {
+        if (binding.reportingEventNameTextInput.length() == 0) {
+            binding.reportingEventNameTextInput.setError("Event Name is required");
+            return false;
+        }
+
+        if (binding.reportingEventDescriptionTextInput.length() == 0) {
+            binding.reportingEventDescriptionTextInput.setError("Event Description is required");
+            return false;
+        }
+
+        if (binding.reportingLocationTextInput.length() == 0) {
+            binding.reportingLocationTextInput.setError("Location is required");
+            return false;
+        }
+
+        // after all validation return true.
+        return true;
+    }
+
+    private boolean CheckAllTags() {
+
+        if(CheckboxCounterTracker > 0 && CheckboxCounterTracker <4){
+            return true;
+        } else {
+            Toast.makeText(this,CheckboxCounterTracker + " No of Tags not within valid range" ,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    private void isCheckedOrNot(boolean isChecked) {
+        if (isChecked) {
+            CheckboxCounterTracker++;
+        }
+        else {
+            if (CheckboxCounterTracker > 0) {
+                CheckboxCounterTracker--;
+            }
+        }
+        System.out.println(CheckboxCounterTracker);
+    }
+
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.reporting_checkBox1:
+                isCheckedOrNot(checked);
+                break;
+
+            case R.id.reporting_checkBox2:
+                isCheckedOrNot(checked);
+                break;
+
+
+            case R.id.reporting_checkBox3:
+                isCheckedOrNot(checked);
+                break;
+
+
+            case R.id.reporting_checkBox4:
+                isCheckedOrNot(checked);
+                break;
+
+            case R.id.reporting_checkBox5:
+                isCheckedOrNot(checked);
+                break;
+
+            case R.id.reporting_checkBox6:
+                isCheckedOrNot(checked);
+                break;
+
+            case R.id.reporting_checkBox7:
+                isCheckedOrNot(checked);
+                break;
+
+            case R.id.reporting_checkBox8:
+                isCheckedOrNot(checked);
+                break;
+
+        }
+    }
+
+//    private void populateUserInfo(String userId){
+//        User u = new User();
+//        u = users.getUserById(userId);
+//        binding.username.setText(u.userId);
+//        binding.pointsField.setText(u.points);
+//
+//        //TODO: LEVEL, PROGRESS BAR
+//    }
+
+//    private void addUser(User u) {
+//        users.insertUser(u);
+//    }
+
+//    public void addPoints(String userId, int pts){
+//        User user = users.getUserById(userId);
+//        int newPts = user.points + pts;
+//        users.updatePoints(userId, newPts);
+//    }
+
+    private void onClear()
+    {
+
+        if (binding.reportingEventNameTextInput != null) binding.reportingEventNameTextInput.setText("");
+        if (binding.reportingEventDescriptionTextInput != null) binding.reportingEventDescriptionTextInput.setText("");
+        if (binding.reportingLocationTextInput != null) binding.reportingLocationTextInput.setText("");
+        if (binding.reportingCheckBox1.isChecked() == true) binding.reportingCheckBox1.setChecked(false);
+        if (binding.reportingCheckBox2.isChecked() == true) binding.reportingCheckBox2.setChecked(false);
+        if (binding.reportingCheckBox3.isChecked() == true) binding.reportingCheckBox3.setChecked(false);
+        if (binding.reportingCheckBox4.isChecked() == true) binding.reportingCheckBox4.setChecked(false);
+        if (binding.reportingCheckBox5.isChecked() == true) binding.reportingCheckBox5.setChecked(false);
+        if (binding.reportingCheckBox6.isChecked() == true) binding.reportingCheckBox6.setChecked(false);
+        if (binding.reportingCheckBox7.isChecked() == true) binding.reportingCheckBox7.setChecked(false);
+        if (binding.reportingCheckBox8.isChecked() == true) binding.reportingCheckBox8.setChecked(false);
+        CheckboxCounterTracker = 0;
+
+    }
+
 
     /**
      * Manipulates the map once available.
