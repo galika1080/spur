@@ -83,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "spur-db").allowMainThreadQueries().build();
         events = db.eventDao();
-        users = db.userDao();
+//        users = db.userDao();
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -100,7 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         spinnerTags.setAdapter(adapter);
 
         //init user profile
-        populateUserInfo("rick");
+//        populateUserInfo("rick");
 
         // @TODO: change this, the social button shouldn't show the event details popup
         binding.btnFilterFood.setOnClickListener((View v) -> {
@@ -203,28 +203,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        //clicking on confirm button should add points to user
-        binding.confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addPoints("rick", 10);
-                populateUserInfo("rick");
-                String reporterId = binding.reporterId.getText().toString();
-                addPoints(reporterId, 5);
-            }
-        });
-
-        //clicking on refute button should add points to user
-        binding.refuteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addPoints("rick", 10);
-                populateUserInfo("rick");
-                String reporterId = binding.reporterId.getText().toString();
-                addPoints(reporterId, -5);
-
-            }
-        });
+//        //clicking on confirm button should add points to user
+//        binding.confirmButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                addPoints("rick", 10);
+//                populateUserInfo("rick");
+//                String reporterId = binding.reporterId.getText().toString();
+//                addPoints(reporterId, 5);
+//            }
+//        });
+//
+//        //clicking on refute button should add points to user
+//        binding.refuteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                addPoints("rick", 10);
+//                populateUserInfo("rick");
+//                String reporterId = binding.reporterId.getText().toString();
+//                addPoints(reporterId, -5);
+//
+//            }
+//        });
 
         //clicking on profile button will take you to profile screen
         binding.profileButton.setOnClickListener(new View.OnClickListener(){
@@ -388,24 +388,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void populateUserInfo(String userId){
-        User u = new User();
-        u = users.getUserById(userId);
-        binding.username.setText(u.userId);
-        binding.pointsField.setText(u.points);
+//    private void populateUserInfo(String userId){
+//        User u = new User();
+//        u = users.getUserById(userId);
+//        binding.username.setText(u.userId);
+//        binding.pointsField.setText(u.points);
+//
+//        //TODO: LEVEL, PROGRESS BAR
+//    }
 
-        //TODO: LEVEL, PROGRESS BAR
-    }
+//    private void addUser(User u) {
+//        users.insertUser(u);
+//    }
 
-    private void addUser(User u) {
-        users.insertUser(u);
-    }
-
-    public void addPoints(String userId, int pts){
-        User user = users.getUserById(userId);
-        int newPts = user.points + pts;
-        users.updatePoints(userId, newPts);
-    }
+//    public void addPoints(String userId, int pts){
+//        User user = users.getUserById(userId);
+//        int newPts = user.points + pts;
+//        users.updatePoints(userId, newPts);
+//    }
 
     private void onClear()
     {
