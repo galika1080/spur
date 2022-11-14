@@ -38,6 +38,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //initialising the state to FullScreenMap (filters + bottom bav bar)
     private AppState currentState = AppState.FullscreenMap;
+    private boolean seen_points_popup = false;
 
     // one boolean variable to check whether all the text fields in Reporting Screen
     // are filled by the user, properly or not.
@@ -140,6 +142,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerTags.setAdapter(adapter);
+
 
         //init user profile
         //populateUserInfo("rick");
@@ -262,6 +265,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+
+        //Change No. Yes and No. No
+        int myPoints = 1;
+        TextView no_confirmation = findViewById(R.id.event_num_yes);
+        no_confirmation.setText(Integer.toString(myPoints));
+
+        // @TODO: change this, the social button shouldn't show the event details popup
+        binding.btnFilterSocial.setOnClickListener((View v) -> {
+            if (!seen_points_popup) {
+                currentState = AppState.PointsPopup;
+            }
+            else {
+                currentState = AppState.EventDetails;
+            }
+            updateVisibility();
+        });
+
+        // got it button
+        /*
+        * I'm thinking that maybe when you click on event details it should show the points popup
+        * for the first time (case 1)
+        * or
+        * it could be the first screen when you open the app (case 2)
+        */
+        binding.gotItButton.setOnClickListener((View v) -> { // case 1
+           currentState = AppState.EventDetails;
+           updateVisibility();
+        });
+
+
 
         // report event button
         binding.btnAddEvent.setOnClickListener((View v) -> {
@@ -386,6 +419,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.reportingPrimaryLL.setVisibility(View.GONE);
         }
 
+<<<<<<< HEAD
         // update to profile view
         if (currentState == AppState.ProfileView) {
             // profile state, show layout as visible
@@ -399,6 +433,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (currentState == AppState.PointsPopup) {
             //popup describing points system (should popup evertime user logs in?)
         }
+=======
+        if (currentState == AppState.PointsPopup) {
+            binding.pointsPopup.setVisibility(View.VISIBLE);
+        } else {
+            binding.pointsPopup.setVisibility(View.GONE);
+        }
+
+>>>>>>> Lyla
     }
 
     private void addEvent(Event e) {
