@@ -673,7 +673,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="User 131"
+                    android:text="marv"
                     android:textColor="#757474" />
 
                 <com.google.android.material.button.MaterialButton
@@ -930,7 +930,7 @@
 
     <!--View Profile starts from here-->
     <RelativeLayout
-        android:id="@+id/middle"
+        android:id="@+id/profileView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp">

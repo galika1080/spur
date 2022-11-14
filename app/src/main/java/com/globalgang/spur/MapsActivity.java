@@ -12,6 +12,8 @@ import android.os.Bundle;
 import com.globalgang.spur.eventdb.AppDatabase;
 import com.globalgang.spur.eventdb.Event;
 import com.globalgang.spur.eventdb.EventDao;
+import com.globalgang.spur.eventdb.User;
+import com.globalgang.spur.eventdb.UserDao;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -50,6 +52,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private EventDao events;
     private List<Marker> eventMarkers;
 
+    private UserDao users;
+
     private enum AppState {
         FullscreenMap,
         EventDetails,
@@ -78,6 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "spur-db").allowMainThreadQueries().build();
         events = db.eventDao();
+        users = db.userDao();
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -161,7 +166,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
         // report event button
         binding.btnAddEvent.setOnClickListener((View v) -> {
             currentState = AppState.ReportPopup;
@@ -195,6 +199,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        //clicking on confirm button should add points to user
+        binding.confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addPoints("rick", 10);
+                String reporterId = binding.reporterId.getText().toString();
+                addPoints(reporterId, 5);
+            }
+        });
+
+        //clicking on refute button should add points to user
+        binding.refuteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addPoints("rick", 10);
+                String reporterId = binding.reporterId.getText().toString();
+                addPoints(reporterId, -5);
+            }
+        });
 
         //clicking on profile button will take you to profile screen
         binding.profileButton.setOnClickListener(new View.OnClickListener(){
@@ -239,9 +262,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //update to profile view
         if(currentState == AppState.ProfileView) {
             //profile state, show layout as visible
-
+            binding.profileView.setVisibility(View.VISIBLE);
         }
-
+        else{
+            binding.profileView.setVisibility(View.GONE);
+        }
     }
 
     private void addEvent(Event e) {
@@ -300,7 +325,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(this,CheckboxCounterTracker + " No of Tags not within valid range" ,Toast.LENGTH_SHORT).show();
             return false;
         }
-
     }
 
     private void isCheckedOrNot(boolean isChecked) {
@@ -357,6 +381,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
 
         }
+    }
+
+    private void addUser(User u) {
+        users.insertUser(u);
+    }
+
+    public void addPoints(String userId, int pts){
+        User user = users.getUserById(userId);
+        int newPts = user.points + pts;
+        users.updatePoints(userId, newPts);
     }
 
     private void onClear()
