@@ -29,9 +29,9 @@
     <string name="popup_event_dist">0.00 mi</string>
     <string name="points_popup_title">Points System Overview</string>
     <string name="points_popup_explanation">Earn points by being active in the app</string>
-    <string name="points_daily">+1 for daily check-in</string>
     <string name="points_confirm_deny">+10 for confirming/denying existing events</string>
-    <string name="points_adding_event">+70 for adding an event with 2+ confirmations</string>
+    <string name="points_adding_event">+50 for adding an event</string>
+    <string name="points_event_confirmed">+5 for every confirmation your event gets</string>
     <string name="points_understood">Got it!</string>
 
     <string name="location_field">Location:\ </string>

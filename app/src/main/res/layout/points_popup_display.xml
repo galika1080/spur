@@ -33,6 +33,7 @@
             app:iconPadding="0dp"
             app:iconSize="25dp"
             app:iconTint="@color/black" />
+
         <!--
         <TextView
             android:id="@+id/points_title"
@@ -45,6 +46,9 @@
             android:text="@string/points_popup_title" />
 -->
         <!-- Existing Event Subtitle -->
+
+
+
 
         <!-- +1 point description -->
         <TextView
@@ -65,10 +69,11 @@
             android:layout_below="@id/points_popup_subtitle_1"
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
-            android:text="@string/points_daily"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:text="@string/points_event_confirmed" />
+
 
         <!-- +10 point description -->
         <Button
