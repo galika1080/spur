@@ -430,7 +430,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag1.setBackgroundColor(getColor(R.color.shopping));
         } else if (e.primaryTag.equals("Professional")) {
             binding.tag1.setText(e.primaryTag);
-            binding.tag1.setIcon(getDrawable(R.drawable.ic_shopping));
+            binding.tag1.setIcon(getDrawable(R.drawable.ic_professional));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag1.setBackgroundColor(getColor(R.color.professional));
         } else if (e.primaryTag.equals("Performance")) {
@@ -476,7 +476,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag2.setBackgroundColor(getColor(R.color.shopping));
         } else if (e.secondaryTag.equals("Professional")) {
             binding.tag2.setText(e.secondaryTag);
-            binding.tag2.setIcon(getDrawable(R.drawable.ic_shopping));
+            binding.tag2.setIcon(getDrawable(R.drawable.ic_professional));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag2.setBackgroundColor(getColor(R.color.professional));
         } else if (e.secondaryTag.equals("Performance")) {
@@ -522,7 +522,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag3.setBackgroundColor(getColor(R.color.shopping));
         } else if (e.tertiaryTag.equals("Professional")) {
             binding.tag3.setText(e.tertiaryTag);
-            binding.tag3.setIcon(getDrawable(R.drawable.ic_shopping));
+            binding.tag3.setIcon(getDrawable(R.drawable.ic_professional));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag3.setBackgroundColor(getColor(R.color.professional));
         } else if (e.tertiaryTag.equals("Performance")) {
