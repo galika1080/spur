@@ -55,6 +55,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private UserDao users;
 
+    private String USER_NAME = "Rick";
+
     private enum AppState {
         FullscreenMap,
         EventDetails,
@@ -85,6 +87,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventMarkers = new ArrayList<>();
+
+        User primaryUser = new User();
+        primaryUser
+        users.insertUser(primaryUser);
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "spur-db").allowMainThreadQueries().build();
@@ -392,10 +398,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.numLikes = 0;
             e.primaryTag = binding.reportingSpinnerForPrimaryTagDropdown.getSelectedItem().toString();
 
+            e.author = USER_NAME;
+
+            User reporter = users.getUserById(USER_NAME);
+            e.authorPoints = reporter.points;
+
             // @TODO: Set these fields
             //e.secondaryTag = binding.;
             //e.tertiaryTag =
-            //e.author = ;
             //e.authorPoints =;
 
             addEvent(e);
