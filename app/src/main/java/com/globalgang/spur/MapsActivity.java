@@ -4,6 +4,7 @@ import static com.globalgang.spur.BuildConfig.DEBUG;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.FragmentActivity;
 
 import android.opengl.Visibility;
@@ -97,6 +98,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this, R.array.tags_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerTags.setAdapter(adapter);
+
+        //init user profile
+        populateUserInfo("rick");
 
         // @TODO: change this, the social button shouldn't show the event details popup
         binding.btnFilterFood.setOnClickListener((View v) -> {
@@ -204,6 +208,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 addPoints("rick", 10);
+                populateUserInfo("rick");
                 String reporterId = binding.reporterId.getText().toString();
                 addPoints(reporterId, 5);
             }
@@ -214,8 +219,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 addPoints("rick", 10);
+                populateUserInfo("rick");
                 String reporterId = binding.reporterId.getText().toString();
                 addPoints(reporterId, -5);
+
             }
         });
 
@@ -381,6 +388,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
 
         }
+    }
+
+    private void populateUserInfo(String userId){
+        User u = new User();
+        u = users.getUserById(userId);
+        binding.username.setText(u.userId);
+        binding.pointsField.setText(u.points);
+
+        //TODO: LEVEL, PROGRESS BAR
     }
 
     private void addUser(User u) {
