@@ -295,6 +295,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.title = binding.reportingEventNameTextInput.getText().toString();
             e.description = binding.reportingEventDescriptionTextInput.getText().toString();
 
+            e.primaryTag = binding.reportingSpinnerForPrimaryTagDropdown.getSelectedItem().toString();
+
             addEvent(e);
 
             currentState = AppState.EventDetails;
