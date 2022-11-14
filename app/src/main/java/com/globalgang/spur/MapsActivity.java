@@ -234,6 +234,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 updateVisibility();
             }
         });
+
+        //clicking on event button will take you to map screen
+        binding.eventButton.setOnClickListener((View v) -> {
+            currentState = AppState.FullscreenMap;
+            updateVisibility();
+        });
     }
 
     private void updateVisibility() {
