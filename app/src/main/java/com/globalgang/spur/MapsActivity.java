@@ -146,11 +146,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterFood.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == "Food") {
+                if (event.primaryTag.equals("Food")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.secondaryTag == "Food") {
+                } else if (event.secondaryTag.equals("Food")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.tertiaryTag == "Food") {
+                } else if (event.tertiaryTag.equals("Food")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
                     eventMarkers.get(i).setVisible(false);
@@ -160,11 +160,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterSocial.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == "Social") {
+                if (event.primaryTag.equals("Social")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.secondaryTag == "Social") {
+                } else if (event.secondaryTag.equals("Social")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.tertiaryTag == "Social") {
+                } else if (event.tertiaryTag.equals("Social")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
                     eventMarkers.get(i).setVisible(false);
@@ -174,11 +174,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterShopping.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == "Shopping") {
+                if (event.primaryTag.equals("Shopping")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.secondaryTag == "Shopping") {
+                } else if (event.secondaryTag.equals("Shopping")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.tertiaryTag == "Shopping") {
+                } else if (event.tertiaryTag.equals("Shopping")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
                     eventMarkers.get(i).setVisible(false);
@@ -188,11 +188,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterProfessional.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == "Professional") {
+                if (event.primaryTag.equals("Professional")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.secondaryTag == "Professional") {
+                } else if (event.secondaryTag.equals("Professional")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.tertiaryTag == "Professional") {
+                } else if (event.tertiaryTag.equals("Professional")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
                     eventMarkers.get(i).setVisible(false);
@@ -202,11 +202,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterPerformance.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == "Performance") {
+                if (event.primaryTag.equals("Performance")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.secondaryTag == "Performance") {
+                } else if (event.secondaryTag.equals("Performance")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.tertiaryTag == "Performance") {
+                } else if (event.tertiaryTag.equals("Performance")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
                     eventMarkers.get(i).setVisible(false);
@@ -216,11 +216,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterActivism.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == "Activism") {
+                if (event.primaryTag.equals("Activism")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.secondaryTag == "Activism") {
+                } else if (event.secondaryTag.equals("Activism")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.tertiaryTag == "Activism") {
+                } else if (event.tertiaryTag.equals("Activism")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
                     eventMarkers.get(i).setVisible(false);
@@ -230,11 +230,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterReligion.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == "Religion") {
+                if (event.primaryTag.equals("Religion")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.secondaryTag == "Religion") {
+                } else if (event.secondaryTag.equals("Religion")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.tertiaryTag == "Religion") {
+                } else if (event.tertiaryTag.equals("Religion")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
                     eventMarkers.get(i).setVisible(false);
@@ -244,11 +244,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterMisc.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == "Misc") {
+                if (event.primaryTag.equals("Misc")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.secondaryTag == "Misc") {
+                } else if (event.secondaryTag.equals("Misc")) {
                     eventMarkers.get(i).setVisible(true);
-                } else if (event.tertiaryTag == "Misc") {
+                } else if (event.tertiaryTag.equals("Misc")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
                     eventMarkers.get(i).setVisible(false);
@@ -401,43 +401,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.reporterId.setText(e.author);
         binding.reporterPoints.setText(Integer.toString(e.authorPoints));
 
+        binding.tag1.setVisibility(View.VISIBLE);
+        binding.tag2.setVisibility(View.VISIBLE);
+        binding.tag3.setVisibility(View.VISIBLE);
+
         //fixing tag display (top 3 tags)
-        if (e.primaryTag == "Food") {
+        if (e.primaryTag.equals("Food")) {
             binding.tag1.setText(e.primaryTag);
             binding.tag1.setIcon(getDrawable(R.drawable.ic_food));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.food)));
             binding.tag1.setBackgroundColor(getColor(R.color.food));
-        } else if (e.primaryTag == "Social") {
+        } else if (e.primaryTag.equals("Social")) {
             binding.tag1.setText(e.primaryTag);
             binding.tag1.setIcon(getDrawable(R.drawable.ic_social));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.social)));
             binding.tag1.setBackgroundColor(getColor(R.color.social));
-        } else if (e.primaryTag == "Shopping") {
+        } else if (e.primaryTag.equals("Shopping")) {
             binding.tag1.setText(e.primaryTag);
             binding.tag1.setIcon(getDrawable(R.drawable.ic_shopping));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.shopping)));
             binding.tag1.setBackgroundColor(getColor(R.color.shopping));
-        } else if (e.primaryTag == "Professional") {
+        } else if (e.primaryTag.equals("Professional")) {
             binding.tag1.setText(e.primaryTag);
             binding.tag1.setIcon(getDrawable(R.drawable.ic_shopping));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag1.setBackgroundColor(getColor(R.color.professional));
-        } else if (e.primaryTag == "Performance") {
+        } else if (e.primaryTag.equals("Performance")) {
             binding.tag1.setText(e.primaryTag);
             binding.tag1.setIcon(getDrawable(R.drawable.ic_performance));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.performance)));
             binding.tag1.setBackgroundColor(getColor(R.color.performance));
-        } else if (e.primaryTag == "Activism") {
+        } else if (e.primaryTag.equals("Activism")) {
             binding.tag1.setText(e.primaryTag);
             binding.tag1.setIcon(getDrawable(R.drawable.ic_activism));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.activism)));
             binding.tag1.setBackgroundColor(getColor(R.color.activism));
-        } else if (e.primaryTag == "Religion") {
+        } else if (e.primaryTag.equals("Religion")) {
             binding.tag1.setText(e.primaryTag);
             binding.tag1.setIcon(getDrawable(R.drawable.ic_religion));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.religion)));
             binding.tag1.setBackgroundColor(getColor(R.color.religion));
-        } else if (e.primaryTag == "Misc") {
+        } else if (e.primaryTag.equals("Misc")) {
             binding.tag1.setText(e.primaryTag);
             binding.tag1.setIcon(getDrawable(R.drawable.ic_misc));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.misc)));
@@ -446,42 +450,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag1.setVisibility(View.GONE);
         }
 
-        if (e.secondaryTag == "Food") {
+        if (e.secondaryTag.equals("Food")) {
             binding.tag2.setText(e.secondaryTag);
             binding.tag2.setIcon(getDrawable(R.drawable.ic_food));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.food)));
             binding.tag2.setBackgroundColor(getColor(R.color.food));
-        } else if (e.secondaryTag == "Social") {
+        } else if (e.secondaryTag.equals("Social")) {
             binding.tag2.setText(e.secondaryTag);
             binding.tag2.setIcon(getDrawable(R.drawable.ic_social));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.social)));
             binding.tag2.setBackgroundColor(getColor(R.color.social));
-        } else if (e.secondaryTag == "Shopping") {
+        } else if (e.secondaryTag.equals("Shopping")) {
             binding.tag2.setText(e.secondaryTag);
             binding.tag2.setIcon(getDrawable(R.drawable.ic_shopping));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.shopping)));
             binding.tag2.setBackgroundColor(getColor(R.color.shopping));
-        } else if (e.secondaryTag == "Professional") {
+        } else if (e.secondaryTag.equals("Professional")) {
             binding.tag2.setText(e.secondaryTag);
             binding.tag2.setIcon(getDrawable(R.drawable.ic_shopping));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag2.setBackgroundColor(getColor(R.color.professional));
-        } else if (e.secondaryTag == "Performance") {
+        } else if (e.secondaryTag.equals("Performance")) {
             binding.tag2.setText(e.secondaryTag);
             binding.tag2.setIcon(getDrawable(R.drawable.ic_performance));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.performance)));
             binding.tag2.setBackgroundColor(getColor(R.color.performance));
-        } else if (e.secondaryTag == "Activism") {
+        } else if (e.secondaryTag.equals("Activism")) {
             binding.tag2.setText(e.secondaryTag);
             binding.tag2.setIcon(getDrawable(R.drawable.ic_activism));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.activism)));
             binding.tag2.setBackgroundColor(getColor(R.color.activism));
-        } else if (e.secondaryTag == "Religion") {
+        } else if (e.secondaryTag.equals("Religion")) {
             binding.tag2.setText(e.secondaryTag);
             binding.tag2.setIcon(getDrawable(R.drawable.ic_religion));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.religion)));
             binding.tag2.setBackgroundColor(getColor(R.color.religion));
-        } else if (e.secondaryTag == "Misc") {
+        } else if (e.secondaryTag.equals("Misc")) {
             binding.tag2.setText(e.secondaryTag);
             binding.tag2.setIcon(getDrawable(R.drawable.ic_misc));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.misc)));
@@ -490,42 +494,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag2.setVisibility(View.GONE);
         }
 
-        if (e.tertiaryTag == "Food") {
+        if (e.tertiaryTag.equals("Food")) {
             binding.tag3.setText(e.tertiaryTag);
             binding.tag3.setIcon(getDrawable(R.drawable.ic_food));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.food)));
             binding.tag3.setBackgroundColor(getColor(R.color.food));
-        } else if (e.tertiaryTag == "Social") {
+        } else if (e.tertiaryTag.equals("Social")) {
             binding.tag3.setText(e.tertiaryTag);
             binding.tag3.setIcon(getDrawable(R.drawable.ic_social));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.social)));
             binding.tag3.setBackgroundColor(getColor(R.color.social));
-        } else if (e.tertiaryTag == "Shopping") {
+        } else if (e.tertiaryTag.equals("Shopping")) {
             binding.tag3.setText(e.tertiaryTag);
             binding.tag3.setIcon(getDrawable(R.drawable.ic_shopping));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.shopping)));
             binding.tag3.setBackgroundColor(getColor(R.color.shopping));
-        } else if (e.tertiaryTag == "Professional") {
+        } else if (e.tertiaryTag.equals("Professional")) {
             binding.tag3.setText(e.tertiaryTag);
             binding.tag3.setIcon(getDrawable(R.drawable.ic_shopping));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag3.setBackgroundColor(getColor(R.color.professional));
-        } else if (e.tertiaryTag == "Performance") {
+        } else if (e.tertiaryTag.equals("Performance")) {
             binding.tag3.setText(e.tertiaryTag);
             binding.tag3.setIcon(getDrawable(R.drawable.ic_performance));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.performance)));
             binding.tag3.setBackgroundColor(getColor(R.color.performance));
-        } else if (e.tertiaryTag == "Activism") {
+        } else if (e.tertiaryTag.equals("Activism")) {
             binding.tag3.setText(e.tertiaryTag);
             binding.tag3.setIcon(getDrawable(R.drawable.ic_activism));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.activism)));
             binding.tag3.setBackgroundColor(getColor(R.color.activism));
-        } else if (e.tertiaryTag == "Religion") {
+        } else if (e.tertiaryTag.equals("Religion")) {
             binding.tag3.setText(e.tertiaryTag);
             binding.tag3.setIcon(getDrawable(R.drawable.ic_religion));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.religion)));
             binding.tag3.setBackgroundColor(getColor(R.color.religion));
-        } else if (e.tertiaryTag == "Misc") {
+        } else if (e.tertiaryTag.equals("Misc")) {
             binding.tag3.setText(e.tertiaryTag);
             binding.tag3.setIcon(getDrawable(R.drawable.ic_misc));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.misc)));
