@@ -1,14 +1,17 @@
 package com.globalgang.spur;
 
-import static com.globalgang.spur.BuildConfig.DEBUG;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.FragmentActivity;
 
+import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
-import android.opengl.Visibility;
+import android.Manifest;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import com.globalgang.spur.eventdb.AppDatabase;
@@ -25,26 +28,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.globalgang.spur.databinding.ActivityMapsBinding;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.util.Log;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.CompoundButton;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -64,6 +59,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         PointsPopup,
         ProfileView
     }
+
+    private double locLat = 0.0;
+    private double locLong = 0.0;
+
     //initialising the state to FullScreenMap (filters + bottom bav bar)
     private AppState currentState = AppState.FullscreenMap;
 
@@ -76,6 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private int CheckboxCounterTracker = 0;
 
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +93,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        ActivityResultLauncher<String[]> locationPermissionRequest =
+                registerForActivityResult(new ActivityResultContracts
+                                .RequestMultiplePermissions(), result -> {
+                            Boolean fineLocationGranted = result.getOrDefault(
+                                    Manifest.permission.ACCESS_FINE_LOCATION, false);
+                            Boolean coarseLocationGranted = result.getOrDefault(
+                                    Manifest.permission.ACCESS_COARSE_LOCATION,false);
+                            if (fineLocationGranted != null && fineLocationGranted) {
+                                // Precise location access granted.
+                            } else if (coarseLocationGranted != null && coarseLocationGranted) {
+                                // Only approximate location access granted.
+                            } else {
+                                // No location access granted.
+                            }
+                        }
+                );
+
+        locationPermissionRequest.launch(new String[] {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        });
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location loc) {
+                locLat = loc.getLatitude();
+                locLong = loc.getLongitude();
+
+                Log.wtf("Main", "Current location is " + locLat + ", " + locLong);
+            }
+        };
+
+        Location lastKnown = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        locLat = lastKnown.getLatitude();
+        locLong = lastKnown.getLongitude();
 
         //Obtain the dropdown id for reporting screen
         Spinner spinnerTags = findViewById(R.id.reporting_spinner_for_primary_tag_dropdown);
@@ -236,19 +274,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             updateVisibility();
         });
 
-        //clicking on submit button on report screen take you back to the main map screen
-        //@TODO: clicking on submit button should take to event screen
-        //if the form has been filled properly
-        binding.reportingSubmitButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                isAllFieldsCheckedReporting = CheckAllFields();
-                isAllTagsCheckedReporting = CheckAllTags();
-                if (isAllFieldsCheckedReporting && isAllTagsCheckedReporting) {
-                    currentState = AppState.FullscreenMap;
-                    updateVisibility();
-                }
+        binding.reportingSubmitButton.setOnClickListener((View v) -> {
+            isAllFieldsCheckedReporting = CheckAllFields();
+            isAllTagsCheckedReporting = CheckAllTags();
+            if (!isAllFieldsCheckedReporting || !isAllTagsCheckedReporting) {
+                return;
             }
+
+            Event e = new Event();
+            Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            locLat = loc.getLatitude();
+            locLong = loc.getLongitude();
+
+            e.latitude = locLat;
+            e.longitude = locLong;
+
+            e.title = binding.reportingEventNameTextInput.getText().toString();
+            e.description = binding.reportingEventDescriptionTextInput.getText().toString();
+
+            addEvent(e);
+
+            currentState = AppState.EventDetails;
+            updateVisibility();
         });
 
 //        //clicking on confirm button should add points to user
@@ -638,6 +685,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -678,6 +726,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent1.writtenLocation = "South of the Union, north quad";
         exampleEvent2.title = "Bake sale on the quad";
         exampleEvent2.latitude = 40.108308; exampleEvent2.longitude = -88.227017;
+
+        googleMap.setMyLocationEnabled(true);
 
         addEvent(exampleEvent1);
         addEvent(exampleEvent2);
