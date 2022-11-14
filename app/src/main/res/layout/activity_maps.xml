@@ -286,7 +286,7 @@
                 android:elevation="10dp"
                 android:text="Career"
                 android:textColor="@color/black"
-                app:icon="@drawable/briefcase"
+                app:icon="@drawable/ic_professional"
                 app:iconTint="@color/black" />
 
             <com.google.android.material.button.MaterialButton

@@ -9,6 +9,8 @@ import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.Manifest;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -40,6 +42,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -128,7 +131,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
 
-        Location lastKnown = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location lastKnown = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         locLat = lastKnown.getLatitude();
         locLong = lastKnown.getLongitude();
 
@@ -298,13 +301,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.writtenLocation = binding.reportingLocationTextInput.getText().toString();
             e.numDislikes = 0;
             e.numLikes = 0;
-            e.primaryTag = binding.reportingSpinnerForPrimaryTagDropdown.getTag().toString();
+            e.primaryTag = binding.reportingSpinnerForPrimaryTagDropdown.getSelectedItem().toString();
 
             // @TODO: Set these fields
             //e.secondaryTag = binding.;
             //e.tertiaryTag =
             //e.author = ;
             //e.authorPoints =;
+
             addEvent(e);
 
             currentState = AppState.EventDetails;
@@ -438,7 +442,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag1.setBackgroundColor(getColor(R.color.shopping));
         } else if (e.primaryTag.equals("Professional")) {
             binding.tag1.setText(e.primaryTag);
-            binding.tag1.setIcon(getDrawable(R.drawable.ic_shopping));
+            binding.tag1.setIcon(getDrawable(R.drawable.ic_professional));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag1.setBackgroundColor(getColor(R.color.professional));
         } else if (e.primaryTag.equals("Performance")) {
@@ -484,7 +488,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag2.setBackgroundColor(getColor(R.color.shopping));
         } else if (e.secondaryTag.equals("Professional")) {
             binding.tag2.setText(e.secondaryTag);
-            binding.tag2.setIcon(getDrawable(R.drawable.ic_shopping));
+            binding.tag2.setIcon(getDrawable(R.drawable.ic_professional));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag2.setBackgroundColor(getColor(R.color.professional));
         } else if (e.secondaryTag.equals("Performance")) {
@@ -530,7 +534,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag3.setBackgroundColor(getColor(R.color.shopping));
         } else if (e.tertiaryTag.equals("Professional")) {
             binding.tag3.setText(e.tertiaryTag);
-            binding.tag3.setIcon(getDrawable(R.drawable.ic_shopping));
+            binding.tag3.setIcon(getDrawable(R.drawable.ic_professional));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.professional)));
             binding.tag3.setBackgroundColor(getColor(R.color.professional));
         } else if (e.tertiaryTag.equals("Performance")) {
@@ -565,11 +569,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Event resolvedEvent = events.getByNameLocation(e.title, e.latitude, e.longitude);
         int id = resolvedEvent.id;
 
+        Map<String, String> tagToMarker = Map.of(
+                "Activism", "ic_marker__activism",
+                "Food", "ic_marker__food",
+                "Misc", "ic_marker__misc",
+                "Performance", "ic_marker__performance",
+                "Professional", "ic_marker__professional",
+                "Religion", "ic_marker__religion",
+                "Shopping", "ic_marker__shopping",
+                "Social", "ic_marker__social"
+        );
+
+        Log.wtf("Get tag", e.primaryTag);
+
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(tagToMarker.get(e.primaryTag), "drawable", getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, 85, 110, false);
+
         LatLng eventLoc = new LatLng(e.latitude, e.longitude);
         Marker eventMarker = mMap.addMarker(new MarkerOptions()
                 .position(eventLoc)
                 .title(e.title)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_food)));
+                .icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap)));
 
         eventMarker.setTag(id);
         eventMarkers.add(eventMarker);
@@ -747,8 +767,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Event exampleEvent2 = new Event();
         exampleEvent2.author = "anotherUser";
         exampleEvent2.description = "Tons of food!";
-        exampleEvent1.writtenLocation = "South of the Union, north quad";
+        exampleEvent2.writtenLocation = "South of the Union, north quad";
         exampleEvent2.title = "Bake sale on the quad";
+        exampleEvent2.primaryTag = "Food";
         exampleEvent2.latitude = 40.108308; exampleEvent2.longitude = -88.227017;
 
         googleMap.setMyLocationEnabled(true);
