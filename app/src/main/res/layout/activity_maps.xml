@@ -933,7 +933,8 @@
         android:id="@+id/profileView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="100dp"
+        android:visibility="gone">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/profilePic"

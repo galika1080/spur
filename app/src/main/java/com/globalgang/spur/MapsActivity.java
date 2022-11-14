@@ -265,13 +265,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.reportingPrimaryLL.setVisibility(View.GONE);
         }
 
-        // @TODO: move profile.xml code to activity_maps.xml and set visibility
-        //update to profile view
-        if(currentState == AppState.ProfileView) {
-            //profile state, show layout as visible
+        // update to profile view
+        if (currentState == AppState.ProfileView) {
+            // profile state, show layout as visible
             binding.profileView.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             binding.profileView.setVisibility(View.GONE);
         }
     }
