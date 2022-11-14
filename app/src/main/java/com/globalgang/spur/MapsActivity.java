@@ -352,7 +352,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.eventNumNo.setText(Integer.toString(e.numDislikes));
         binding.eventNumYes.setText(Integer.toString(e.numLikes));
         binding.reporterId.setText(e.author);
-        binding.reporterPoints.setText(e.authorPoints);
+        binding.reporterPoints.setText(Integer.toString(e.authorPoints));
 
         //fixing tag display (top 3 tags)
         if (e.primaryTag == "Food") {
@@ -664,11 +664,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Event exampleEvent1 = new Event();
         exampleEvent1.author = "userGuy123";
+        exampleEvent1.authorPoints = 344;
         exampleEvent1.description = "This is an event. You should pull up.";
         exampleEvent1.writtenLocation = "Fourth floor chemistry building!";
         exampleEvent1.title = "Super secret social stuff";
         exampleEvent1.latitude = 40.1074821; exampleEvent1.longitude = -88.2265963;
         exampleEvent1.primaryTag = "Social";
+        exampleEvent1.secondaryTag = "Food";
 
         Event exampleEvent2 = new Event();
         exampleEvent2.author = "anotherUser";
