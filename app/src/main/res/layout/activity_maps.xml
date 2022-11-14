@@ -3,56 +3,1099 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.Material3.Light">
+
+    <!--popup event XML details starts here-->
+    <RelativeLayout
+        android:id="@+id/report_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/border_box"
+        android:elevation="30dp"
+        android:padding="15dp"
+        android:visibility="gone">
+
+        <!-- Popup Title -->
+        <TextView
+            android:id="@+id/popup_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="@string/popup_title"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <!-- Existing Event Subtitle -->
+        <TextView
+            android:id="@+id/popup_subtitle_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_title"
+            android:layout_marginTop="10dp"
+            android:text="@string/popup_subtitle_1"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <!-- Existing Event 1 -->
+        <Button
+            android:id="@+id/popup_event_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_subtitle_1"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="@string/popup_event_1"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/event_dist_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_subtitle_1"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/grey"
+            android:gravity="right|center_vertical"
+            android:text="@string/popup_event_dist"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <!-- Existing Event 2 -->
+        <Button
+            android:id="@+id/popup_event_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_1"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="@string/popup_event_2"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/event_dist_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_1"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/grey"
+            android:gravity="right|center_vertical"
+            android:text="@string/popup_event_dist"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <!-- Existing Event 3 -->
+        <Button
+            android:id="@+id/popup_event_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_2"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="@string/popup_event_3"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/event_dist_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_2"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/grey"
+            android:gravity="right|center_vertical"
+            android:text="@string/popup_event_dist"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <!-- Existing Event 4 -->
+        <Button
+            android:id="@+id/popup_event_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_3"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="@string/popup_event_4"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/event_dist_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_3"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/grey"
+            android:gravity="right|center_vertical"
+            android:text="@string/popup_event_dist"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <!-- Existing Event 5 -->
+        <Button
+            android:id="@+id/popup_event_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_4"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="@string/popup_event_5"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/event_dist_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_4"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/grey"
+            android:gravity="right|center_vertical"
+            android:text="@string/popup_event_dist"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <!-- Confirmation Subtitle -->
+        <TextView
+            android:id="@+id/popup_subtitle_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_event_5"
+            android:layout_marginTop="10dp"
+            android:text="@string/popup_subtitle_2"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <!-- Yes button -->
+        <Button
+            android:id="@+id/popup_button_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_subtitle_2"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/green"
+            android:text="@string/popup_button_yes"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <!-- No button -->
+        <Button
+            android:id="@+id/popup_button_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_subtitle_2"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/popup_button_yes"
+            android:backgroundTint="@color/black"
+            android:text="@string/popup_button_no"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+    <!--popup event details ends here -->
+
+    <!--filter details start here -->
 
     <HorizontalScrollView
         android:id="@+id/filterScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/filter_linlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:background="#75C5C5C5"
+            android:orientation="horizontal"
+            android:paddingTop="2dp"
+            android:paddingBottom="3dp">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_social"
+                android:id="@+id/btn_filter_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/grey"
+                android:elevation="10dp"
+                android:text="All"
+                android:textColor="@color/black"
+                app:iconTint="@color/black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_filter_social"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/social"
+                android:elevation="10dp"
                 android:text="Social"
-                app:icon="@drawable/ic_social" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_social"
+                app:iconTint="@color/black" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_food"
+                android:id="@+id/btn_filter_food"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/food"
+                android:elevation="10dp"
                 android:text="Food"
-                app:icon="@drawable/ic_food" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_food"
+                app:iconTint="@color/black" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_shopping"
+                android:id="@+id/btn_filter_shopping"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/shopping"
+                android:elevation="10dp"
                 android:text="Shopping"
-                app:icon="@drawable/ic_shopping" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_shopping"
+                app:iconTint="@color/black" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_religion"
+                android:id="@+id/btn_filter_professional"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/professional"
+                android:elevation="10dp"
+                android:text="Career"
+                android:textColor="@color/black"
+                app:icon="@drawable/briefcase"
+                app:iconTint="@color/black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_filter_religion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/religion"
+                android:elevation="10dp"
                 android:text="Religion"
-                app:icon="@drawable/ic_religion" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_religion"
+                app:iconTint="@color/black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_filter_performance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/performance"
+                android:elevation="10dp"
+                android:text="Performance"
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_performance"
+                app:iconTint="@color/black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_filter_activism"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/activism"
+                android:elevation="10dp"
+                android:text="Activism"
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_activism"
+                app:iconTint="@color/black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_filter_misc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/misc"
+                android:elevation="10dp"
+                android:text="Miscellaneous"
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_misc"
+                app:iconTint="@color/black" />
 
         </LinearLayout>
     </HorizontalScrollView>
+    <!--filter details end here -->
+
+    <!--map XML can be seen here -->
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/filterScrollView"
         tools:context=".MapsActivity" />
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/navi"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Add event"
+        android:src="@drawable/ic_baseline_add_24" />
+
+    <LinearLayout
+        android:id="@+id/navi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:elevation="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/eventButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:text="Event" />
+
+        <Button
+            android:id="@+id/profileButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:text="Profile" />
+
+    </LinearLayout>
+
+    <!--Event Details LL starts from here-->
+    <LinearLayout
+        android:id="@+id/event_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/border_box"
+        android:elevation="20dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/event_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Event Name"
+            android:textColor="@color/black"
+            android:textSize="40sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tag_1"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/social"
+                android:clickable="false"
+                android:gravity="center"
+                android:text="Tag1"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/ic_social"
+                app:iconPadding="5dp"
+                app:iconSize="20dp"
+                app:iconTint="@color/black"
+                app:strokeColor="@color/social" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tag_2"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/food"
+                android:clickable="false"
+                android:gravity="center"
+                android:text="Tag2"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/ic_food"
+                app:iconPadding="5dp"
+                app:iconSize="20dp"
+                app:iconTint="@color/black"
+                app:strokeColor="@color/food" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tag_3"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/shopping"
+                android:clickable="false"
+                android:gravity="center"
+                android:text="Tag3"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/ic_shopping"
+                app:iconPadding="5dp"
+                app:iconSize="20dp"
+                app:iconTint="@color/black"
+                app:strokeColor="@color/shopping" />
+
+
+            <Button
+                android:id="@+id/distance_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="@color/white"
+                android:clickable="false"
+                android:gravity="center_horizontal"
+                android:outlineProvider="background"
+                android:text="0.00 mi"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/event_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Event description. Event description. Event description. Event description. Event description. Event description. Event description. Event ."
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Location: "
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/event_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Siebel Room 1213"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="340dp"
+            android:layout_height="2dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="15dp"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Is this event happening right now?"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12.5dp">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/refute_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="15dp"
+                        android:background="@color/white"
+                        android:backgroundTint="#FB3F4E"
+                        android:elevation="0dp"
+                        android:src="@drawable/x"
+                        android:tint="@color/white"
+                        app:backgroundTint="#000000"
+                        app:borderWidth="0dp"
+                        app:elevation="0dp"
+                        app:maxImageSize="25dp"
+                        app:rippleColor="#B8273C" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/confirm_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
+                        android:backgroundTint="#B6E82B"
+                        android:elevation="0dp"
+                        android:src="@drawable/check"
+                        app:backgroundTint="#000000"
+                        app:borderWidth="0dp"
+                        app:elevation="0dp"
+                        app:maxImageSize="35dp"
+                        app:rippleColor="#7A9C1D" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="2.5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/event_num_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="40dp"
+                        android:text="0" />
+
+                    <TextView
+                        android:id="@+id/event_num_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="40dp"
+                        android:text="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Last confirmed: "
+                        android:textColor="#757474" />
+
+                    <TextView
+                        android:id="@+id/last_confirmed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Just now"
+                        android:textColor="#757474" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="40dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Reported by:"
+                    android:textColor="#757474" />
+
+                <TextView
+                    android:id="@+id/reporter_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="User 131"
+                    android:textColor="#757474" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/reporter_points"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/white"
+                    android:clickable="false"
+                    android:gravity="center"
+                    android:text="0 pts"
+                    android:textAllCaps="false"
+                    android:textColor="@color/grey"
+                    android:textSize="13sp"
+                    app:cornerRadius="100dp"
+                    app:icon="@drawable/points_star"
+                    app:iconGravity="textStart"
+                    app:iconPadding="5dp"
+                    app:iconSize="25dp"
+                    app:iconTint="@color/grey"
+                    app:strokeColor="@color/black" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--Event details LL ends here -->
+
+    <!--Adding the Report screen LL here -->
+    <LinearLayout
+        android:id="@+id/reporting_primary_LL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:background="#B88787"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:id = "@+id/reporting_add_an_event_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="25sp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="Add an Event" />
+
+        <TextView
+            android:id="@+id/reporting_event_name_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/event_name" />
+
+        <EditText
+            android:id="@+id/reporting_event_name_text_input"
+            android:layout_width="match_parent"
+            android:layout_height= "match_parent"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:maxLength="40"/>
+
+        <TextView
+            android:id="@+id/reporting_add_description_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/desc_label" />
+
+        <EditText
+            android:id="@+id/reporting_event_description_text_input"
+            android:layout_width="match_parent"
+            android:layout_height= "match_parent"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:maxLength="140"/>
+
+        <TextView
+            android:id="@+id/reporting_location_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="Location (Max 50 char.)" />
+
+        <EditText
+            android:id="@+id/reporting_location_text_input"
+            android:layout_width="match_parent"
+            android:layout_height= "match_parent"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:maxLength="50"/>
+
+
+        <TextView
+            android:id="@+id/reporting_tags_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tags_label" />
+
+        <GridLayout
+            android:id="@+id/reporting_grid_view_for_tag_checkboxes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:columnCount="2"
+            android:rowCount="4">
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_marginTop="6dp"
+                app:icon="@drawable/funkycarpet"
+                android:text="Food"
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_marginTop="6dp"
+                android:text="Shopping"
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_marginTop="6dp"
+                android:text="Activism"
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_marginTop="6dp"
+                android:text="Social"
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_marginTop="6dp"
+                android:text="Religion"
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_marginTop="6dp"
+                android:text="Professional"
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:layout_marginTop="6dp"
+                android:text="Performance"
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/reporting_checkBox8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:layout_marginTop="6dp"
+                android:text="Miscellaneous"
+                android:textSize="10sp"
+                android:onClick="onCheckboxClicked"/>
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/reporting_primary_tag_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:text="Primary Tag (Shows up on the Map)" />
+
+        <Spinner
+            android:id="@+id/reporting_spinner_for_primary_tag_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="10dp"
+            android:spinnerMode="dropdown"
+            />
+
+        <Button
+            android:id="@+id/reporting_submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/black"
+            android:text="Submit"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+    <!--reporting screen XML ends here -->
+
+    <!--View Profile starts from here-->
+    <RelativeLayout
+        android:id="@+id/middle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profilePic"
+            android:layout_width="155dp"
+            android:layout_height="155dp"
+            app:cardCornerRadius="250dp"
+            app:cardBackgroundColor="@color/white"
+            android:layout_centerHorizontal="true">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:cardCornerRadius="250dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop">
+                </ImageView>
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profilePic"
+            android:gravity="center"
+            android:text="Rick" />
+
+        <LinearLayout
+            android:id="@+id/pointsAndLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/username"
+            android:layout_marginTop="50dp"
+            android:baselineAligned="false">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="50dp">
+
+                <TextView
+                    android:id="@+id/pointsField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20"
+                    android:gravity="center">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/pointsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Points"
+                    android:layout_below="@+id/pointsField"
+                    android:gravity="center">
+                </TextView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/levelField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:gravity="center">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/levelLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Level"
+                    android:layout_below="@+id/levelField"
+                    android:gravity="center">
+                </TextView>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/progress_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pointsAndLevel">
+
+            <LinearLayout
+                android:id="@+id/currAndNextPoints"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp">
+                <TextView
+                    android:id="@+id/currPoints"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="10"
+                    android:gravity="left">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/nextPoints"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="25">
+                </TextView>
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/determinateBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progress="75"
+                android:layout_centerHorizontal="true"
+                android:minHeight="25dp"
+                android:minWidth="300dp"
+                android:layout_below="@id/currAndNextPoints">
+            </ProgressBar>
+
+            <LinearLayout
+                android:id="@+id/currAndNextLevel"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/determinateBar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/currLevel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Level 2"
+                    android:gravity="left">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/nextLevel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Level 3">
+                </TextView>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+    <!--View Profile ends from here-->
 
 </RelativeLayout>
