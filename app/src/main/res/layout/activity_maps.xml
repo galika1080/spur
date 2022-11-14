@@ -929,7 +929,7 @@
     </LinearLayout>
     <!--reporting screen XML ends here -->
 
-<<<<<<< HEAD
+
     <!--View Profile starts from here-->
     <RelativeLayout
         android:id="@+id/profileView"
