@@ -873,6 +873,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Event exampleEvent1 = new Event();
         exampleEvent1.author = "userGuy123";
         exampleEvent1.authorPoints = 344;
+        if (!users.isUserExists(exampleEvent1.author)) {
+            User exampleUser1 = new User();
+            exampleUser1.userId = exampleEvent1.author;
+            exampleUser1.points = exampleEvent1.authorPoints;
+            users.insertUser(exampleUser1);
+        }
         exampleEvent1.description = "This is an event. You should pull up.";
         exampleEvent1.writtenLocation = "Fourth floor chemistry building!";
         exampleEvent1.title = "Super secret social stuff";
@@ -883,9 +889,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Event exampleEvent2 = new Event();
         exampleEvent2.author = "anotherUser";
-        exampleEvent1.authorPoints = 0;
+        exampleEvent2.authorPoints = 0;
+        if (!users.isUserExists(exampleEvent2.author)) {
+            User exampleUser2 = new User();
+            exampleUser2.userId = exampleEvent2.author;
+            exampleUser2.points = exampleEvent2.authorPoints;
+            users.insertUser(exampleUser2);
+        }
         exampleEvent2.description = "Tons of food!";
-        exampleEvent2.writtenLocation = "South of the Union, north quad";
         exampleEvent2.title = "Bake sale on the quad";
         exampleEvent2.primaryTag = "Food";
         exampleEvent2.latitude = 40.108308; exampleEvent2.longitude = -88.227017;
