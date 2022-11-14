@@ -359,7 +359,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.tag3.setVisibility(View.VISIBLE);
 
         //fixing tag display (top 3 tags)
-        if (e.primaryTag.equals("Food")) {
+        if (e.primaryTag == null) {
+            binding.tag1.setVisibility(View.GONE);
+        } else if (e.primaryTag.equals("Food")) {
             binding.tag1.setText(e.primaryTag);
             binding.tag1.setIcon(getDrawable(R.drawable.ic_food));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.food)));
@@ -403,7 +405,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag1.setVisibility(View.GONE);
         }
 
-        if (e.secondaryTag.equals("Food")) {
+        if (e.secondaryTag == null) {
+            binding.tag2.setVisibility(View.GONE);
+        } else if (e.secondaryTag.equals("Food")) {
             binding.tag2.setText(e.secondaryTag);
             binding.tag2.setIcon(getDrawable(R.drawable.ic_food));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.food)));
@@ -447,7 +451,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag2.setVisibility(View.GONE);
         }
 
-        if (e.tertiaryTag.equals("Food")) {
+        if (e.tertiaryTag == null) {
+            binding.tag3.setVisibility(View.GONE);
+        } else if (e.tertiaryTag.equals("Food")) {
             binding.tag3.setText(e.tertiaryTag);
             binding.tag3.setIcon(getDrawable(R.drawable.ic_food));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.food)));
@@ -675,6 +681,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent1.latitude = 40.1074821; exampleEvent1.longitude = -88.2265963;
         exampleEvent1.primaryTag = "Social";
         exampleEvent1.secondaryTag = "Food";
+        exampleEvent1.tertiaryTag = "Shopping";
 
         Event exampleEvent2 = new Event();
         exampleEvent2.author = "anotherUser";
