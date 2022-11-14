@@ -121,21 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Manifest.permission.ACCESS_COARSE_LOCATION
         });
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        LocationListener locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location loc) {
-                locLat = loc.getLatitude();
-                locLong = loc.getLongitude();
-
-                Log.wtf("Main", "Current location is " + locLat + ", " + locLong);
-            }
-        };
-
-        Location lastKnown = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        locLat = lastKnown.getLatitude();
-        locLong = lastKnown.getLongitude();
+        updateKnownLocation();
 
         //Obtain the dropdown id for reporting screen
         Spinner spinnerTags = findViewById(R.id.reporting_spinner_for_primary_tag_dropdown);
@@ -322,9 +308,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
             Event e = new Event();
-            Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            locLat = loc.getLatitude();
-            locLong = loc.getLongitude();
+            updateKnownLocation();
 
             e.latitude = locLat;
             e.longitude = locLong;
@@ -388,6 +372,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 updateVisibility();
             }
         });
+    }
+
+    @SuppressLint("MissingPermission")
+    private void updateKnownLocation() {
+        Location lastKnown = ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (lastKnown != null) {
+            locLat = lastKnown.getLatitude();
+            locLong = lastKnown.getLongitude();
+        } else {
+            locLat = 40.1108879;
+            locLong = -88.2282231;
+        }
     }
 
     private void updateVisibility() {
