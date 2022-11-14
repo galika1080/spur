@@ -8,3 +8,4 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract EventDao eventDao();
     public abstract UserDao userDao();
 }
+
