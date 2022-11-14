@@ -142,7 +142,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //populateUserInfo("rick");
 
         // filter buttons change marker visibility
-
+        binding.btnFilterAll.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                eventMarkers.get(i).setVisible(true);
+            }
+        });
         binding.btnFilterFood.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
@@ -291,7 +295,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             e.title = binding.reportingEventNameTextInput.getText().toString();
             e.description = binding.reportingEventDescriptionTextInput.getText().toString();
+            e.writtenLocation = binding.reportingLocationTextInput.getText().toString();
+            e.numDislikes = 0;
+            e.numLikes = 0;
+            e.primaryTag = binding.reportingSpinnerForPrimaryTagDropdown.getTag().toString();
 
+            // @TODO: Set these fields
+            //e.secondaryTag = binding.;
+            //e.tertiaryTag =
+            //e.author = ;
+            //e.authorPoints =;
             addEvent(e);
 
             currentState = AppState.EventDetails;
