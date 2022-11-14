@@ -9,8 +9,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:background="@drawable/border_box">
+        android:background="@drawable/border_box"
+        android:padding="15dp">
 
         <!-- Popup Title -->
         <com.google.android.material.button.MaterialButton
@@ -18,9 +18,9 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:layout_centerHorizontal="true"
             android:backgroundTint="@color/white"
             android:clickable="false"
             android:gravity="center"
@@ -33,7 +33,7 @@
             app:iconPadding="0dp"
             app:iconSize="25dp"
             app:iconTint="@color/black" />
-<!--
+        <!--
         <TextView
             android:id="@+id/points_title"
             android:layout_width="match_parent"
@@ -63,12 +63,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/points_popup_subtitle_1"
-            android:textSize="12sp"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="@string/points_daily"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:text="@string/points_daily"
-            android:gravity="left|center_vertical"
-            android:backgroundTint="@color/grey" />
+            android:textSize="12sp" />
 
         <!-- +10 point description -->
         <Button
@@ -76,12 +76,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/points_popup_1"
-            android:textSize="12sp"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="@string/points_confirm_deny"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:text="@string/points_confirm_deny"
-            android:gravity="left|center_vertical"
-            android:backgroundTint="@color/grey"/>
+            android:textSize="12sp" />
 
         <!-- +70 point description -->
         <Button
@@ -89,12 +89,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/points_2"
-            android:textSize="12sp"
-            android:textAllCaps="false"
-            android:text="@string/points_adding_event"
-            android:textColor="@color/black"
+            android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
-            android:backgroundTint="@color/grey"/>
+            android:text="@string/points_adding_event"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
         <!-- Got IT button -->
         <Button
@@ -102,8 +102,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/points_3"
-            android:layout_marginRight="10dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginRight="10dp"
             android:backgroundTint="@color/green"
             android:text="@string/points_understood"
             android:textSize="12sp" />

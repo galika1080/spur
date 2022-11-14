@@ -28,11 +28,20 @@ public class Event {
     @ColumnInfo(name = "written_location")
     public String writtenLocation;
 
-    @ColumnInfo(name = "tags")
-    public String tags;
+    @ColumnInfo(name = "primary_tag")
+    public String primaryTag;
+
+    @ColumnInfo(name = "secondary_tag")
+    public String secondaryTag;
+
+    @ColumnInfo(name = "tertiary_tag")
+    public String tertiaryTag;
 
     @ColumnInfo(name = "author")
     public String author;
+
+    @ColumnInfo(name = "author_points")
+    public int authorPoints;
 
     @ColumnInfo(name = "num_likes")
     public int numLikes;

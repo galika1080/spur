@@ -4,13 +4,13 @@
 
     <string-array name="tags_array">
         <item>Food</item>
-        <item>Shopping</item>
-        <item>Activism</item>
         <item>Social</item>
-        <item>Religion</item>
+        <item>Shopping</item>
         <item>Professional</item>
         <item>Performance</item>
-        <item>Other</item>
+        <item>Activism</item>
+        <item>Religion</item>
+        <item>Misc</item>
     </string-array>
     <string name="event_name">Event Name<font color='#FF0000'>*</font></string>
     <string name="tags_label">Tags (Choose 1-3)<font color='#FF0000'>*</font></string>
@@ -33,5 +33,11 @@
     <string name="points_confirm_deny">+10 for confirming/denying existing events</string>
     <string name="points_adding_event">+70 for adding an event with 2+ confirmations</string>
     <string name="points_understood">Got it!</string>
+
+    <string name="location_field">Location:\ </string>
+    <string name="confirmation_message">Is this event happening right now?</string>
+    <string name="last_confirmed_message">Last confirmed:\ </string>
+    <string name="reporter_message">Reported by:</string>
+
 </resources>
 
