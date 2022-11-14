@@ -131,7 +131,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //populateUserInfo("rick");
 
         // filter buttons change marker visibility
-
+        binding.btnFilterAll.setOnClickListener((View v) -> {
+            for (int i = 0; i < eventMarkers.size(); i++) {
+                eventMarkers.get(i).setVisible(true);
+            }
+        });
         binding.btnFilterFood.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
@@ -278,8 +282,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             e.title = binding.reportingEventNameTextInput.getText().toString();
             e.description = binding.reportingEventDescriptionTextInput.getText().toString();
-
+            e.writtenLocation = binding.reportingLocationTextInput.getText().toString();
+            e.numDislikes = 0;
+            e.numLikes = 0;
             e.primaryTag = binding.reportingSpinnerForPrimaryTagDropdown.getSelectedItem().toString();
+
+            // @TODO: Set these fields
+            //e.secondaryTag = binding.;
+            //e.tertiaryTag =
+            //e.author = ;
+            //e.authorPoints =;
 
             addEvent(e);
 
@@ -311,7 +323,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        });
 
         //clicking on profile button will take you to profile screen
-        //@TODO: finish this
         binding.profileButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -321,7 +332,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         //clicking on events button will take you to map screen
-        // @TODO: finish this
         binding.eventButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -375,6 +385,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // update to profile view
         if (currentState == AppState.ProfileView) {
             // profile state, show layout as visible
+            binding.filterScrollView.setVisibility(View.GONE);
             binding.profileView.setVisibility(View.VISIBLE);
         } else {
             binding.profileView.setVisibility(View.GONE);
@@ -396,11 +407,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void populateEventInfo(Event e) {
         binding.eventName.setText(e.title);
         binding.eventDescription.setText(e.description);
-        binding.eventLocation.setText(e.writtenLocation);
         binding.eventNumNo.setText(Integer.toString(e.numDislikes));
         binding.eventNumYes.setText(Integer.toString(e.numLikes));
         binding.reporterId.setText(e.author);
         binding.reporterPoints.setText(Integer.toString(e.authorPoints));
+
+        if (e.writtenLocation == null || e.writtenLocation.isEmpty()) {
+            binding.eventLocationLayout.setVisibility(View.GONE);
+        } else {
+            binding.eventLocationLayout.setVisibility(View.VISIBLE);
+            binding.eventLocation.setText(e.writtenLocation);
+        }
 
         binding.tag1.setVisibility(View.VISIBLE);
         binding.tag2.setVisibility(View.VISIBLE);
@@ -547,6 +564,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // @TODO: add remaining fields
         //need to set distance from current location
+        //need to set last confirmed
     }
 
     private void displayEventMarker(Event e) {
@@ -587,11 +605,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (binding.reportingEventDescriptionTextInput.length() == 0) {
             binding.reportingEventDescriptionTextInput.setError("Event Description is required");
-            return false;
-        }
-
-        if (binding.reportingLocationTextInput.length() == 0) {
-            binding.reportingLocationTextInput.setError("Location is required");
             return false;
         }
 
@@ -750,6 +763,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Event exampleEvent2 = new Event();
         exampleEvent2.author = "anotherUser";
+        exampleEvent1.authorPoints = 0;
         exampleEvent2.description = "Tons of food!";
         exampleEvent2.writtenLocation = "South of the Union, north quad";
         exampleEvent2.title = "Bake sale on the quad";
