@@ -9,6 +9,8 @@ import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.Manifest;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -40,6 +42,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -552,11 +555,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Event resolvedEvent = events.getByNameLocation(e.title, e.latitude, e.longitude);
         int id = resolvedEvent.id;
 
+        Map<String, String> tagToMarker = Map.of(
+                "Activism", "ic_marker__activism",
+                "Food", "ic_marker__food",
+                "Misc", "ic_marker__misc",
+                "Performance", "ic_marker__performance",
+                "Professional", "ic_marker__professional",
+                "Religion", "ic_marker__religion",
+                "Shopping", "ic_marker__shopping",
+                "Social", "ic_marker__social"
+        );
+
+        Log.wtf("Get tag", e.primaryTag);
+
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(tagToMarker.get(e.primaryTag), "drawable", getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, 85, 110, false);
+
         LatLng eventLoc = new LatLng(e.latitude, e.longitude);
         Marker eventMarker = mMap.addMarker(new MarkerOptions()
                 .position(eventLoc)
                 .title(e.title)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_food)));
+                .icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap)));
 
         eventMarker.setTag(id);
         eventMarkers.add(eventMarker);
