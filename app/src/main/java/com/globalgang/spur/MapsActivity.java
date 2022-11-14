@@ -142,10 +142,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterFood.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag.equals("Food")) {
+                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
+                } else if (event.primaryTag.equals("Food")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.secondaryTag.equals("Food")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.tertiaryTag.equals("Food")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
@@ -156,10 +165,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterSocial.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag.equals("Social")) {
+                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
+                } else if (event.primaryTag.equals("Social")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.secondaryTag.equals("Social")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.tertiaryTag.equals("Social")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
@@ -170,10 +188,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterShopping.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag.equals("Shopping")) {
+                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
+                } else if (event.primaryTag.equals("Shopping")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.secondaryTag.equals("Shopping")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.tertiaryTag.equals("Shopping")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
@@ -184,10 +211,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterProfessional.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag.equals("Professional")) {
+                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
+                } else if (event.primaryTag.equals("Professional")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.secondaryTag.equals("Professional")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.tertiaryTag.equals("Professional")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
@@ -198,10 +234,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterPerformance.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag.equals("Performance")) {
+                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
+                } else if (event.primaryTag.equals("Performance")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.secondaryTag.equals("Performance")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.tertiaryTag.equals("Performance")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
@@ -212,10 +257,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterActivism.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag.equals("Activism")) {
+                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
+                } else if (event.primaryTag.equals("Activism")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.secondaryTag.equals("Activism")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.tertiaryTag.equals("Activism")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
@@ -226,10 +280,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterReligion.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag.equals("Religion")) {
+                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
+                } else if (event.primaryTag.equals("Religion")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.secondaryTag.equals("Religion")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.tertiaryTag.equals("Religion")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
@@ -240,10 +303,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterMisc.setOnClickListener((View v) -> {
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag.equals("Misc")) {
+                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
+                } else if (event.primaryTag.equals("Misc")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.secondaryTag.equals("Misc")) {
                     eventMarkers.get(i).setVisible(true);
+                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
+                    eventMarkers.get(i).setVisible(false);
+                    continue;
                 } else if (event.tertiaryTag.equals("Misc")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
