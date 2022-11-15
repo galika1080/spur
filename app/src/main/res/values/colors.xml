@@ -11,12 +11,25 @@
     <color name="grey">#FF808080</color>
 
     <!--Tags in order of relevancy (to be shown in filter) -->
-    <color name="food">#FFDBA4</color>
-    <color name="social">#C4DFAA</color>
-    <color name="shopping">#D35D6E</color>
-    <color name="professional">#94B3FD</color>
-    <color name="performance">#FCCBCB</color>
-    <color name="activism">#FFF89A</color>
-    <color name="religion">#AF7AB3</color>
+    <color name="all">#9F9F9F</color>
+    <color name="food">#E16778</color>
+    <color name="social">#FFDBA4</color>
+    <color name="shopping">#FFF89A</color>
+    <color name="professional">#C4DFAA</color>
+    <color name="performance">#94B3FD</color>
+    <color name="activism">#B984BD</color>
+    <color name="religion">#FCCBCB</color>
     <color name="misc">#EDE4E0</color>
+
+    <!--Colors for tags *when selected* in order of relevancy (to be shown in filter) -->
+    <color name="all_selected">#6C6C6C</color>
+    <color name="food_selected">#B83F51</color>
+    <color name="social_selected">#EAAF58</color>
+    <color name="shopping_selected">#DFD763</color>
+    <color name="professional_selected">#99CD66</color>
+    <color name="performance_selected">#6589DF</color>
+    <color name="activism_selected">#B059B6</color>
+    <color name="religion_selected">#ED8888</color>
+    <color name="misc_selected">#959291</color>
+
 </resources>

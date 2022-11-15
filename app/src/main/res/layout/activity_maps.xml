@@ -233,10 +233,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
-                android:backgroundTint="@color/grey"
+                android:backgroundTint="@color/all"
+                app:strokeColor="@color/all"
+                app:strokeWidth="5dp"
                 android:elevation="10dp"
                 android:text="All"
                 android:textColor="@color/black"
+                app:iconTint="@color/black" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_filter_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/food"
+                app:strokeColor="@color/food"
+                app:strokeWidth="5dp"
+                android:elevation="10dp"
+                android:text="Food"
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_food"
                 app:iconTint="@color/black" />
 
             <com.google.android.material.button.MaterialButton
@@ -246,24 +264,14 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/social"
+                app:strokeColor="@color/social"
+                app:strokeWidth="5dp"
                 android:elevation="10dp"
                 android:text="Social"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_social"
-                app:iconTint="@color/black" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_filter_food"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:backgroundTint="@color/food"
-                android:elevation="10dp"
-                android:text="Food"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_food"
-                app:iconTint="@color/black" />
+                app:iconTint="@color/black"
+                />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_filter_shopping"
@@ -272,6 +280,8 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/shopping"
+                app:strokeColor="@color/shopping"
+                app:strokeWidth="5dp"
                 android:elevation="10dp"
                 android:text="Shopping"
                 android:textColor="@color/black"
@@ -285,23 +295,12 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/professional"
+                app:strokeColor="@color/professional"
+                app:strokeWidth="5dp"
                 android:elevation="10dp"
-                android:text="Career"
+                android:text="Professional"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_professional"
-                app:iconTint="@color/black" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_filter_religion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:backgroundTint="@color/religion"
-                android:elevation="10dp"
-                android:text="Religion"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_religion"
                 app:iconTint="@color/black" />
 
             <com.google.android.material.button.MaterialButton
@@ -311,6 +310,8 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/performance"
+                app:strokeColor="@color/performance"
+                app:strokeWidth="5dp"
                 android:elevation="10dp"
                 android:text="Performance"
                 android:textColor="@color/black"
@@ -324,10 +325,27 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/activism"
+                app:strokeColor="@color/activism"
+                app:strokeWidth="5dp"
                 android:elevation="10dp"
                 android:text="Activism"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_activism"
+                app:iconTint="@color/black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_filter_religion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:backgroundTint="@color/religion"
+                app:strokeColor="@color/religion"
+                app:strokeWidth="5dp"
+                android:elevation="10dp"
+                android:text="Religion"
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_religion"
                 app:iconTint="@color/black" />
 
             <com.google.android.material.button.MaterialButton
@@ -337,6 +355,8 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:backgroundTint="@color/misc"
+                app:strokeColor="@color/misc"
+                app:strokeWidth="5dp"
                 android:elevation="10dp"
                 android:text="Miscellaneous"
                 android:textColor="@color/black"
