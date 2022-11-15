@@ -830,7 +830,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void onClear()
     {
-
         if (binding.reportingEventNameTextInput != null) binding.reportingEventNameTextInput.setText("");
         if (binding.reportingEventDescriptionTextInput != null) binding.reportingEventDescriptionTextInput.setText("");
         if (binding.reportingLocationTextInput != null) binding.reportingLocationTextInput.setText("");
