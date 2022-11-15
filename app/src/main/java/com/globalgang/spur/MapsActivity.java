@@ -410,6 +410,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //e.secondaryTag = binding.;
             //e.tertiaryTag =
 
+            addPoints("rick", 50);
             addEvent(e);
 
             currentState = AppState.EventDetails;
@@ -522,8 +523,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    private void displayExistingEvents() {
+        List<Event> existing = events.getAll();
+
+        for (Event e : existing) {
+            addEvent(e);
+        }
+    }
+
     private void addEvent(Event e) {
-        events.insertAll(e);
+        if (events.getByNameLocation(e.title, e.latitude, e.longitude) == null) {
+            events.insertAll(e);
+        }
 
         populateEventInfo(e);
         displayEventMarker(e);
@@ -903,7 +914,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         googleMap.setMyLocationEnabled(true);
 
-        addEvent(exampleEvent1);
-        addEvent(exampleEvent2);
+        displayExistingEvents();
     }
 }
