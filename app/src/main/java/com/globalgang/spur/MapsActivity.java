@@ -499,15 +499,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.filterScrollView.setVisibility(View.GONE);
             binding.btnAddEvent.setVisibility(View.GONE);
             binding.profileView.setVisibility(View.VISIBLE);
+            binding.navi.setVisibility(View.VISIBLE);
         } else {
             binding.profileView.setVisibility(View.GONE);
         }
 
-        // @TODO: move points_popup_display.xml code to activity_maps.xml and set visibility
-        if (currentState == AppState.PointsPopup) {
-            //popup describing points system (should popup evertime user logs in?)
-        }
-
+        //popup describing points system (should popup everytime user logs in?)
         if (currentState == AppState.PointsPopup) {
             binding.pointsPopup.setVisibility(View.VISIBLE);
         } else {

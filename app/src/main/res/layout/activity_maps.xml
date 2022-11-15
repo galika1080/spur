@@ -376,6 +376,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:elevation="10dp"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <Button
@@ -935,14 +936,18 @@
     <RelativeLayout
         android:id="@+id/profileView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:visibility="gone">
+        android:layout_height="match_parent"
+        android:layout_above="@id/navi"
+        android:visibility="gone"
+        android:elevation="50dp"
+        android:clickable="true"
+        android:background="@color/white">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/profilePic"
             android:layout_width="155dp"
             android:layout_height="155dp"
+            android:layout_marginTop="100dp"
             app:cardCornerRadius="250dp"
             app:cardBackgroundColor="@color/white"
             android:layout_centerHorizontal="true">
@@ -1114,40 +1119,39 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:clickable="true"
             android:background="@drawable/border_box"
-            >
+            android:clickable="true"
+            android:padding="15dp">
 
             <!-- Popup Title -->
             <LinearLayout
                 android:id="@+id/points_popup_title_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                >
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center_horizontal">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="10dp"
                     android:src="@drawable/points_star" />
+
                 <TextView
                     android:id="@+id/points_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
                     android:backgroundTint="@color/white"
                     android:clickable="false"
                     android:gravity="center"
                     android:text="@string/points_popup_title"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -1155,10 +1159,10 @@
                 android:id="@+id/points_popup_subtitle_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_below="@id/points_popup_title_layout"
-                android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:clickable="false"
+                android:gravity="center"
                 android:text="@string/points_popup_explanation"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
@@ -1183,13 +1187,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/points_popup_1"
-                android:textSize="12sp"
+                android:backgroundTint="@color/grey"
                 android:clickable="false"
+                android:gravity="left|center_vertical"
+                android:text="@string/points_confirm_deny"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:text="@string/points_confirm_deny"
-                android:gravity="left|center_vertical"
-                android:backgroundTint="@color/grey"/>
+                android:textSize="12sp" />
 
             <!-- +50 point description -->
             <Button
@@ -1197,13 +1201,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/points_2"
-                android:textSize="12sp"
+                android:backgroundTint="@color/grey"
                 android:clickable="false"
-                android:textAllCaps="false"
-                android:text="@string/points_adding_event"
-                android:textColor="@color/black"
                 android:gravity="left|center_vertical"
-                android:backgroundTint="@color/grey"/>
+                android:text="@string/points_adding_event"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
             <!-- Got IT button -->
             <Button
@@ -1211,8 +1215,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/points_3"
-                android:layout_marginRight="10dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginRight="10dp"
                 android:backgroundTint="@color/green"
                 android:text="@string/points_understood"
                 android:textSize="12sp" />
