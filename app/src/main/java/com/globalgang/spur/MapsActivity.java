@@ -338,17 +338,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         TextView no_confirmation = findViewById(R.id.event_num_yes);
         no_confirmation.setText(Integer.toString(myPoints));
 
-        // @TODO: change this, the social button shouldn't show the event details popup
-        binding.btnFilterSocial.setOnClickListener((View v) -> {
-            if (!seen_points_popup) {
-                currentState = AppState.PointsPopup;
-            }
-            else {
-                currentState = AppState.EventDetails;
-            }
-            updateVisibility();
-        });
-
         // got it button
         /*
         * I'm thinking that maybe when you click on event details it should show the points popup
