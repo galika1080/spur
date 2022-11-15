@@ -80,6 +80,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private int CheckboxCounterTracker = 0;
 
+    private List<String> CheckedTagNames = new ArrayList<>();
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -400,6 +402,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.primaryTag = binding.reportingSpinnerForPrimaryTagDropdown.getSelectedItem().toString();
 
             // @TODO: Set these fields
+            String[] reportingTagsArray = new String[3];
+            //reportingTagsArray[0] = binding.
             //e.secondaryTag = binding.;
             //e.tertiaryTag =
             //e.author = ;
@@ -742,7 +746,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void isCheckedOrNot(boolean isChecked) {
+    private void isCheckedOrNotCounter(boolean isChecked) {
         if (isChecked) {
             CheckboxCounterTracker++;
         }
@@ -753,8 +757,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         System.out.println(CheckboxCounterTracker);
     }
-
-
+    /*
+    private List<String> isCheckedOrNotTagNames(boolean isChecked) {
+        String TagName1 = "";
+        String TagName2 = "";
+        TagName1 = binding.reportingCheckBox1.getText().toString();
+        TagName2 = binding.reportingCheckBox2.getText().toString();
+        //List<String> CheckedTagNames = new ArrayList<>();
+        if (isChecked) {
+            CheckedTagNames.add(TagName1);
+            CheckedTagNames.add(TagName2);
+        }
+        else {
+            CheckedTagNames.remove(TagName1);
+            CheckedTagNames.remove(TagName2);
+        }
+        System.out.println(CheckedTagNames);
+        return CheckedTagNames;
+    }
+    */
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -762,38 +783,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.reporting_checkBox1:
-                isCheckedOrNot(checked);
+                isCheckedOrNotCounter(checked);
+                if(checked) {CheckedTagNames.add(binding.reportingCheckBox1.getText().toString());}
+                else {CheckedTagNames.remove(binding.reportingCheckBox1.getText().toString());}
+                System.out.println(CheckedTagNames);
                 break;
 
             case R.id.reporting_checkBox2:
-                isCheckedOrNot(checked);
-                break;
+                 isCheckedOrNotCounter(checked);
+                 if(checked) CheckedTagNames.add(binding.reportingCheckBox2.getText().toString());
+                 else {CheckedTagNames.remove(binding.reportingCheckBox2.getText().toString());}
+                 System.out.println(CheckedTagNames);
+                 break;
 
 
             case R.id.reporting_checkBox3:
-                isCheckedOrNot(checked);
+                 isCheckedOrNotCounter(checked);
                 break;
 
 
             case R.id.reporting_checkBox4:
-                isCheckedOrNot(checked);
+                 isCheckedOrNotCounter(checked);
                 break;
 
             case R.id.reporting_checkBox5:
-                isCheckedOrNot(checked);
+                 isCheckedOrNotCounter(checked);
                 break;
 
             case R.id.reporting_checkBox6:
-                isCheckedOrNot(checked);
+                 isCheckedOrNotCounter(checked);
                 break;
 
             case R.id.reporting_checkBox7:
-                isCheckedOrNot(checked);
-                break;
+                 isCheckedOrNotCounter(checked);
+                 break;
 
             case R.id.reporting_checkBox8:
-                isCheckedOrNot(checked);
-                break;
+                 isCheckedOrNotCounter(checked);
+                 break;
 
         }
     }
@@ -827,6 +854,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (binding.reportingCheckBox7.isChecked() == true) binding.reportingCheckBox7.setChecked(false);
         if (binding.reportingCheckBox8.isChecked() == true) binding.reportingCheckBox8.setChecked(false);
         CheckboxCounterTracker = 0;
+        CheckedTagNames.clear();
 
     }
 
