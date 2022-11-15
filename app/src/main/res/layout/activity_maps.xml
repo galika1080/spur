@@ -713,9 +713,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:background="#B88787"
         android:gravity="center"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:clickable="true"
+        android:background="@drawable/border_box"
+        android:elevation="30dp"
+        android:padding="15dp">
 
         <TextView
             android:id = "@+id/reporting_add_an_event_label"
@@ -724,6 +727,7 @@
             android:textSize="25sp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="13dp"
             android:text="Add an Event" />
 
         <TextView

@@ -1,6 +1,5 @@
 package com.globalgang.spur;
 
-import androidx.annotation.NonNull;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.FragmentActivity;
@@ -12,7 +11,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
@@ -34,7 +32,6 @@ import androidx.room.Room;
 
 import android.util.Log;
 import android.view.View;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
@@ -43,7 +40,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -141,8 +137,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Obtain the dropdown id for reporting screen
         Spinner spinnerTags = findViewById(R.id.reporting_spinner_for_primary_tag_dropdown);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags_array, R.layout.reporting_spinner_backgroud_color);
+        adapter.setDropDownViewResource(R.layout.reporting_custom_spinner_dropdrown_text_colour);
         spinnerTags.setAdapter(adapter);
 
 
@@ -759,7 +755,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(CheckboxCounterTracker > 0 && CheckboxCounterTracker <4){
             return true;
         } else {
-            Toast.makeText(this,CheckboxCounterTracker + " No of Tags not within valid range" ,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Please Choose 1-3 Tags",Toast.LENGTH_SHORT).show();
             return false;
         }
     }
