@@ -435,6 +435,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.tertiaryTag = CheckedTagNames.get(1).toString();
 
             addPoints("rick", 50);
+            Toast.makeText(MapsActivity.this, "Thanks for adding an event! +50 points", Toast.LENGTH_SHORT).show();
+
             addEvent(e);
 
             currentState = AppState.EventDetails;
@@ -445,10 +447,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addPoints("rick", 10);
-                populateUserInfo("rick");
+                if (binding.refuteButton.getBackgroundTintList() == ColorStateList.valueOf(getColor(R.color.x_selected))) {
+                    //if you had previously refuted and are now switching your vote
+                    Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
+
+                } else if (binding.confirmButton.getBackgroundTintList() != ColorStateList.valueOf(getColor(R.color.check_selected))) {
+                    //if you had not previously already selected check then give person points (voting for first time on event)
+                    addPoints("rick", 10);
+                    populateUserInfo("rick");
+                    Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    //do nothing if already checked and pressing check again
+                    return;
+                }
+
+                binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check_selected)));
+                binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x)));
+
                 String reporterId = binding.reporterId.getText().toString();
                 addPoints(reporterId, 5);
+
             }
         });
 
@@ -456,11 +475,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.refuteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addPoints("rick", 10);
-                populateUserInfo("rick");
-                String reporterId = binding.reporterId.getText().toString();
-                addPoints(reporterId, -5);
+                if (binding.confirmButton.getBackgroundTintList() == ColorStateList.valueOf(getColor(R.color.check_selected))) {
+                    //if you had previously checked and are now switching your vote
+                    Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
 
+                } else if (binding.refuteButton.getBackgroundTintList() != ColorStateList.valueOf(getColor(R.color.x_selected))) {
+                    //if you had not previously already refuted then give person points (voting for first time on event)
+                    addPoints("rick", 10);
+                    populateUserInfo("rick");
+                    Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    //do nothing if already refuted and pressing x again
+                    return;
+                }
+
+                binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check)));
+                binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
             }
         });
 

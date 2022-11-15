@@ -34,9 +34,11 @@
 
     <color name="navi">#B1B0B0</color>
     <color name="navi_selected">#706F6F</color>
-    4ABC4A
+
     <color name="check">#60CC60</color>
     <color name="x">#FB3F4E</color>
+    <color name="check_selected">#3DA13D</color>
+    <color name="x_selected">#C53541</color>
 
 
 </resources>

@@ -623,7 +623,7 @@
                         app:borderWidth="0dp"
                         app:elevation="0dp"
                         app:maxImageSize="25dp"
-                        app:rippleColor="#B8273C" />
+                        app:rippleColor="@color/x_selected" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/confirm_button"
@@ -638,7 +638,7 @@
                         app:borderWidth="0dp"
                         app:elevation="0dp"
                         app:maxImageSize="35dp"
-                        app:rippleColor="#7A9C1D" />
+                        app:rippleColor="@color/check_selected" />
                 </LinearLayout>
 
                 <LinearLayout
