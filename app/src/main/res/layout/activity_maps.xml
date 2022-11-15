@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@drawable/border_box"
+        android:clickable="true"
         android:elevation="30dp"
         android:padding="15dp"
         android:visibility="gone">
@@ -1173,6 +1174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/points_popup_subtitle_1"
+                android:layout_marginTop="5dp"
                 android:backgroundTint="@color/grey"
                 android:clickable="false"
                 android:gravity="left|center_vertical"
