@@ -928,6 +928,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent2.primaryTag = "Food";
         exampleEvent2.latitude = 40.108308; exampleEvent2.longitude = -88.227017;
 
+        if (events.getByNameLocation(exampleEvent1.title, exampleEvent1.latitude, exampleEvent1.longitude) == null) {
+            events.insertAll(exampleEvent1);
+        }
+        if (events.getByNameLocation(exampleEvent2.title, exampleEvent2.latitude, exampleEvent2.longitude) == null) {
+            events.insertAll(exampleEvent2);
+        }
+
         googleMap.setMyLocationEnabled(true);
 
         displayExistingEvents();
