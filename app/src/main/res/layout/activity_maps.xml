@@ -407,6 +407,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
+            android:backgroundTint="@color/navi"
             android:text="Event" />
 
         <Button
@@ -416,6 +417,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
+            android:backgroundTint="@color/navi"
             android:text="Profile" />
 
     </LinearLayout>

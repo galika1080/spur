@@ -85,7 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private List<String> CheckedTagNames = new ArrayList<>();
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint({"MissingPermission", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +146,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         populateUserInfo("rick");
 
         updateFilterColors("All");
+        binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
+        binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
 
         // filter buttons change marker visibility
         binding.btnFilterAll.setOnClickListener((View v) -> {
@@ -467,6 +469,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view){
                 currentState = AppState.ProfileView;
+                binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
+                binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
                 updateVisibility();
             }
         });
@@ -476,6 +480,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view){
                 currentState = AppState.FullscreenMap;
+                binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
+                binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
                 updateVisibility();
             }
         });
