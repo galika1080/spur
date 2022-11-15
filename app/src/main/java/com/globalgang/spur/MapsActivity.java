@@ -81,6 +81,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // are filled by the user, properly or not.
     boolean isAllTagsCheckedReporting = false;
 
+    // one boolean variable to check whether the primary tag selected
+    // is one of the tags checked as part of the checkboxes
+    boolean isPrimaryTagPartofCheckedTags = false;
+
     private int CheckboxCounterTracker = 0;
 
     private List<String> CheckedTagNames = new ArrayList<>();
@@ -376,7 +380,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.reportingSubmitButton.setOnClickListener((View v) -> {
             isAllFieldsCheckedReporting = CheckAllFields();
             isAllTagsCheckedReporting = CheckAllTags();
-            if (!isAllFieldsCheckedReporting || !isAllTagsCheckedReporting) {
+            isPrimaryTagPartofCheckedTags = CheckPrimaryTagForErrorHandling();
+            if (!isAllFieldsCheckedReporting || !isAllTagsCheckedReporting || !isPrimaryTagPartofCheckedTags) {
                 return;
             }
 
@@ -757,6 +762,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(this,CheckboxCounterTracker + " No of Tags not within valid range" ,Toast.LENGTH_SHORT).show();
             return false;
         }
+    }
+
+    private boolean CheckPrimaryTagForErrorHandling() {
+        boolean trackingFlag = false;
+        for (int i = 0; i < CheckedTagNames.size(); i++) {
+            System.out.println(CheckedTagNames.get(i).toString());
+            if (CheckedTagNames.get(i).toString().equals(binding.reportingSpinnerForPrimaryTagDropdown.getSelectedItem().toString())) {
+                trackingFlag = true;
+                return true;
+            } else {
+                trackingFlag = false;
+            }
+        }
+        if(trackingFlag == false){
+            Toast.makeText(this, "Primary Tag should be part of Tags selected above", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 
     private void isCheckedOrNotCounter(boolean isChecked) {
