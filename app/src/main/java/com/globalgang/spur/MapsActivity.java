@@ -43,6 +43,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -398,10 +399,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.authorPoints = reporter.points;
 
             // @TODO: Set these fields
-            String[] reportingTagsArray = new String[3];
+            //String[] reportingTagsArray = new String[3];
+            for (int i = 0; i < CheckedTagNames.size(); i++){
+                if(CheckedTagNames.get(i).toString().equals(e.primaryTag)){
+                    CheckedTagNames.remove(CheckedTagNames.get(i).toString());
+                }
+            //System.out.println("After clicking submit button");
+            //System.out.println(CheckedTagNames);
+            }
             //reportingTagsArray[0] = binding.
-            //e.secondaryTag = binding.;
-            //e.tertiaryTag =
+            e.secondaryTag = CheckedTagNames.get(0).toString();
+            e.tertiaryTag = CheckedTagNames.get(1).toString();
 
             addPoints("rick", 50);
             addEvent(e);
@@ -804,29 +812,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             case R.id.reporting_checkBox3:
                  isCheckedOrNotCounter(checked);
-                break;
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox3.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox3.getText().toString());}
+                 System.out.println(CheckedTagNames);
+                 break;
 
 
             case R.id.reporting_checkBox4:
                  isCheckedOrNotCounter(checked);
-                break;
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox4.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox4.getText().toString());}
+                 System.out.println(CheckedTagNames);
+                 break;
 
             case R.id.reporting_checkBox5:
                  isCheckedOrNotCounter(checked);
-                break;
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox5.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox5.getText().toString());}
+                 System.out.println(CheckedTagNames);
+                 break;
 
             case R.id.reporting_checkBox6:
                  isCheckedOrNotCounter(checked);
-                break;
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox6.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox6.getText().toString());}
+                 System.out.println(CheckedTagNames);
+                 break;
 
             case R.id.reporting_checkBox7:
                  isCheckedOrNotCounter(checked);
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox7.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox7.getText().toString());}
+                 System.out.println(CheckedTagNames);
                  break;
 
             case R.id.reporting_checkBox8:
                  isCheckedOrNotCounter(checked);
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox8.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox8.getText().toString());}
+                 System.out.println(CheckedTagNames);
                  break;
-
         }
     }
 
@@ -834,7 +859,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         User u = users.getUserById(userId);
         binding.username.setText(u.userId);
         binding.pointsField.setText(Integer.toString(u.points));
-
         //TODO: LEVEL, PROGRESS BAR
     }
 
@@ -859,7 +883,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (binding.reportingCheckBox8.isChecked() == true) binding.reportingCheckBox8.setChecked(false);
         CheckboxCounterTracker = 0;
         CheckedTagNames.clear();
-
     }
 
 
