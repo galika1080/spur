@@ -429,20 +429,46 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/border_box"
+        android:clickable="true"
         android:elevation="20dp"
         android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/event_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:text="Event Name"
-            android:textColor="@color/black"
-            android:textSize="40sp" />
+            >
+
+            <TextView
+                android:id="@+id/event_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Event Name"
+                android:gravity="left"
+                android:textColor="@color/black"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/distance_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:backgroundTint="@color/white"
+                android:clickable="false"
+                android:gravity="center"
+                android:outlineProvider="background"
+                android:text="0.00 mi"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="12.5sp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -510,21 +536,6 @@
                 app:iconTint="@color/black"
                 app:strokeColor="@color/shopping" />
 
-
-            <Button
-                android:id="@+id/distance_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:backgroundTint="@color/white"
-                android:clickable="false"
-                android:gravity="center_horizontal"
-                android:outlineProvider="background"
-                android:text="0.00 mi"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="10sp"
-                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
@@ -604,7 +615,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="15dp"
                         android:background="@color/white"
-                        android:backgroundTint="#FB3F4E"
+                        android:backgroundTint="@color/x"
                         android:elevation="0dp"
                         android:src="@drawable/x"
                         android:tint="@color/white"
@@ -620,7 +631,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
-                        android:backgroundTint="#B6E82B"
+                        android:backgroundTint="@color/check"
                         android:elevation="0dp"
                         android:src="@drawable/check"
                         app:backgroundTint="#000000"
@@ -1245,7 +1256,7 @@
                 android:layout_below="@id/points_3"
                 android:layout_centerHorizontal="true"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@color/check"
                 android:text="@string/points_understood"
                 android:textSize="12sp" />
         </RelativeLayout>
