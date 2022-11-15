@@ -1,6 +1,5 @@
 package com.globalgang.spur;
 
-import androidx.annotation.NonNull;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.FragmentActivity;
@@ -12,7 +11,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
@@ -34,7 +32,6 @@ import androidx.room.Room;
 
 import android.util.Log;
 import android.view.View;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
@@ -79,6 +76,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // one boolean variable to check whether all the tags in Reporting Screen
     // are filled by the user, properly or not.
     boolean isAllTagsCheckedReporting = false;
+
+    // one boolean variable to check whether the primary tag selected
+    // is one of the tags checked as part of the checkboxes
+    boolean isPrimaryTagPartofCheckedTags = false;
 
     private int CheckboxCounterTracker = 0;
 
@@ -136,8 +137,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Obtain the dropdown id for reporting screen
         Spinner spinnerTags = findViewById(R.id.reporting_spinner_for_primary_tag_dropdown);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags_array, R.layout.reporting_spinner_backgroud_color);
+        adapter.setDropDownViewResource(R.layout.reporting_custom_spinner_dropdrown_text_colour);
         spinnerTags.setAdapter(adapter);
 
 
@@ -395,7 +396,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.reportingSubmitButton.setOnClickListener((View v) -> {
             isAllFieldsCheckedReporting = CheckAllFields();
             isAllTagsCheckedReporting = CheckAllTags();
-            if (!isAllFieldsCheckedReporting || !isAllTagsCheckedReporting) {
+            isPrimaryTagPartofCheckedTags = CheckPrimaryTagForErrorHandling();
+            if (!isAllFieldsCheckedReporting || !isAllTagsCheckedReporting || !isPrimaryTagPartofCheckedTags) {
                 return;
             }
 
@@ -418,10 +420,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.authorPoints = reporter.points;
 
             // @TODO: Set these fields
-            String[] reportingTagsArray = new String[3];
+            //String[] reportingTagsArray = new String[3];
+            for (int i = 0; i < CheckedTagNames.size(); i++){
+                if(CheckedTagNames.get(i).toString().equals(e.primaryTag)){
+                    CheckedTagNames.remove(CheckedTagNames.get(i).toString());
+                }
+            //System.out.println("After clicking submit button");
+            //System.out.println(CheckedTagNames);
+            }
             //reportingTagsArray[0] = binding.
-            //e.secondaryTag = binding.;
-            //e.tertiaryTag =
+            e.secondaryTag = CheckedTagNames.get(0).toString();
+            e.tertiaryTag = CheckedTagNames.get(1).toString();
 
             addPoints("rick", 50);
             addEvent(e);
@@ -877,9 +886,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(CheckboxCounterTracker > 0 && CheckboxCounterTracker <4){
             return true;
         } else {
-            Toast.makeText(this,CheckboxCounterTracker + " No of Tags not within valid range" ,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Please Choose 1-3 Tags",Toast.LENGTH_SHORT).show();
             return false;
         }
+    }
+
+    private boolean CheckPrimaryTagForErrorHandling() {
+        boolean trackingFlag = false;
+        for (int i = 0; i < CheckedTagNames.size(); i++) {
+            System.out.println(CheckedTagNames.get(i).toString());
+            if (CheckedTagNames.get(i).toString().equals(binding.reportingSpinnerForPrimaryTagDropdown.getSelectedItem().toString())) {
+                trackingFlag = true;
+                return true;
+            } else {
+                trackingFlag = false;
+            }
+        }
+        if(trackingFlag == false){
+            Toast.makeText(this, "Primary Tag should be part of Tags selected above", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 
     private void isCheckedOrNotCounter(boolean isChecked) {
@@ -935,29 +961,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             case R.id.reporting_checkBox3:
                  isCheckedOrNotCounter(checked);
-                break;
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox3.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox3.getText().toString());}
+                 System.out.println(CheckedTagNames);
+                 break;
 
 
             case R.id.reporting_checkBox4:
                  isCheckedOrNotCounter(checked);
-                break;
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox4.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox4.getText().toString());}
+                 System.out.println(CheckedTagNames);
+                 break;
 
             case R.id.reporting_checkBox5:
                  isCheckedOrNotCounter(checked);
-                break;
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox5.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox5.getText().toString());}
+                 System.out.println(CheckedTagNames);
+                 break;
 
             case R.id.reporting_checkBox6:
                  isCheckedOrNotCounter(checked);
-                break;
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox6.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox6.getText().toString());}
+                 System.out.println(CheckedTagNames);
+                 break;
 
             case R.id.reporting_checkBox7:
                  isCheckedOrNotCounter(checked);
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox7.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox7.getText().toString());}
+                 System.out.println(CheckedTagNames);
                  break;
 
             case R.id.reporting_checkBox8:
                  isCheckedOrNotCounter(checked);
+                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox8.getText().toString());}
+                 else {CheckedTagNames.remove(binding.reportingCheckBox8.getText().toString());}
+                 System.out.println(CheckedTagNames);
                  break;
-
         }
     }
 
@@ -965,7 +1008,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         User u = users.getUserById(userId);
         binding.username.setText(u.userId);
         binding.pointsField.setText(Integer.toString(u.points));
-
         //TODO: LEVEL, PROGRESS BAR
     }
 
@@ -990,7 +1032,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (binding.reportingCheckBox8.isChecked() == true) binding.reportingCheckBox8.setChecked(false);
         CheckboxCounterTracker = 0;
         CheckedTagNames.clear();
-
     }
 
 
