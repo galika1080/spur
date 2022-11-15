@@ -1140,7 +1140,6 @@
                 app:iconTint="@color/black" />
 
 
-            <!-- +1 point description -->
             <TextView
                 android:id="@+id/points_popup_subtitle_1"
                 android:layout_width="match_parent"
@@ -1152,6 +1151,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
+            <!-- +1 point description -->
             <Button
                 android:id="@+id/points_popup_1"
                 android:layout_width="match_parent"
@@ -1177,7 +1177,7 @@
                 android:gravity="left|center_vertical"
                 android:backgroundTint="@color/grey"/>
 
-            <!-- +70 point description -->
+            <!-- +50 point description -->
             <Button
                 android:id="@+id/points_3"
                 android:layout_width="match_parent"
