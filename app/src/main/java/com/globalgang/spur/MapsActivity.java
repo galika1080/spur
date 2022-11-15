@@ -383,7 +383,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             updateVisibility();
         });
 
-        // yes and no buttons on "heads up, nearby events" popup
+
+       // yes and no buttons on "heads up, nearby events" popup
         binding.popupButtonYes.setOnClickListener((View v) -> {
             onClear();
             currentState = AppState.Reporting; // @TODO: add layout for reporting
@@ -468,6 +469,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String reporterId = binding.reporterId.getText().toString();
                 addPoints(reporterId, 5);
 
+                //find event and increase confirm count
+                List<Event> all_events = events.getAll();
+                int id = 0;
+                for (int i = 0; i < all_events.size(); i++) {
+                    if (all_events.get(i).title.equals(binding.eventName.getText())) {
+                        id = all_events.get(i).id;
+                    }
+                }
+                events.getById(id).numLikes += 1;
+                binding.eventNumYes.setText(Integer.toString(events.getById(id).numLikes));
             }
         });
 
@@ -487,11 +498,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 } else {
                     //do nothing if already refuted and pressing x again
+                    System.out.println("DiDnt work");
                     return;
                 }
 
                 binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check)));
                 binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
+
+                //find event and increase refute count
+                List<Event> all_events = events.getAll();
+                int id = 0;
+                for (int i = 0; i < all_events.size(); i++) {
+                    if (all_events.get(i).title.equals(binding.eventName.getText())) {
+                        id = all_events.get(i).id;
+                    }
+                }
+                events.getById(id).numDislikes += 1;
+                binding.eventNumNo.setText(Integer.toString(events.getById(id).numDislikes));
             }
         });
 
@@ -1122,6 +1145,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent1.primaryTag = "Social";
         exampleEvent1.secondaryTag = "Food";
         exampleEvent1.tertiaryTag = "Shopping";
+        exampleEvent1.numDislikes = 10;
+        exampleEvent1.numLikes = 154;
 
         Event exampleEvent2 = new Event();
         exampleEvent2.author = "anotherUser";
@@ -1136,6 +1161,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent2.title = "Bake sale on the quad";
         exampleEvent2.primaryTag = "Food";
         exampleEvent2.latitude = 40.108308; exampleEvent2.longitude = -88.227017;
+        exampleEvent2.numDislikes = 0;
+        exampleEvent2.numLikes = 0;
 
         if (events.getByNameLocation(exampleEvent1.title, exampleEvent1.latitude, exampleEvent1.longitude) == null) {
             events.insertAll(exampleEvent1);
