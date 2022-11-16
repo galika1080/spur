@@ -189,7 +189,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/popup_subtitle_2"
             android:layout_marginRight="10dp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/check_selected"
             android:text="@string/popup_button_yes"
             android:textColor="@color/white"
             android:textSize="12sp" />
