@@ -10,6 +10,7 @@ import android.Manifest;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -126,9 +127,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Manifest.permission.ACCESS_COARSE_LOCATION
         });
 
-        if (!users.isUserExists("rick")) {
+        if (!users.isUserExists(USER_NAME)) {
             User rick = new User();
-            rick.userId = "rick";
+            rick.userId = USER_NAME;
             rick.points = 0;
             users.insertUser(rick);
         }
@@ -143,7 +144,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         //init user profile
-        populateUserInfo("rick");
+        populateUserInfo(USER_NAME);
 
         updateFilterColors("All");
         binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
@@ -333,24 +334,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         binding.btnFilterMisc.setOnClickListener((View v) -> {
-            updateFilterColors("Misc");
+            updateFilterColors("Miscellaneous");
 
             for (int i = 0; i < eventMarkers.size(); i++) {
                 Event event = events.getById((int) eventMarkers.get(i).getTag());
                 if (event.primaryTag == null || event.primaryTag.isEmpty()) {
                     eventMarkers.get(i).setVisible(false);
                     continue;
-                } else if (event.primaryTag.equals("Misc")) {
+                } else if (event.primaryTag.equals("Miscellaneous")) {
                     eventMarkers.get(i).setVisible(true);
                 } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
                     eventMarkers.get(i).setVisible(false);
                     continue;
-                } else if (event.secondaryTag.equals("Misc")) {
+                } else if (event.secondaryTag.equals("Miscellaneous")) {
                     eventMarkers.get(i).setVisible(true);
                 } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
                     eventMarkers.get(i).setVisible(false);
                     continue;
-                } else if (event.tertiaryTag.equals("Misc")) {
+                } else if (event.tertiaryTag.equals("Miscellaneous")) {
                     eventMarkers.get(i).setVisible(true);
                 } else {
                     eventMarkers.get(i).setVisible(false);
@@ -432,10 +433,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //System.out.println(CheckedTagNames);
             }
             //reportingTagsArray[0] = binding.
-            e.secondaryTag = CheckedTagNames.get(0).toString();
-            e.tertiaryTag = CheckedTagNames.get(1).toString();
+            if (!CheckedTagNames.isEmpty()) {
+                e.secondaryTag = CheckedTagNames.get(0).toString();
+                if (CheckedTagNames.size() >= 2) {
+                    e.tertiaryTag = CheckedTagNames.get(1).toString();
+                }
+            }
 
-            addPoints("rick", 50);
+            addPoints(USER_NAME, 50);
             Toast.makeText(MapsActivity.this, "Thanks for adding an event! +50 points", Toast.LENGTH_SHORT).show();
 
             addEvent(e);
@@ -448,14 +453,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (binding.refuteButton.getBackgroundTintList() == ColorStateList.valueOf(getColor(R.color.x_selected))) {
-                    //if you had previously refuted and are now switching your vote
-                    Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
+               //get current event from event name
+                List<Event> all_events = events.getAll();
+                int id = 0;
+                for (int i = 0; i < all_events.size(); i++) {
+                    if (all_events.get(i).title.equals(binding.eventName.getText())) {
+                        id = all_events.get(i).id;
+                    }
+                }
+                Event this_event = events.getById(id);
 
-                } else if (binding.confirmButton.getBackgroundTintList() != ColorStateList.valueOf(getColor(R.color.check_selected))) {
+                if (users.getUserById(USER_NAME).refuted_events.contains(this_event)) {
+                    //if previously refuted, but now changing to confirm
+                    Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
+                    users.getUserById(USER_NAME).refuted_events.remove(this_event);
+                    //remove 1 from refute count
+                    events.updateDislikes(id, -1);
+                    binding.eventNumNo.setText(Integer.toString(events.getById(id).numDislikes));
+                } else if (!users.getUserById(USER_NAME).confirmed_events.contains(this_event)) {
                     //if you had not previously already selected check then give person points (voting for first time on event)
-                    addPoints("rick", 10);
-                    populateUserInfo("rick");
+                    addPoints(USER_NAME, 10);
+                    populateUserInfo(USER_NAME);
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -465,19 +483,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check_selected)));
                 binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x)));
+                // @TODO: Figure out how to handle database adding events
+                users.getUserById(USER_NAME).confirmed_events.add(events.getById(id));
 
                 String reporterId = binding.reporterId.getText().toString();
                 addPoints(reporterId, 5);
 
-                //find event and increase confirm count
-                List<Event> all_events = events.getAll();
-                int id = 0;
-                for (int i = 0; i < all_events.size(); i++) {
-                    if (all_events.get(i).title.equals(binding.eventName.getText())) {
-                        id = all_events.get(i).id;
-                    }
-                }
-                events.getById(id).numLikes += 1;
+                //increase confirm count
+                events.updateLikes(id, 1);
                 binding.eventNumYes.setText(Integer.toString(events.getById(id).numLikes));
             }
         });
@@ -486,26 +499,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.refuteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (binding.confirmButton.getBackgroundTintList() == ColorStateList.valueOf(getColor(R.color.check_selected))) {
-                    //if you had previously checked and are now switching your vote
-                    Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
-
-                } else if (binding.refuteButton.getBackgroundTintList() != ColorStateList.valueOf(getColor(R.color.x_selected))) {
-                    //if you had not previously already refuted then give person points (voting for first time on event)
-                    addPoints("rick", 10);
-                    populateUserInfo("rick");
-                    Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    //do nothing if already refuted and pressing x again
-                    System.out.println("DiDnt work");
-                    return;
-                }
-
-                binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check)));
-                binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
-
-                //find event and increase refute count
+                //get current event from event name
                 List<Event> all_events = events.getAll();
                 int id = 0;
                 for (int i = 0; i < all_events.size(); i++) {
@@ -513,7 +507,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         id = all_events.get(i).id;
                     }
                 }
-                events.getById(id).numDislikes += 1;
+                Event this_event = events.getById(id);
+                if (users.getUserById(USER_NAME).confirmed_events.contains(this_event)) {
+                    //if previously confirmed, but now changing to refute
+                    Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
+                    users.getUserById(USER_NAME).confirmed_events.remove(this_event);
+                    //remove 1 from confirm count
+                    events.updateLikes(id, -1);
+                    binding.eventNumYes.setText(Integer.toString(events.getById(id).numLikes));
+                } else if (!users.getUserById(USER_NAME).refuted_events.contains(this_event)) {
+                    //if you had not previously already selected x then give person points (voting for first time on event)
+                    addPoints(USER_NAME, 10);
+                    populateUserInfo(USER_NAME);
+                    Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    //do nothing if already refuted and pressing x again
+                    return;
+                }
+
+                binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check)));
+                binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
+
+                // @TODO: Figure out how to handle database adding events
+                users.getUserById(USER_NAME).refuted_events.add(this_event);
+
+                //increase refute count
+                events.updateDislikes(id, 1);
                 binding.eventNumNo.setText(Integer.toString(events.getById(id).numDislikes));
             }
         });
@@ -631,7 +651,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance));
             binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism));
             binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc));
-        } else if (selected_filter.equals("Misc")) {
+        } else if (selected_filter.equals("Miscellaneous")) {
             binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc_selected));
 
             binding.btnFilterAll.setBackgroundColor(getColor(R.color.all));
@@ -790,7 +810,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag1.setIcon(getDrawable(R.drawable.ic_religion));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.religion)));
             binding.tag1.setBackgroundColor(getColor(R.color.religion));
-        } else if (e.primaryTag.equals("Misc")) {
+        } else if (e.primaryTag.equals("Miscellaneous")) {
             binding.tag1.setText(e.primaryTag);
             binding.tag1.setIcon(getDrawable(R.drawable.ic_misc));
             binding.tag1.setStrokeColor(ColorStateList.valueOf(getColor(R.color.misc)));
@@ -836,7 +856,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag2.setIcon(getDrawable(R.drawable.ic_religion));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.religion)));
             binding.tag2.setBackgroundColor(getColor(R.color.religion));
-        } else if (e.secondaryTag.equals("Misc")) {
+        } else if (e.secondaryTag.equals("Miscellaneous")) {
             binding.tag2.setText(e.secondaryTag);
             binding.tag2.setIcon(getDrawable(R.drawable.ic_misc));
             binding.tag2.setStrokeColor(ColorStateList.valueOf(getColor(R.color.misc)));
@@ -882,7 +902,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag3.setIcon(getDrawable(R.drawable.ic_religion));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.religion)));
             binding.tag3.setBackgroundColor(getColor(R.color.religion));
-        } else if (e.tertiaryTag.equals("Misc")) {
+        } else if (e.tertiaryTag.equals("Miscellaneous")) {
             binding.tag3.setText(e.tertiaryTag);
             binding.tag3.setIcon(getDrawable(R.drawable.ic_misc));
             binding.tag3.setStrokeColor(ColorStateList.valueOf(getColor(R.color.misc)));
@@ -903,7 +923,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Map<String, String> tagToMarker = Map.of(
                 "Activism", "ic_marker__activism",
                 "Food", "ic_marker__food",
-                "Misc", "ic_marker__misc",
+                "Miscellaneous", "ic_marker__misc",
                 "Performance", "ic_marker__performance",
                 "Professional", "ic_marker__professional",
                 "Religion", "ic_marker__religion",

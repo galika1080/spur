@@ -48,4 +48,5 @@ public class Event {
 
     @ColumnInfo(name = "num_dislikes")
     public int numDislikes;
+
 }

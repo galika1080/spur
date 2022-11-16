@@ -29,5 +29,11 @@ public interface EventDao {
     @Delete
     void delete(Event user);
 
+    @Query("UPDATE event SET num_likes = num_likes+:increment WHERE id =:eventId")
+    void updateLikes(Integer eventId, int increment);
+
+    @Query("UPDATE event SET num_dislikes = num_dislikes+:increment WHERE id =:eventId")
+    void updateDislikes(Integer eventId, int increment);
+
 
 }

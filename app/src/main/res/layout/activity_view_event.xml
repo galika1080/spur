@@ -17,9 +17,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:orientation="horizontal"
             >
 
             <TextView
@@ -28,19 +29,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:text="Event Name"
                 android:gravity="left"
+                android:text="Event Name"
                 android:textColor="@color/black"
-                android:textSize="40sp" />
-
+                android:textSize="40sp"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
             <Button
                 android:id="@+id/distance_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|right"
+                android:layout_gravity="bottom|right"
                 android:backgroundTint="@color/white"
                 android:clickable="false"
-                android:gravity="center"
+                android:gravity="right"
                 android:outlineProvider="background"
                 android:text="0.00 mi"
                 android:textAlignment="center"
@@ -49,21 +55,29 @@
                 android:textSize="12.5sp" />
 
         </LinearLayout>
-
-        <LinearLayout
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/tag_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            >
+
+        </androidx.constraintlayout.helper.widget.Flow>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/tag_1"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            android:id="@+id/tag_1"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
                 android:layout_marginRight="10dp"
                 android:backgroundTint="@color/social"
                 android:clickable="false"
@@ -84,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tag_1"
                 android:backgroundTint="@color/food"
                 android:clickable="false"
                 android:gravity="center"
@@ -103,6 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tag_2"
                 android:backgroundTint="@color/shopping"
                 android:clickable="false"
                 android:gravity="center"
@@ -116,7 +132,7 @@
                 app:iconTint="@color/black"
                 app:strokeColor="@color/shopping" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/event_description"
@@ -166,7 +182,7 @@
             android:background="@color/black" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp">
@@ -233,17 +249,17 @@
                     <TextView
                         android:id="@+id/event_num_no"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginRight="40dp"
+                        android:layout_marginRight="39dp"
                         android:text="0" />
 
                     <TextView
                         android:id="@+id/event_num_yes"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginLeft="39dp"
                         android:text="0" />
                 </LinearLayout>
 
@@ -276,13 +292,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="30dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
                     android:text="@string/reporter_message"
                     android:textColor="#757474" />
 
@@ -292,6 +309,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="User 131"
+                    android:textAlignment="center"
                     android:textColor="#757474" />
 
                 <com.google.android.material.button.MaterialButton
