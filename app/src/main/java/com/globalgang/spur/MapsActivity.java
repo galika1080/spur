@@ -471,28 +471,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     events.setIsRefuted(currentlyViewedEventId, false);
                     //remove 1 from refute count
                     events.updateDislikes(currentlyViewedEventId, -1);
-                    //TODO: Need to fix this -- binding not changing view
-                    binding.eventNumNo.setText(Integer.toString(events.getById(currentlyViewedEventId).numDislikes));
 
-                    //TODO: Need to fix this -- binding not changing view
-                    binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                 } else if (!current_event.isConfirmed) {
                     //if you had not previously already selected check then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
 
-                    //TODO: Need to fix this -- binding not changing view
-                    binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                 } else {
                     //do nothing if already checked and pressing check again
                     Toast.makeText(MapsActivity.this, "You have already confirmed this event", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                //TODO: Need to fix this -- binding not changing view
-                binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check_selected)));
-                binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x)));
 
                 events.setIsConfirmed(currentlyViewedEventId, true);
 
@@ -502,10 +492,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 //increase confirm count
                 events.updateLikes(currentlyViewedEventId, 1);
-                //TODO: Need to fix this -- binding not changing view
-                binding.eventNumYes.setText(Integer.toString(events.getById(currentlyViewedEventId).numLikes));
                 events.updateLastConfirmed(currentlyViewedEventId, System.currentTimeMillis());
 
+                //call populate event to update confirm/refute count, and reporter points info
                 populateEventInfo(events.getById(currentlyViewedEventId));
             }
         });
@@ -531,15 +520,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     events.setIsConfirmed(currentlyViewedEventId, false);
                     //remove 1 from confirm count
                     events.updateLikes(currentlyViewedEventId, -1);
-                    //TODO: Need to fix this -- binding not working
-                    binding.eventNumYes.setText(Integer.toString(events.getById(currentlyViewedEventId).numLikes));
-                    binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                 } else if (!current_event.isRefuted) {
                     //if you had not previously already selected x then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
-                    //TODO: Need to fix this -- binding not working
-                    binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
                 } else {
                     //do nothing if already refuted and pressing x again
@@ -547,16 +531,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     return;
                 }
 
-                //TODO: Need to fix this -- user info of reporter needs to be populated not the viewing user
-                binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check)));
-                binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
-
                 events.setIsRefuted(currentlyViewedEventId, true);
 
                 //increase refute count
                 events.updateDislikes(currentlyViewedEventId, 1);
-                //TODO: Need to fix this -- binding not working
-                binding.eventNumNo.setText(Integer.toString(events.getById(currentlyViewedEventId).numDislikes));
+
+                //call populate event to update confirm/refute count, and reporter points info
+                populateEventInfo(events.getById(currentlyViewedEventId));
             }
         });
 
@@ -791,6 +772,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.reporterId.setText(e.author);
         binding.reporterPoints.setText(Integer.toString(users.getUserById(e.author).points));
 
+
         Log.d("Author", e.author);
         if (e.author.equals(USER_NAME)){
 //            binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check_selected)));
@@ -805,6 +787,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.confirmButton.setClickable(true);
             binding.refuteButton.setAlpha(1f);
             binding.refuteButton.setClickable(true);
+            //if not the author of this event and the event has been confirmed/refuted --> set colors
+            if (e.isConfirmed) {
+                binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check_selected)));
+                binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x)));
+            } else if (e.isRefuted) {
+                binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check)));
+                binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
+            }
         }
 
         float[] distanceResults = new float[]{-1.0f};
