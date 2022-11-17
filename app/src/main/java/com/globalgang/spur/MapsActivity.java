@@ -1258,6 +1258,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent3.numDislikes = 0;
         exampleEvent3.numLikes = 0;
 
+        Event exampleEvent4 = new Event();
+        exampleEvent4.lastConfirmed = 1668000000 * 1000;
+        exampleEvent4.author = "anotherUser";
+        exampleEvent4.authorPoints = 0;
+        exampleEvent4.description = "Grainger giving out free merch at their booth";
+        exampleEvent4.writtenLocation = "First floor CIF";
+        exampleEvent4.title = "Grainger free merch";
+        exampleEvent4.primaryTag = "Professional";
+        exampleEvent4.latitude = 40.1124; exampleEvent3.longitude = -88.2283;
+        exampleEvent4.numDislikes = 0;
+        exampleEvent4.numLikes = 0;
+
 
         if (events.getByNameLocation(exampleEvent1.title, exampleEvent1.latitude, exampleEvent1.longitude) == null) {
             events.insertAll(exampleEvent1);
@@ -1267,6 +1279,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         if (events.getByNameLocation(exampleEvent3.title, exampleEvent3.latitude, exampleEvent3.longitude) == null) {
             events.insertAll(exampleEvent3);
+        }
+        if (events.getByNameLocation(exampleEvent4.title, exampleEvent4.latitude, exampleEvent4.longitude) == null) {
+            events.insertAll(exampleEvent4);
         }
 
         googleMap.setMyLocationEnabled(true);
