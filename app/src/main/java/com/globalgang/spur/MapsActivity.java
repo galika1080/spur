@@ -461,6 +461,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
                 Event this_event = events.getById(id);
+
+                float[] distanceResults = new float[]{-1.0f};
+                Location.distanceBetween(this_event.latitude, this_event.longitude, locLat, locLong, distanceResults);
+                float distanceMiles = distanceResults[0] * 0.000621371f;
+                if (distanceMiles > 0.1f) {
+                    Toast.makeText(MapsActivity.this, "You must attend in-person to vote!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 //                User user = users.getUserById(USER_NAME);
 //
 //                if (user.confirmed_events.contains(this_event)){
@@ -543,6 +552,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
                 Event this_event = events.getById(id);
+
+                float[] distanceResults = new float[]{-1.0f};
+                Location.distanceBetween(this_event.latitude, this_event.longitude, locLat, locLong, distanceResults);
+                float distanceMiles = distanceResults[0] * 0.000621371f;
+                if (distanceMiles > 0.1f) {
+                    Toast.makeText(MapsActivity.this, "You must attend in-person to vote!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 User user = users.getUserById(USER_NAME);
 
 //                if (user.refuted_events.contains(this_event)){
@@ -1304,11 +1322,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent2.numDislikes = 0;
         exampleEvent2.numLikes = 0;
 
+        Event exampleEvent3 = new Event();
+        exampleEvent3.lastConfirmed = 1668644335 * 1000;
+        exampleEvent3.author = "anotherUser";
+        exampleEvent3.authorPoints = 0;
+        exampleEvent3.description = "Tons of food!";
+        exampleEvent3.title = "Bake sale on the quad";
+        exampleEvent3.primaryTag = "Food";
+        exampleEvent3.latitude = 40.103279; exampleEvent3.longitude = -88.234597;
+        exampleEvent3.numDislikes = 0;
+        exampleEvent3.numLikes = 0;
+
         if (events.getByNameLocation(exampleEvent1.title, exampleEvent1.latitude, exampleEvent1.longitude) == null) {
             events.insertAll(exampleEvent1);
         }
         if (events.getByNameLocation(exampleEvent2.title, exampleEvent2.latitude, exampleEvent2.longitude) == null) {
             events.insertAll(exampleEvent2);
+        }
+        if (events.getByNameLocation(exampleEvent3.title, exampleEvent3.latitude, exampleEvent3.longitude) == null) {
+            events.insertAll(exampleEvent3);
         }
 
         googleMap.setMyLocationEnabled(true);
