@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.FragmentActivity;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.Manifest;
 import android.content.Context;
@@ -143,6 +144,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         adapter.setDropDownViewResource(R.layout.reporting_custom_spinner_dropdrown_text_colour);
         spinnerTags.setAdapter(adapter);
 
+        // points popup as a shared pref
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.putBoolean("pointsPopupSeen", false);
+        myEdit.commit();
 
         //init user profile
         populateUserInfo(USER_NAME);
@@ -366,14 +372,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         no_confirmation.setText(Integer.toString(myPoints));
 
         // got it button
-        /*
-        * I'm thinking that maybe when you click on event details it should show the points popup
-        * for the first time (case 1)
-        * or
-        * it could be the first screen when you open the app (case 2)
-        */
         binding.gotItButton.setOnClickListener((View v) -> { // case 1
-           currentState = AppState.EventDetails;
+           currentState = AppState.FullscreenMap;
            updateVisibility();
         });
 
@@ -702,6 +702,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         if (currentState == AppState.FullscreenMap) {
+            SharedPreferences sharedPreferences = getSharedPreferences("sharedPref", MODE_PRIVATE);
+            if (sharedPreferences.getBoolean("pointsPopupSeen", false)) {
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                myEdit.putBoolean("pointsPopupSeen", true);
+                myEdit.commit();
+                currentState = AppState.PointsPopup;
+            }
+
             binding.filterScrollView.setVisibility(View.VISIBLE);
             binding.navi.setVisibility(View.VISIBLE);
             binding.btnAddEvent.setVisibility(View.VISIBLE);
