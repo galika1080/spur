@@ -1258,6 +1258,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent3.numDislikes = 0;
         exampleEvent3.numLikes = 0;
 
+
         if (events.getByNameLocation(exampleEvent1.title, exampleEvent1.latitude, exampleEvent1.longitude) == null) {
             events.insertAll(exampleEvent1);
         }
