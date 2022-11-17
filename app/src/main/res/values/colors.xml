@@ -37,8 +37,8 @@
 
     <color name="check">#60CC60</color>
     <color name="x">#FB3F4E</color>
-    <color name="check_selected">#3B933B</color>
-    <color name="x_selected">#BF343F</color>
+    <color name="check_selected">#327A32</color>
+    <color name="x_selected">#AA2832</color>
 
 
 </resources>

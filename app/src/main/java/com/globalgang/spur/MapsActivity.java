@@ -1266,7 +1266,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent4.writtenLocation = "First floor CIF";
         exampleEvent4.title = "Grainger free merch";
         exampleEvent4.primaryTag = "Professional";
-        exampleEvent4.latitude = 40.1124; exampleEvent3.longitude = -88.2283;
+        exampleEvent4.latitude = 40.1124; exampleEvent4.longitude = -88.228300;
         exampleEvent4.numDislikes = 0;
         exampleEvent4.numLikes = 0;
 
