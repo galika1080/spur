@@ -10,6 +10,7 @@ import android.Manifest;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationManager;
@@ -359,11 +360,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        //Change No. Yes and No. No
-        int myPoints = 1;
-        TextView no_confirmation = findViewById(R.id.event_num_yes);
-        no_confirmation.setText(Integer.toString(myPoints));
-
         // got it button
         /*
         * I'm thinking that maybe when you click on event details it should show the points popup
@@ -375,8 +371,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
            currentState = AppState.EventDetails;
            updateVisibility();
         });
-
-
 
         // report event button
         binding.btnAddEvent.setOnClickListener((View v) -> {
@@ -441,6 +435,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
             addPoints(USER_NAME, 50);
+            populateUserInfo(USER_NAME);
             Toast.makeText(MapsActivity.this, "Thanks for adding an event! +50 points", Toast.LENGTH_SHORT).show();
 
             addEvent(e);
@@ -462,22 +457,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
                 Event this_event = events.getById(id);
+//                User user = users.getUserById(USER_NAME);
+//
+//                if (user.confirmed_events.contains(this_event)){
+////                    Toast.makeText(MapsActivity.this, "You have already confirmed this event", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                else if (user.refuted_events.contains(this_event)){
+////                    Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
+//                    user.refuted_events.remove(this_event);
+//                    user.confirmed_events.add(this_event);
+//                    users.updateConfirmedEvents(user.userId, user.confirmed_events);
+//                    users.updateRefutedEvents(user.userId, user.confirmed_events);
+//
+//                    events.updateDislikes(id, -1);
+//                    events.updateLikes(id, 1);
+//                    }
+//                else{
+//                    addPoints(USER_NAME, 10);
+//                    populateUserInfo(USER_NAME);
+//                    Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
+//                    user.confirmed_events.add(this_event);
+//                    users.updateConfirmedEvents(user.userId, user.confirmed_events);
+//                    events.updateLikes(id, 1);
+//                    addPoints(this_event.author, 5);
+//                }
+//
+//                binding.reporterPoints.setText(Integer.toString(users.getUserById(this_event.author).points));
+//                binding.eventNumYes.setText(Integer.toString(events.getById(id).numLikes));
+//                binding.eventNumNo.setText(Integer.toString(events.getById(id).numLikes));
 
                 if (users.getUserById(USER_NAME).refuted_events.contains(this_event)) {
                     //if previously refuted, but now changing to confirm
                     Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
+                    addPoints(USER_NAME, -10);
+                    populateUserInfo(USER_NAME);
                     users.getUserById(USER_NAME).refuted_events.remove(this_event);
                     //remove 1 from refute count
                     events.updateDislikes(id, -1);
+                    binding.reporterPoints.setText(Integer.toString(users.getUserById(this_event.author).points));
                     binding.eventNumNo.setText(Integer.toString(events.getById(id).numDislikes));
                 } else if (!users.getUserById(USER_NAME).confirmed_events.contains(this_event)) {
                     //if you had not previously already selected check then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
-
+                    binding.reporterPoints.setText(Integer.toString(users.getUserById(this_event.author).points));
                 } else {
                     //do nothing if already checked and pressing check again
+                    Toast.makeText(MapsActivity.this, "You have already confirmed this event", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -508,21 +536,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
                 Event this_event = events.getById(id);
+                User user = users.getUserById(USER_NAME);
+
+//                if (user.refuted_events.contains(this_event)){
+////                    Toast.makeText(MapsActivity.this, "You have already confirmed this event", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                else if (user.confirmed_events.contains(this_event)){
+////                    Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
+//                    user.refuted_events.add(this_event);
+//                    user.confirmed_events.remove(this_event);
+//                    users.updateConfirmedEvents(user.userId, user.confirmed_events);
+//                    users.updateRefutedEvents(user.userId, user.confirmed_events);
+//
+//                    events.updateDislikes(id, 1);
+//                    events.updateLikes(id, -1);
+//                }
+//                else{
+//                    addPoints(USER_NAME, 10);
+//                    populateUserInfo(USER_NAME);
+//                    Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
+//                    user.refuted_events.add(this_event);
+//                    users.updateRefutedEvents(user.userId, user.confirmed_events);
+//                    events.updateDislikes(id, 1);
+//                    addPoints(this_event.author, 5);
+//                }
+//
+//                binding.reporterPoints.setText(Integer.toString(users.getUserById(this_event.author).points));
+//                binding.eventNumYes.setText(Integer.toString(events.getById(id).numLikes));
+//                binding.eventNumNo.setText(Integer.toString(events.getById(id).numLikes));
+
                 if (users.getUserById(USER_NAME).confirmed_events.contains(this_event)) {
                     //if previously confirmed, but now changing to refute
                     Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
                     users.getUserById(USER_NAME).confirmed_events.remove(this_event);
+                    addPoints(users.getUserById(USER_NAME).userId, -10);
                     //remove 1 from confirm count
                     events.updateLikes(id, -1);
                     binding.eventNumYes.setText(Integer.toString(events.getById(id).numLikes));
+                    binding.reporterPoints.setText(Integer.toString(users.getUserById(this_event.author).points));
                 } else if (!users.getUserById(USER_NAME).refuted_events.contains(this_event)) {
                     //if you had not previously already selected x then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
+                    binding.reporterPoints.setText(Integer.toString(users.getUserById(this_event.author).points));
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
-
                 } else {
                     //do nothing if already refuted and pressing x again
+                    Toast.makeText(MapsActivity.this, "You have already refuted this event", Toast.LENGTH_SHORT).show();
+
                     return;
                 }
 
@@ -759,7 +821,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.eventNumNo.setText(Integer.toString(e.numDislikes));
         binding.eventNumYes.setText(Integer.toString(e.numLikes));
         binding.reporterId.setText(e.author);
-        binding.reporterPoints.setText(Integer.toString(e.authorPoints));
+        binding.reporterPoints.setText(Integer.toString(users.getUserById(e.author).points));
+
+
+        if (e.author.equals(USER_NAME)){
+//            binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check_selected)));
+            binding.confirmButton.setAlpha(0.5f);
+            binding.confirmButton.setClickable(false);
+//            binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
+            binding.refuteButton.setAlpha(0.5f);
+            binding.refuteButton.setClickable(false);
+        }
 
         if (e.writtenLocation == null || e.writtenLocation.isEmpty()) {
             binding.eventLocationLayout.setVisibility(View.GONE);
