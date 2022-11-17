@@ -469,19 +469,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //if previously refuted, but now changing to confirm
                     Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
                     events.setIsRefuted(currentlyViewedEventId, false);
-                    addPoints(USER_NAME, -10);
                     //remove 1 from refute count
                     events.updateDislikes(currentlyViewedEventId, -1);
+                    //TODO: Need to fix this -- binding not changing view
                     binding.eventNumNo.setText(Integer.toString(events.getById(currentlyViewedEventId).numDislikes));
 
-                    populateUserInfo(USER_NAME);
+                    //TODO: Need to fix this -- binding not changing view
                     binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                 } else if (!current_event.isConfirmed) {
-
                     //if you had not previously already selected check then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
+
+                    //TODO: Need to fix this -- binding not changing view
                     binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                 } else {
                     //do nothing if already checked and pressing check again
@@ -489,17 +490,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     return;
                 }
 
-
+                //TODO: Need to fix this -- binding not changing view
                 binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check_selected)));
                 binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x)));
-                // @TODO: Figure out how to handle database adding events
+
                 events.setIsConfirmed(currentlyViewedEventId, true);
 
-                String reporterId = binding.reporterId.getText().toString();
+                String reporterId = events.getById(currentlyViewedEventId).author;
                 addPoints(reporterId, 5);
+                populateUserInfo(reporterId);
 
                 //increase confirm count
                 events.updateLikes(currentlyViewedEventId, 1);
+                //TODO: Need to fix this -- binding not changing view
                 binding.eventNumYes.setText(Integer.toString(events.getById(currentlyViewedEventId).numLikes));
                 events.updateLastConfirmed(currentlyViewedEventId, System.currentTimeMillis());
 
@@ -526,32 +529,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //if previously confirmed, but now changing to refute
                     Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
                     events.setIsConfirmed(currentlyViewedEventId, false);
-                    addPoints(users.getUserById(USER_NAME).userId, -10);
                     //remove 1 from confirm count
                     events.updateLikes(currentlyViewedEventId, -1);
+                    //TODO: Need to fix this -- binding not working
                     binding.eventNumYes.setText(Integer.toString(events.getById(currentlyViewedEventId).numLikes));
                     binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                 } else if (!current_event.isRefuted) {
                     //if you had not previously already selected x then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
+                    //TODO: Need to fix this -- binding not working
                     binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
                 } else {
                     //do nothing if already refuted and pressing x again
                     Toast.makeText(MapsActivity.this, "You have already refuted this event", Toast.LENGTH_SHORT).show();
-
                     return;
                 }
 
+                //TODO: Need to fix this -- user info of reporter needs to be populated not the viewing user
                 binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check)));
                 binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
 
-                // @TODO: Figure out how to handle database adding events
                 events.setIsRefuted(currentlyViewedEventId, true);
 
                 //increase refute count
                 events.updateDislikes(currentlyViewedEventId, 1);
+                //TODO: Need to fix this -- binding not working
                 binding.eventNumNo.setText(Integer.toString(events.getById(currentlyViewedEventId).numDislikes));
             }
         });
