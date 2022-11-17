@@ -49,4 +49,7 @@ public class Event {
     @ColumnInfo(name = "num_dislikes")
     public int numDislikes;
 
+    @ColumnInfo(name = "last_confirmed")
+    public long lastConfirmed;
+
 }

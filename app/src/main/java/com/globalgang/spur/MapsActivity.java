@@ -39,6 +39,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -411,6 +412,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.latitude = locLat;
             e.longitude = locLong;
 
+            e.lastConfirmed = System.currentTimeMillis();
+
             e.title = binding.reportingEventNameTextInput.getText().toString();
             e.description = binding.reportingEventDescriptionTextInput.getText().toString();
             e.writtenLocation = binding.reportingLocationTextInput.getText().toString();
@@ -491,7 +494,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 //increase confirm count
                 events.updateLikes(id, 1);
+                events.updateLastConfirmed(id, System.currentTimeMillis());
                 binding.eventNumYes.setText(Integer.toString(events.getById(id).numLikes));
+
+                populateEventInfo(events.getById(id));
             }
         });
 
@@ -760,6 +766,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.eventNumYes.setText(Integer.toString(e.numLikes));
         binding.reporterId.setText(e.author);
         binding.reporterPoints.setText(Integer.toString(e.authorPoints));
+
+        float[] distanceResults = new float[]{-1.0f};
+        Location.distanceBetween(e.latitude, e.longitude, locLat, locLong, distanceResults);
+
+        float distanceMiles = distanceResults[0] * 0.000621371f;
+
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+
+        binding.distanceBox.setText(df.format(distanceMiles) + " mi");
+
+        long timeDelta = System.currentTimeMillis() - e.lastConfirmed;
+        long minutes = timeDelta / (1000 * 60);
+
+        String deltaText = "just now";
+        if (minutes > 0) {
+            deltaText = Long.toString(minutes) + " minutes ago";
+        }
+        if (minutes > 60) {
+            deltaText = Long.toString(minutes / 60) + " hours ago";
+        }
+        if (minutes > 1440) {
+            deltaText = "a long time ago";
+        }
+        binding.lastConfirmed.setText(deltaText);
 
         if (e.writtenLocation == null || e.writtenLocation.isEmpty()) {
             binding.eventLocationLayout.setVisibility(View.GONE);
@@ -1150,6 +1181,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(quad, 14f));
 
         Event exampleEvent1 = new Event();
+        exampleEvent1.lastConfirmed = 1668651536 * 1000;
         exampleEvent1.author = "userGuy123";
         exampleEvent1.authorPoints = 344;
         if (!users.isUserExists(exampleEvent1.author)) {
@@ -1169,6 +1201,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent1.numLikes = 154;
 
         Event exampleEvent2 = new Event();
+        exampleEvent2.lastConfirmed = 1668644335 * 1000;
         exampleEvent2.author = "anotherUser";
         exampleEvent2.authorPoints = 0;
         if (!users.isUserExists(exampleEvent2.author)) {
