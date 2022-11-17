@@ -2,6 +2,7 @@ package com.globalgang.spur;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.ColorRes;
 import androidx.fragment.app.FragmentActivity;
 
 import android.annotation.SuppressLint;
@@ -837,7 +838,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.reporterId.setText(e.author);
         binding.reporterPoints.setText(Integer.toString(users.getUserById(e.author).points));
 
-
+        Log.d("Author", e.author);
         if (e.author.equals(USER_NAME)){
 //            binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check_selected)));
             binding.confirmButton.setAlpha(0.5f);
@@ -845,6 +846,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //            binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
             binding.refuteButton.setAlpha(0.5f);
             binding.refuteButton.setClickable(false);
+        }
+        else{
+            binding.confirmButton.setAlpha(1f);
+            binding.confirmButton.setClickable(true);
+            binding.refuteButton.setAlpha(1f);
+            binding.refuteButton.setClickable(true);
         }
 
         float[] distanceResults = new float[]{-1.0f};
