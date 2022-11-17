@@ -2,12 +2,14 @@ package com.globalgang.spur.eventdb;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Database;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
+import com.globalgang.spur.MapsActivity;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.lang.reflect.Type;
@@ -23,12 +25,5 @@ public class User {
 
     @ColumnInfo(name = "points")
     public int points;
-
-    @Embedded
-    public ArrayList<Event> confirmed_events = new ArrayList<Event>();
-
-    @Embedded
-    public ArrayList<Event> refuted_events = new ArrayList<Event>();
-
 }
 

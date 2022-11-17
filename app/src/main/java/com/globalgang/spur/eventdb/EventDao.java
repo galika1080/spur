@@ -35,5 +35,9 @@ public interface EventDao {
     @Query("UPDATE event SET num_dislikes = num_dislikes+:increment WHERE id =:eventId")
     void updateDislikes(Integer eventId, int increment);
 
+    @Query("UPDATE event SET is_confirmed = :is_confirmed WHERE id =:eventId")
+    void setIsConfirmed(Integer eventId, boolean is_confirmed);
 
+    @Query("UPDATE event SET is_refuted = :is_refuted WHERE id =:eventId")
+    void setIsRefuted(Integer eventId, boolean is_refuted);
 }

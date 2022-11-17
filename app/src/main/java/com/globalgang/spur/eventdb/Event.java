@@ -49,4 +49,9 @@ public class Event {
     @ColumnInfo(name = "num_dislikes")
     public int numDislikes;
 
+    @ColumnInfo(name = "is_refuted")
+    public boolean isRefuted;
+
+    @ColumnInfo(name = "is_confirmed")
+    public boolean isConfirmed;
 }

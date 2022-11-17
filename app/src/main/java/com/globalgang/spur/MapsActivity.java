@@ -64,6 +64,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ProfileView
     }
 
+    private Integer currentlyViewedEventId;
+
     private double locLat = 0.0;
     private double locLong = 0.0;
 
@@ -453,24 +455,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //get current event from event name
-                List<Event> all_events = events.getAll();
-                int id = 0;
-                for (int i = 0; i < all_events.size(); i++) {
-                    if (all_events.get(i).title.equals(binding.eventName.getText())) {
-                        id = all_events.get(i).id;
-                    }
-                }
-                Event this_event = events.getById(id);
+               //get current event from event id
+                Event current_event = events.getById(currentlyViewedEventId);
 
-                if (users.getUserById(USER_NAME).refuted_events.contains(this_event)) {
+                if (current_event.isRefuted) {
                     //if previously refuted, but now changing to confirm
                     Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
-                    users.getUserById(USER_NAME).refuted_events.remove(this_event);
+                    events.setIsRefuted(currentlyViewedEventId, false);
                     //remove 1 from refute count
-                    events.updateDislikes(id, -1);
-                    binding.eventNumNo.setText(Integer.toString(events.getById(id).numDislikes));
-                } else if (!users.getUserById(USER_NAME).confirmed_events.contains(this_event)) {
+                    events.updateDislikes(currentlyViewedEventId, -1);
+                    binding.eventNumNo.setText(Integer.toString(events.getById(currentlyViewedEventId).numDislikes));
+                } else if (!current_event.isConfirmed) {
                     //if you had not previously already selected check then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
@@ -481,17 +476,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     return;
                 }
 
+
                 binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check_selected)));
                 binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x)));
                 // @TODO: Figure out how to handle database adding events
-                users.getUserById(USER_NAME).confirmed_events.add(events.getById(id));
+                events.setIsConfirmed(currentlyViewedEventId, true);
 
                 String reporterId = binding.reporterId.getText().toString();
                 addPoints(reporterId, 5);
 
                 //increase confirm count
-                events.updateLikes(id, 1);
-                binding.eventNumYes.setText(Integer.toString(events.getById(id).numLikes));
+                events.updateLikes(currentlyViewedEventId, 1);
+                binding.eventNumYes.setText(Integer.toString(events.getById(currentlyViewedEventId).numLikes));
             }
         });
 
@@ -499,23 +495,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.refuteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //get current event from event name
-                List<Event> all_events = events.getAll();
-                int id = 0;
-                for (int i = 0; i < all_events.size(); i++) {
-                    if (all_events.get(i).title.equals(binding.eventName.getText())) {
-                        id = all_events.get(i).id;
-                    }
-                }
-                Event this_event = events.getById(id);
-                if (users.getUserById(USER_NAME).confirmed_events.contains(this_event)) {
+                //get current event from event id
+                Event current_event = events.getById(currentlyViewedEventId);
+
+                if (current_event.isConfirmed) {
                     //if previously confirmed, but now changing to refute
                     Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
-                    users.getUserById(USER_NAME).confirmed_events.remove(this_event);
+                    events.setIsConfirmed(currentlyViewedEventId, false);
                     //remove 1 from confirm count
-                    events.updateLikes(id, -1);
-                    binding.eventNumYes.setText(Integer.toString(events.getById(id).numLikes));
-                } else if (!users.getUserById(USER_NAME).refuted_events.contains(this_event)) {
+                    events.updateLikes(currentlyViewedEventId, -1);
+                    binding.eventNumYes.setText(Integer.toString(events.getById(currentlyViewedEventId).numLikes));
+                } else if (!current_event.isRefuted) {
                     //if you had not previously already selected x then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
@@ -530,11 +520,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
 
                 // @TODO: Figure out how to handle database adding events
-                users.getUserById(USER_NAME).refuted_events.add(this_event);
+                events.setIsRefuted(currentlyViewedEventId, true);
 
                 //increase refute count
-                events.updateDislikes(id, 1);
-                binding.eventNumNo.setText(Integer.toString(events.getById(id).numDislikes));
+                events.updateDislikes(currentlyViewedEventId, 1);
+                binding.eventNumNo.setText(Integer.toString(events.getById(currentlyViewedEventId).numDislikes));
             }
         });
 
@@ -910,7 +900,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             binding.tag3.setVisibility(View.GONE);
         }
-
+        currentlyViewedEventId = e.id;
         // @TODO: add remaining fields
         //need to set distance from current location
         //need to set last confirmed

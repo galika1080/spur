@@ -3,9 +3,11 @@ package com.globalgang.spur.eventdb;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.TypeConverters;
 import androidx.room.Update;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface UserDao {
@@ -21,5 +23,6 @@ public interface UserDao {
 
     @Insert
     void insertUser(User user);
+
 
 }
