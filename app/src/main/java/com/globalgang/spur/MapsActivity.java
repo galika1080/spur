@@ -811,6 +811,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         long minutes = timeDelta / (1000 * 60);
 
         String deltaText = "just now";
+        if (e.numLikes == 0) {
+            binding.titleLastConfirmed.setText("Event created: ");
+        }
         if (minutes > 0) {
             deltaText = Long.toString(minutes) + " minutes ago";
         }
@@ -972,9 +975,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag3.setVisibility(View.GONE);
         }
         currentlyViewedEventId = e.id;
-        // @TODO: add remaining fields
-        //need to set distance from current location
-        //need to set last confirmed
     }
 
     private void displayEventMarker(Event e) {
