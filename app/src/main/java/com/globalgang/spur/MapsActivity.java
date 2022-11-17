@@ -488,7 +488,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 String reporterId = events.getById(currentlyViewedEventId).author;
                 addPoints(reporterId, 5);
-                populateUserInfo(reporterId);
 
                 //increase confirm count
                 events.updateLikes(currentlyViewedEventId, 1);
