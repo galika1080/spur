@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.FragmentActivity;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.Manifest;
 import android.content.Context;
@@ -40,6 +41,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -143,6 +145,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         adapter.setDropDownViewResource(R.layout.reporting_custom_spinner_dropdrown_text_colour);
         spinnerTags.setAdapter(adapter);
 
+        // points popup as a shared pref
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.putBoolean("pointsPopupSeen", false);
+        myEdit.commit();
 
         //init user profile
         populateUserInfo(USER_NAME);
@@ -361,14 +368,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         // got it button
-        /*
-        * I'm thinking that maybe when you click on event details it should show the points popup
-        * for the first time (case 1)
-        * or
-        * it could be the first screen when you open the app (case 2)
-        */
         binding.gotItButton.setOnClickListener((View v) -> { // case 1
-           currentState = AppState.EventDetails;
+           currentState = AppState.FullscreenMap;
            updateVisibility();
         });
 
@@ -404,6 +405,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             e.latitude = locLat;
             e.longitude = locLong;
+
+            e.lastConfirmed = System.currentTimeMillis();
 
             e.title = binding.reportingEventNameTextInput.getText().toString();
             e.description = binding.reportingEventDescriptionTextInput.getText().toString();
@@ -519,7 +522,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 //increase confirm count
                 events.updateLikes(id, 1);
+                events.updateLastConfirmed(id, System.currentTimeMillis());
                 binding.eventNumYes.setText(Integer.toString(events.getById(id).numLikes));
+
+                populateEventInfo(events.getById(id));
             }
         });
 
@@ -758,6 +764,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         if (currentState == AppState.FullscreenMap) {
+            SharedPreferences sharedPreferences = getSharedPreferences("sharedPref", MODE_PRIVATE);
+            if (sharedPreferences.getBoolean("pointsPopupSeen", false)) {
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                myEdit.putBoolean("pointsPopupSeen", true);
+                myEdit.commit();
+                currentState = AppState.PointsPopup;
+            }
+
             binding.filterScrollView.setVisibility(View.VISIBLE);
             binding.navi.setVisibility(View.VISIBLE);
             binding.btnAddEvent.setVisibility(View.VISIBLE);
@@ -832,6 +846,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.refuteButton.setAlpha(0.5f);
             binding.refuteButton.setClickable(false);
         }
+
+        float[] distanceResults = new float[]{-1.0f};
+        Location.distanceBetween(e.latitude, e.longitude, locLat, locLong, distanceResults);
+
+        float distanceMiles = distanceResults[0] * 0.000621371f;
+
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+
+        binding.distanceBox.setText(df.format(distanceMiles) + " mi");
+
+        long timeDelta = System.currentTimeMillis() - e.lastConfirmed;
+        long minutes = timeDelta / (1000 * 60);
+
+        String deltaText = "just now";
+        if (minutes > 0) {
+            deltaText = Long.toString(minutes) + " minutes ago";
+        }
+        if (minutes > 60) {
+            deltaText = Long.toString(minutes / 60) + " hours ago";
+        }
+        if (minutes > 1440) {
+            deltaText = "a long time ago";
+        }
+        binding.lastConfirmed.setText(deltaText);
 
         if (e.writtenLocation == null || e.writtenLocation.isEmpty()) {
             binding.eventLocationLayout.setVisibility(View.GONE);
@@ -1222,6 +1261,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(quad, 14f));
 
         Event exampleEvent1 = new Event();
+        exampleEvent1.lastConfirmed = 1668651536 * 1000;
         exampleEvent1.author = "userGuy123";
         exampleEvent1.authorPoints = 344;
         if (!users.isUserExists(exampleEvent1.author)) {
@@ -1241,6 +1281,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent1.numLikes = 154;
 
         Event exampleEvent2 = new Event();
+        exampleEvent2.lastConfirmed = 1668644335 * 1000;
         exampleEvent2.author = "anotherUser";
         exampleEvent2.authorPoints = 0;
         if (!users.isUserExists(exampleEvent2.author)) {
