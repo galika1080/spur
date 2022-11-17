@@ -54,4 +54,7 @@ public class Event {
 
     @ColumnInfo(name = "is_confirmed")
     public boolean isConfirmed;
+
+    @ColumnInfo(name = "last_confirmed")
+    public long lastConfirmed;
 }

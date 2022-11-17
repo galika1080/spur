@@ -38,6 +38,9 @@ public interface EventDao {
     @Query("UPDATE event SET is_confirmed = :is_confirmed WHERE id =:eventId")
     void setIsConfirmed(Integer eventId, boolean is_confirmed);
 
+    @Query("UPDATE event SET last_confirmed = :timestamp WHERE id LIKE :id")
+    void updateLastConfirmed(int id, long timestamp);
+
     @Query("UPDATE event SET is_refuted = :is_refuted WHERE id =:eventId")
     void setIsRefuted(Integer eventId, boolean is_refuted);
 }

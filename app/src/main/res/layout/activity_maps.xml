@@ -216,7 +216,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="10dp"
-        android:visibility="visible"
         tools:visibility="gone">
 
         <LinearLayout
@@ -434,41 +433,23 @@
         android:clickable="true"
         android:elevation="20dp"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="horizontal"
-            >
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
-            <TextView
-                android:id="@+id/event_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="left"
-                android:text="Event Name"
-                android:textColor="@color/black"
-                android:textSize="40sp"
-                />
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                />
             <Button
                 android:id="@+id/distance_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="15dp"
                 android:backgroundTint="@color/white"
-                android:clickable="false"
-                android:gravity="right"
+                android:clickable="true"
                 android:outlineProvider="background"
                 android:text="0.00 mi"
                 android:textAlignment="center"
@@ -476,7 +457,18 @@
                 android:textColor="@color/black"
                 android:textSize="12.5sp" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/event_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toStartOf="@id/distance_box"
+                android:gravity="left"
+                android:text="Event Name"
+                android:textColor="@color/black"
+                android:textSize="40sp" />
+        </RelativeLayout>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -568,7 +560,7 @@
         <LinearLayout
             android:id="@+id/event_location_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -658,7 +650,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="2.5dp"
                     android:gravity="center"
@@ -717,8 +709,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:textAlignment="center"
                     android:text="@string/reporter_message"
+                    android:textAlignment="center"
                     android:textColor="#757474" />
 
                 <TextView
@@ -1161,7 +1153,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:padding="15dp">
+        android:padding="15dp"
+        tools:visibility="gone">
 
         <RelativeLayout
             android:layout_width="wrap_content"

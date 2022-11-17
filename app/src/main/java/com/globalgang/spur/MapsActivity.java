@@ -2,14 +2,17 @@ package com.globalgang.spur;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.ColorRes;
 import androidx.fragment.app.FragmentActivity;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.Manifest;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationManager;
@@ -39,6 +42,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -144,6 +148,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         adapter.setDropDownViewResource(R.layout.reporting_custom_spinner_dropdrown_text_colour);
         spinnerTags.setAdapter(adapter);
 
+        // points popup as a shared pref
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.putBoolean("pointsPopupSeen", false);
+        myEdit.commit();
 
         //init user profile
         populateUserInfo(USER_NAME);
@@ -361,24 +370,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        //Change No. Yes and No. No
-        int myPoints = 1;
-        TextView no_confirmation = findViewById(R.id.event_num_yes);
-        no_confirmation.setText(Integer.toString(myPoints));
-
         // got it button
-        /*
-        * I'm thinking that maybe when you click on event details it should show the points popup
-        * for the first time (case 1)
-        * or
-        * it could be the first screen when you open the app (case 2)
-        */
         binding.gotItButton.setOnClickListener((View v) -> { // case 1
-           currentState = AppState.EventDetails;
+           currentState = AppState.FullscreenMap;
            updateVisibility();
         });
-
-
 
         // report event button
         binding.btnAddEvent.setOnClickListener((View v) -> {
@@ -413,6 +409,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.latitude = locLat;
             e.longitude = locLong;
 
+            e.lastConfirmed = System.currentTimeMillis();
+
             e.title = binding.reportingEventNameTextInput.getText().toString();
             e.description = binding.reportingEventDescriptionTextInput.getText().toString();
             e.writtenLocation = binding.reportingLocationTextInput.getText().toString();
@@ -443,6 +441,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
             addPoints(USER_NAME, 50);
+            populateUserInfo(USER_NAME);
             Toast.makeText(MapsActivity.this, "Thanks for adding an event! +50 points", Toast.LENGTH_SHORT).show();
 
             addEvent(e);
@@ -458,21 +457,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                //get current event from event id
                 Event current_event = events.getById(currentlyViewedEventId);
 
+                float[] distanceResults = new float[]{-1.0f};
+                Location.distanceBetween(current_event.latitude, current_event.longitude, locLat, locLong, distanceResults);
+                float distanceMiles = distanceResults[0] * 0.000621371f;
+                if (distanceMiles > 0.1f) {
+                    Toast.makeText(MapsActivity.this, "You must attend in-person to vote!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (current_event.isRefuted) {
                     //if previously refuted, but now changing to confirm
                     Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
                     events.setIsRefuted(currentlyViewedEventId, false);
+                    addPoints(USER_NAME, -10);
                     //remove 1 from refute count
                     events.updateDislikes(currentlyViewedEventId, -1);
                     binding.eventNumNo.setText(Integer.toString(events.getById(currentlyViewedEventId).numDislikes));
+
+                    populateUserInfo(USER_NAME);
+                    binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                 } else if (!current_event.isConfirmed) {
+
                     //if you had not previously already selected check then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
-
+                    binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                 } else {
                     //do nothing if already checked and pressing check again
+                    Toast.makeText(MapsActivity.this, "You have already confirmed this event", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -488,6 +501,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //increase confirm count
                 events.updateLikes(currentlyViewedEventId, 1);
                 binding.eventNumYes.setText(Integer.toString(events.getById(currentlyViewedEventId).numLikes));
+                events.updateLastConfirmed(currentlyViewedEventId, System.currentTimeMillis());
+
+                populateEventInfo(events.getById(currentlyViewedEventId));
             }
         });
 
@@ -498,21 +514,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //get current event from event id
                 Event current_event = events.getById(currentlyViewedEventId);
 
+                float[] distanceResults = new float[]{-1.0f};
+                Location.distanceBetween(current_event.latitude, current_event.longitude, locLat, locLong, distanceResults);
+                float distanceMiles = distanceResults[0] * 0.000621371f;
+                if (distanceMiles > 0.1f) {
+                    Toast.makeText(MapsActivity.this, "You must attend in-person to vote!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (current_event.isConfirmed) {
                     //if previously confirmed, but now changing to refute
                     Toast.makeText(MapsActivity.this, "You changed your vote! +0 points", Toast.LENGTH_SHORT).show();
                     events.setIsConfirmed(currentlyViewedEventId, false);
+                    addPoints(users.getUserById(USER_NAME).userId, -10);
                     //remove 1 from confirm count
                     events.updateLikes(currentlyViewedEventId, -1);
                     binding.eventNumYes.setText(Integer.toString(events.getById(currentlyViewedEventId).numLikes));
+                    binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                 } else if (!current_event.isRefuted) {
                     //if you had not previously already selected x then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
+                    binding.reporterPoints.setText(Integer.toString(users.getUserById(current_event.author).points));
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
-
                 } else {
                     //do nothing if already refuted and pressing x again
+                    Toast.makeText(MapsActivity.this, "You have already refuted this event", Toast.LENGTH_SHORT).show();
+
                     return;
                 }
 
@@ -686,6 +714,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         if (currentState == AppState.FullscreenMap) {
+            SharedPreferences sharedPreferences = getSharedPreferences("sharedPref", MODE_PRIVATE);
+            if (sharedPreferences.getBoolean("pointsPopupSeen", false)) {
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                myEdit.putBoolean("pointsPopupSeen", true);
+                myEdit.commit();
+                currentState = AppState.PointsPopup;
+            }
+
             binding.filterScrollView.setVisibility(View.VISIBLE);
             binding.navi.setVisibility(View.VISIBLE);
             binding.btnAddEvent.setVisibility(View.VISIBLE);
@@ -749,7 +785,48 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.eventNumNo.setText(Integer.toString(e.numDislikes));
         binding.eventNumYes.setText(Integer.toString(e.numLikes));
         binding.reporterId.setText(e.author);
-        binding.reporterPoints.setText(Integer.toString(e.authorPoints));
+        binding.reporterPoints.setText(Integer.toString(users.getUserById(e.author).points));
+
+        Log.d("Author", e.author);
+        if (e.author.equals(USER_NAME)){
+//            binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check_selected)));
+            binding.confirmButton.setAlpha(0.5f);
+            binding.confirmButton.setClickable(false);
+//            binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x_selected)));
+            binding.refuteButton.setAlpha(0.5f);
+            binding.refuteButton.setClickable(false);
+        }
+        else{
+            binding.confirmButton.setAlpha(1f);
+            binding.confirmButton.setClickable(true);
+            binding.refuteButton.setAlpha(1f);
+            binding.refuteButton.setClickable(true);
+        }
+
+        float[] distanceResults = new float[]{-1.0f};
+        Location.distanceBetween(e.latitude, e.longitude, locLat, locLong, distanceResults);
+
+        float distanceMiles = distanceResults[0] * 0.000621371f;
+
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+
+        binding.distanceBox.setText(df.format(distanceMiles) + " mi");
+
+        long timeDelta = System.currentTimeMillis() - e.lastConfirmed;
+        long minutes = timeDelta / (1000 * 60);
+
+        String deltaText = "just now";
+        if (minutes > 0) {
+            deltaText = Long.toString(minutes) + " minutes ago";
+        }
+        if (minutes > 60) {
+            deltaText = Long.toString(minutes / 60) + " hours ago";
+        }
+        if (minutes > 1440) {
+            deltaText = "a long time ago";
+        }
+        binding.lastConfirmed.setText(deltaText);
 
         if (e.writtenLocation == null || e.writtenLocation.isEmpty()) {
             binding.eventLocationLayout.setVisibility(View.GONE);
@@ -1140,6 +1217,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(quad, 14f));
 
         Event exampleEvent1 = new Event();
+        exampleEvent1.lastConfirmed = 1668651536 * 1000;
         exampleEvent1.author = "userGuy123";
         exampleEvent1.authorPoints = 344;
         if (!users.isUserExists(exampleEvent1.author)) {
@@ -1159,6 +1237,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent1.numLikes = 154;
 
         Event exampleEvent2 = new Event();
+        exampleEvent2.lastConfirmed = 1668644335 * 1000;
         exampleEvent2.author = "anotherUser";
         exampleEvent2.authorPoints = 0;
         if (!users.isUserExists(exampleEvent2.author)) {
@@ -1174,11 +1253,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent2.numDislikes = 0;
         exampleEvent2.numLikes = 0;
 
+        Event exampleEvent3 = new Event();
+        exampleEvent3.lastConfirmed = 1668644335 * 1000;
+        exampleEvent3.author = "anotherUser";
+        exampleEvent3.authorPoints = 0;
+        exampleEvent3.description = "Tons of food!";
+        exampleEvent3.title = "Bake sale on the quad";
+        exampleEvent3.primaryTag = "Food";
+        exampleEvent3.latitude = 40.103279; exampleEvent3.longitude = -88.234597;
+        exampleEvent3.numDislikes = 0;
+        exampleEvent3.numLikes = 0;
+
         if (events.getByNameLocation(exampleEvent1.title, exampleEvent1.latitude, exampleEvent1.longitude) == null) {
             events.insertAll(exampleEvent1);
         }
         if (events.getByNameLocation(exampleEvent2.title, exampleEvent2.latitude, exampleEvent2.longitude) == null) {
             events.insertAll(exampleEvent2);
+        }
+        if (events.getByNameLocation(exampleEvent3.title, exampleEvent3.latitude, exampleEvent3.longitude) == null) {
+            events.insertAll(exampleEvent3);
         }
 
         googleMap.setMyLocationEnabled(true);
