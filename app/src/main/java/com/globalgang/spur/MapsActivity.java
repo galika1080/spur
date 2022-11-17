@@ -771,6 +771,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.eventNumYes.setText(Integer.toString(e.numLikes));
         binding.reporterId.setText(e.author);
         binding.reporterPoints.setText(Integer.toString(users.getUserById(e.author).points));
+        binding.confirmButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.check)));
+        binding.refuteButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.x)));
 
 
         Log.d("Author", e.author);
