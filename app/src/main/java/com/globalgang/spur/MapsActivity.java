@@ -2,7 +2,6 @@ package com.globalgang.spur;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.ColorRes;
 import androidx.fragment.app.FragmentActivity;
 
 import android.annotation.SuppressLint;
@@ -12,8 +11,6 @@ import android.Manifest;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -39,11 +36,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -379,6 +378,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // report event button
         binding.btnAddEvent.setOnClickListener((View v) -> {
             currentState = AppState.ReportPopup;
+            getNearbyEvents();
             updateVisibility();
         });
 
@@ -751,6 +751,158 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (Event e : existing) {
             addEvent(e);
+        }
+    }
+
+    // helper function to calculate distance in miles from current location to an event
+    private float getEventDistance(Event e) {
+        float[] distanceResults = new float[]{-1.0f};
+        Location.distanceBetween(e.latitude, e.longitude, locLat, locLong, distanceResults);
+        float distanceMiles = distanceResults[0] * 0.000621371f;
+        System.out.println("title: " + e.title + " lat: " + e.latitude + " long: " + e.longitude + " meters: " + distanceResults[0]);
+        return distanceMiles;
+    }
+
+    // helper function to build a map of {event_id: event_distance} for all events within .1 miles
+    // map sorted by distance in ascending order
+    private LinkedHashMap<Integer, Float> getSortedMap() {
+        HashMap<Integer, Float> map = new HashMap<>();
+        LinkedHashMap<Integer, Float> sortedMap = new LinkedHashMap<>();
+        ArrayList<Float> list = new ArrayList<>();
+        float threshold = 0.1f;
+
+        updateKnownLocation();
+        List<Event> existing = events.getAll();
+        for (int i = 0; i < existing.size(); i++) {
+            Event e = existing.get(i);
+            float dist = getEventDistance(existing.get(i));
+            if (dist < threshold) {
+                map.put(e.id, dist);
+            }
+        }
+
+        for (Map.Entry<Integer, Float> entry : map.entrySet()) {
+            list.add(entry.getValue());
+        }
+        Collections.sort(list);
+        for (float num : list) {
+            for (Map.Entry<Integer, Float> entry : map.entrySet()) {
+                if (entry.getValue().equals(num)) {
+                    sortedMap.put(entry.getKey(), num);
+                }
+            }
+        }
+        System.out.println(sortedMap);
+        return sortedMap;
+    }
+
+    // show nearby events within .1 mi in a list, click to view event details
+    // if no such event, don't show the popup, directly go to report event view
+    // hide placeholders if nearby events fewer than 5
+    private void getNearbyEvents() {
+        LinkedHashMap<Integer, Float> sortedMap = getSortedMap();
+        binding.popupEvent1.setVisibility(View.GONE);
+        binding.eventDist1.setVisibility(View.GONE);
+        binding.popupEvent2.setVisibility(View.GONE);
+        binding.eventDist2.setVisibility(View.GONE);
+        binding.popupEvent3.setVisibility(View.GONE);
+        binding.eventDist3.setVisibility(View.GONE);
+        binding.popupEvent4.setVisibility(View.GONE);
+        binding.eventDist4.setVisibility(View.GONE);
+        binding.popupEvent5.setVisibility(View.GONE);
+        binding.eventDist5.setVisibility(View.GONE);
+        if (sortedMap.size() == 0) {
+            currentState = AppState.Reporting;
+            updateVisibility();
+        } else {
+            int i = 1; // counter of events < 0.1 mi
+            DecimalFormat df = new DecimalFormat("#.## mi");
+            for (Map.Entry<Integer, Float> entry : sortedMap.entrySet()) {
+                int event_id = entry.getKey();
+                Event event = events.getById(event_id);
+                String event_title = event.title;
+                float dist = entry.getValue();
+                if (i == 1) {
+                    binding.popupEvent1.setText(event_title);
+                    binding.eventDist1.setText(df.format(dist));
+                    binding.popupEvent1.setVisibility(View.VISIBLE);
+                    binding.eventDist1.setVisibility(View.VISIBLE);
+                    binding.popupEvent1.setOnClickListener((View v) -> {
+                        currentState = AppState.EventDetails;
+                        populateEventInfo(event);
+                        updateVisibility();
+                    });
+                    binding.eventDist1.setOnClickListener((View v) -> {
+                        currentState = AppState.EventDetails;
+                        populateEventInfo(event);
+                        updateVisibility();
+                    });
+                } else if (i == 2) {
+                    binding.popupEvent2.setText(event_title);
+                    binding.eventDist2.setText(df.format(dist));
+                    binding.popupEvent2.setVisibility(View.VISIBLE);
+                    binding.eventDist2.setVisibility(View.VISIBLE);
+                    binding.popupEvent2.setOnClickListener((View v) -> {
+                        currentState = AppState.EventDetails;
+                        populateEventInfo(event);
+                        updateVisibility();
+                    });
+                    binding.eventDist2.setOnClickListener((View v) -> {
+                        currentState = AppState.EventDetails;
+                        populateEventInfo(event);
+                        updateVisibility();
+                    });
+                } else if (i == 3) {
+                    binding.popupEvent3.setText(event_title);
+                    binding.eventDist3.setText(df.format(dist));
+                    binding.popupEvent3.setVisibility(View.VISIBLE);
+                    binding.eventDist3.setVisibility(View.VISIBLE);
+                    binding.popupEvent3.setOnClickListener((View v) -> {
+                        currentState = AppState.EventDetails;
+                        populateEventInfo(event);
+                        updateVisibility();
+                    });
+                    binding.eventDist3.setOnClickListener((View v) -> {
+                        currentState = AppState.EventDetails;
+                        populateEventInfo(event);
+                        updateVisibility();
+                    });
+                } else if (i == 4) {
+                    binding.popupEvent4.setText(event_title);
+                    binding.eventDist4.setText(df.format(dist));
+                    binding.popupEvent4.setVisibility(View.VISIBLE);
+                    binding.eventDist4.setVisibility(View.VISIBLE);
+                    binding.popupEvent4.setOnClickListener((View v) -> {
+                        currentState = AppState.EventDetails;
+                        populateEventInfo(event);
+                        updateVisibility();
+                    });
+                    binding.eventDist4.setOnClickListener((View v) -> {
+                        currentState = AppState.EventDetails;
+                        populateEventInfo(event);
+                        updateVisibility();
+                    });
+                } else if (i == 5) {
+                    binding.popupEvent5.setText(event_title);
+                    binding.eventDist5.setText(df.format(dist));
+                    binding.popupEvent5.setVisibility(View.VISIBLE);
+                    binding.eventDist5.setVisibility(View.VISIBLE);
+                    binding.popupEvent5.setOnClickListener((View v) -> {
+                        currentState = AppState.EventDetails;
+                        populateEventInfo(event);
+                        updateVisibility();
+                    });
+                    binding.eventDist5.setOnClickListener((View v) -> {
+                        currentState = AppState.EventDetails;
+                        populateEventInfo(event);
+                        updateVisibility();
+                    });
+                } else {
+                    // only need to consider the top 5 nearby events
+                    break;
+                }
+                i++;
+            }
         }
     }
 
