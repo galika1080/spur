@@ -20,6 +20,7 @@ import com.globalgang.spur.eventdb.Event;
 import com.globalgang.spur.eventdb.EventDao;
 import com.globalgang.spur.eventdb.User;
 import com.globalgang.spur.eventdb.UserDao;
+import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -164,209 +165,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.btnFilterAll.setOnClickListener((View v) -> {
             updateFilterColors("All");
 
-            for (int i = 0; i < eventMarkers.size(); i++) {
-                eventMarkers.get(i).setVisible(true);
+            for (Marker mark : eventMarkers) {
+                mark.setVisible(true);
             }
         });
         binding.btnFilterFood.setOnClickListener((View v) -> {
-            updateFilterColors("Food");
-
-            for (int i = 0; i < eventMarkers.size(); i++) {
-                Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.primaryTag.equals("Food")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.secondaryTag.equals("Food")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.tertiaryTag.equals("Food")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else {
-                    eventMarkers.get(i).setVisible(false);
-                }
-            }
+            String filterTag = "Food";
+            updateFilterColors(filterTag);
+            updateMarkerVisibility(filterTag);
         });
         binding.btnFilterSocial.setOnClickListener((View v) -> {
-            updateFilterColors("Social");
-
-            for (int i = 0; i < eventMarkers.size(); i++) {
-                Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.primaryTag.equals("Social")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.secondaryTag.equals("Social")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.tertiaryTag.equals("Social")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else {
-                    eventMarkers.get(i).setVisible(false);
-                }
-            }
+            String filterTag = "Social";
+            updateFilterColors(filterTag);
+            updateMarkerVisibility(filterTag);
         });
         binding.btnFilterShopping.setOnClickListener((View v) -> {
-            updateFilterColors("Shopping");
-
-            for (int i = 0; i < eventMarkers.size(); i++) {
-                Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.primaryTag.equals("Shopping")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.secondaryTag.equals("Shopping")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.tertiaryTag.equals("Shopping")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else {
-                    eventMarkers.get(i).setVisible(false);
-                }
-            }
+            String filterTag = "Shopping";
+            updateFilterColors(filterTag);
+            updateMarkerVisibility(filterTag);
         });
         binding.btnFilterProfessional.setOnClickListener((View v) -> {
-            updateFilterColors("Professional");
-
-            for (int i = 0; i < eventMarkers.size(); i++) {
-                Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.primaryTag.equals("Professional")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.secondaryTag.equals("Professional")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.tertiaryTag.equals("Professional")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else {
-                    eventMarkers.get(i).setVisible(false);
-                }
-            }
+            String filterTag = "Professional";
+            updateFilterColors(filterTag);
+            updateMarkerVisibility(filterTag);
         });
         binding.btnFilterPerformance.setOnClickListener((View v) -> {
-            updateFilterColors("Performance");
-
-            for (int i = 0; i < eventMarkers.size(); i++) {
-                Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.primaryTag.equals("Performance")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.secondaryTag.equals("Performance")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.tertiaryTag.equals("Performance")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else {
-                    eventMarkers.get(i).setVisible(false);
-                }
-            }
+            String filterTag = "Performance";
+            updateFilterColors(filterTag);
+            updateMarkerVisibility(filterTag);
         });
         binding.btnFilterActivism.setOnClickListener((View v) -> {
-            updateFilterColors("Activism");
-
-            for (int i = 0; i < eventMarkers.size(); i++) {
-                Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.primaryTag.equals("Activism")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.secondaryTag.equals("Activism")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.tertiaryTag.equals("Activism")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else {
-                    eventMarkers.get(i).setVisible(false);
-                }
-            }
+            String filterTag = "Activism";
+            updateFilterColors(filterTag);
+            updateMarkerVisibility(filterTag);
         });
         binding.btnFilterReligion.setOnClickListener((View v) -> {
-            updateFilterColors("Religion");
-
-            for (int i = 0; i < eventMarkers.size(); i++) {
-                Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.primaryTag.equals("Religion")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.secondaryTag.equals("Religion")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.tertiaryTag.equals("Religion")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else {
-                    eventMarkers.get(i).setVisible(false);
-                }
-            }
+            String filterTag = "Religion";
+            updateFilterColors(filterTag);
+            updateMarkerVisibility(filterTag);
         });
         binding.btnFilterMisc.setOnClickListener((View v) -> {
-            updateFilterColors("Miscellaneous");
-
-            for (int i = 0; i < eventMarkers.size(); i++) {
-                Event event = events.getById((int) eventMarkers.get(i).getTag());
-                if (event.primaryTag == null || event.primaryTag.isEmpty()) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.primaryTag.equals("Miscellaneous")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.secondaryTag == null || event.secondaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.secondaryTag.equals("Miscellaneous")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else if ((event.tertiaryTag == null || event.tertiaryTag.isEmpty())) {
-                    eventMarkers.get(i).setVisible(false);
-                    continue;
-                } else if (event.tertiaryTag.equals("Miscellaneous")) {
-                    eventMarkers.get(i).setVisible(true);
-                } else {
-                    eventMarkers.get(i).setVisible(false);
-                }
-            }
+            String filterTag = "Miscellaneous";
+            updateFilterColors(filterTag);
+            updateMarkerVisibility(filterTag);
         });
 
         // got it button
@@ -563,6 +404,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    private void updateMarkerVisibility(String filterTag) {
+        for (Marker mark : eventMarkers) {
+            Event event = events.getById((int) mark.getTag());
+
+            String[] tags = {event.primaryTag, event.secondaryTag, event.tertiaryTag};
+            mark.setVisible(ArrayUtils.contains(tags, filterTag));
+        }
+    }
+
     private void updateFilterColors(String selected_filter) {
         if (selected_filter.equals("All")) {
             binding.btnFilterAll.setBackgroundColor(getColor(R.color.all_selected));
@@ -693,8 +543,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (currentState == AppState.EventDetails) {
             binding.eventView.setVisibility(View.VISIBLE);
             binding.filterScrollView.setVisibility(View.GONE);
+
+            mMap.setPadding(0, 0, 0, 850);
         } else {
             binding.eventView.setVisibility(View.GONE);
+
+            mMap.setPadding(0, 135, 0, 0);
         }
 
         if (currentState == AppState.FullscreenMap) {
@@ -1135,14 +989,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int id = resolvedEvent.id;
 
         Map<String, String> tagToMarker = Map.of(
-                "Activism", "ic_marker__activism",
-                "Food", "ic_marker__food",
-                "Miscellaneous", "ic_marker__misc",
-                "Performance", "ic_marker__performance",
-                "Professional", "ic_marker__professional",
-                "Religion", "ic_marker__religion",
-                "Shopping", "ic_marker__shopping",
-                "Social", "ic_marker__social"
+                "Activism", "ic_marker_activism",
+                "Food", "ic_marker_food",
+                "Miscellaneous", "ic_marker_misc",
+                "Performance", "ic_marker_performance",
+                "Professional", "ic_marker_professional",
+                "Religion", "ic_marker_religion",
+                "Shopping", "ic_marker_shopping",
+                "Social", "ic_marker_social"
         );
 
         Log.wtf("Get tag", e.primaryTag);
@@ -1355,6 +1209,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             currentState = AppState.EventDetails;
             updateVisibility();
 
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                new LatLng(event.latitude, event.longitude), 16f
+            ));
+
             return true;
         });
 
@@ -1454,5 +1312,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         googleMap.setMyLocationEnabled(true);
 
         displayExistingEvents();
+
+        currentState = AppState.PointsPopup;
+        updateVisibility();
     }
 }
