@@ -1212,7 +1212,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(quad, 14f));
 
         Event exampleEvent1 = new Event();
-        exampleEvent1.lastConfirmed = 1668651536 * 1000;
+        exampleEvent1.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 10);
         exampleEvent1.author = "userGuy123";
         exampleEvent1.authorPoints = 344;
         if (!users.isUserExists(exampleEvent1.author)) {
@@ -1221,7 +1221,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             exampleUser1.points = exampleEvent1.authorPoints;
             users.insertUser(exampleUser1);
         }
-        exampleEvent1.description = "This is an event. You should pull up.";
+        exampleEvent1.description = "We have food. Pull up.";
         exampleEvent1.writtenLocation = "Fourth floor chemistry building!";
         exampleEvent1.title = "Super secret social stuff";
         exampleEvent1.latitude = 40.1074821; exampleEvent1.longitude = -88.2265963;
@@ -1232,7 +1232,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent1.numLikes = 154;
 
         Event exampleEvent2 = new Event();
-        exampleEvent2.lastConfirmed = 1668644335 * 1000;
+        exampleEvent2.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 4);
         exampleEvent2.author = "anotherUser";
         exampleEvent2.authorPoints = 0;
         if (!users.isUserExists(exampleEvent2.author)) {
@@ -1241,26 +1241,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             exampleUser2.points = exampleEvent2.authorPoints;
             users.insertUser(exampleUser2);
         }
-        exampleEvent2.description = "Tons of food!";
+        exampleEvent2.description = "Tons of yummy baked goods!";
         exampleEvent2.title = "Bake sale on the quad";
         exampleEvent2.primaryTag = "Food";
         exampleEvent2.latitude = 40.108308; exampleEvent2.longitude = -88.227017;
-        exampleEvent2.numDislikes = 0;
-        exampleEvent2.numLikes = 0;
+        exampleEvent2.numDislikes = 3;
+        exampleEvent2.numLikes = 26;
 
         Event exampleEvent3 = new Event();
-        exampleEvent3.lastConfirmed = 1668644335 * 1000;
+        exampleEvent3.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 48);
         exampleEvent3.author = "anotherUser";
         exampleEvent3.authorPoints = 0;
-        exampleEvent3.description = "Tons of food!";
-        exampleEvent3.title = "Bake sale on the quad";
+        exampleEvent3.description = "Great tacos and such";
+        exampleEvent3.title = "La Paloma Food Truck";
         exampleEvent3.primaryTag = "Food";
         exampleEvent3.latitude = 40.103279; exampleEvent3.longitude = -88.234597;
         exampleEvent3.numDislikes = 0;
-        exampleEvent3.numLikes = 0;
+        exampleEvent3.numLikes = 10;
 
         Event exampleEvent4 = new Event();
-        exampleEvent4.lastConfirmed = 1668000000 * 1000;
+        exampleEvent4.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 1);
         exampleEvent4.author = "anotherUser";
         exampleEvent4.authorPoints = 0;
         exampleEvent4.description = "Grainger giving out free merch at their booth";
@@ -1268,9 +1268,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent4.title = "Grainger free merch";
         exampleEvent4.primaryTag = "Professional";
         exampleEvent4.latitude = 40.1124; exampleEvent4.longitude = -88.228300;
-        exampleEvent4.numDislikes = 0;
-        exampleEvent4.numLikes = 0;
+        exampleEvent4.numDislikes = 1;
+        exampleEvent4.numLikes = 12;
 
+        Event exampleEvent5 = new Event();
+        exampleEvent5.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 8);
+        exampleEvent5.author = "userGuy123";
+        exampleEvent5.authorPoints = 0;
+        exampleEvent5.description = "All welcome, show up and play!";
+        exampleEvent5.writtenLocation = "Frat park, near PKT house";
+        exampleEvent5.title = "Beach volleyball";
+        exampleEvent5.primaryTag = "Social";
+        exampleEvent5.latitude = 40.105851; exampleEvent5.longitude = -88.236158;
+        exampleEvent5.numDislikes = 0;
+        exampleEvent5.numLikes = 4;
 
         if (events.getByNameLocation(exampleEvent1.title, exampleEvent1.latitude, exampleEvent1.longitude) == null) {
             events.insertAll(exampleEvent1);
@@ -1283,6 +1294,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         if (events.getByNameLocation(exampleEvent4.title, exampleEvent4.latitude, exampleEvent4.longitude) == null) {
             events.insertAll(exampleEvent4);
+        }
+        if (events.getByNameLocation(exampleEvent5.title, exampleEvent5.latitude, exampleEvent5.longitude) == null) {
+            events.insertAll(exampleEvent5);
         }
 
         googleMap.setMyLocationEnabled(true);
