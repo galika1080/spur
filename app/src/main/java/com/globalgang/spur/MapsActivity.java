@@ -25,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -73,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private Integer currentlyViewedEventId;
+    private Marker selectedMarker = null;
 
     private double locLat = 0.0;
     private double locLong = 0.0;
@@ -96,7 +98,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private List<String> CheckedTagNames = new ArrayList<>();
 
-    @SuppressLint({"MissingPermission", "ResourceAsColor"})
+    @SuppressLint({"MissingPermission"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,10 +183,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // filter buttons change marker visibility
         binding.btnFilterAll.setOnClickListener((View v) -> {
             updateFilterColors(v);
-
-            for (Marker mark : eventMarkers) {
-                mark.setVisible(true);
-            }
+            eventMarkers.forEach((m) -> m.setVisible(true));
         });
         binding.btnFilterFood.setOnClickListener((View v) -> {
             updateFilterColors(v);
@@ -503,14 +502,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.pointsPopup.setVisibility(View.GONE);
         }
 
-    }
-
-    private void displayExistingEvents() {
-        List<Event> existing = events.getAll();
-
-        for (Event e : existing) {
-            addEvent(e);
-        }
     }
 
     // helper function to calculate distance in miles from current location to an event
@@ -889,10 +880,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         currentlyViewedEventId = e.id;
     }
 
-    private void displayEventMarker(Event e) {
-        Event resolvedEvent = events.getByNameLocation(e.title, e.latitude, e.longitude);
-        int id = resolvedEvent.id;
-
+    private BitmapDescriptor getEventMarkerBitmap(String tag, boolean selected) {
         Map<String, String> tagToMarker = Map.of(
                 "Activism", "ic_marker_activism",
                 "Food", "ic_marker_food",
@@ -904,16 +892,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 "Social", "ic_marker_social"
         );
 
-        Log.wtf("Get tag", e.primaryTag);
+        String identifier = tagToMarker.get(tag);
+        if (selected) {
+            identifier += "_selected";
+        }
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(identifier, "drawable", getPackageName()));
 
-        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(tagToMarker.get(e.primaryTag), "drawable", getPackageName()));
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, 85, 110, false);
+        return BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(
+                imageBitmap,
+                selected ? 127 : 85,
+                selected? 165 : 110,
+                false));
+    }
+
+    private void displayEventMarker(Event e) {
+        Event resolvedEvent = events.getByNameLocation(e.title, e.latitude, e.longitude);
+        int id = resolvedEvent.id;
+
+        BitmapDescriptor bitmap = getEventMarkerBitmap(resolvedEvent.primaryTag, false);
 
         LatLng eventLoc = new LatLng(e.latitude, e.longitude);
         Marker eventMarker = mMap.addMarker(new MarkerOptions()
                 .position(eventLoc)
                 .title(e.title)
-                .icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap)));
+                .icon(bitmap));
 
         eventMarker.setTag(id);
         eventMarkers.add(eventMarker);
@@ -1103,12 +1105,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         mMap.setOnMapClickListener((LatLng loc) -> {
+            if (selectedMarker != null) {
+                String tag = events.getById(currentlyViewedEventId).primaryTag;
+                selectedMarker.setIcon(getEventMarkerBitmap(tag, false));
+            }
+            selectedMarker = null;
+
             currentState = AppState.FullscreenMap;
             updateVisibility();
         });
 
         mMap.setOnMarkerClickListener((Marker m) -> {
             Event event = events.getById((int) m.getTag());
+
+            if (selectedMarker != null) {
+                String tag = events.getById(currentlyViewedEventId).primaryTag;
+                selectedMarker.setIcon(getEventMarkerBitmap(tag, false));
+            }
+            m.setIcon(getEventMarkerBitmap(event.primaryTag, true));
+
             populateEventInfo(event);
 
             currentState = AppState.EventDetails;
@@ -1118,6 +1133,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 new LatLng(event.latitude, event.longitude), 16f
             ));
 
+            selectedMarker = m;
             return true;
         });
 
@@ -1216,7 +1232,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         googleMap.setMyLocationEnabled(true);
 
-        displayExistingEvents();
+        events.getAll().forEach(this::addEvent);
 
         currentState = AppState.PointsPopup;
         updateVisibility();
