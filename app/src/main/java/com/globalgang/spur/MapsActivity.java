@@ -30,9 +30,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.globalgang.spur.databinding.ActivityMapsBinding;
+import com.google.android.material.button.MaterialButton;
+
 import androidx.room.Room;
 
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -54,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private EventDao events;
     private List<Marker> eventMarkers;
+    private Map<MaterialButton, Pair<Integer, Integer>> filterButtonColors;
 
     private UserDao users;
 
@@ -157,57 +161,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //init user profile
         populateUserInfo(USER_NAME);
 
-        updateFilterColors("All");
+        // init the map from filter button to colors, enabling updateFilterColors() to work
+        filterButtonColors = Map.of(
+                binding.btnFilterAll, Pair.create(R.color.all, R.color.all_selected),
+                binding.btnFilterFood, Pair.create(R.color.food, R.color.food_selected),
+                binding.btnFilterSocial, Pair.create(R.color.social, R.color.social_selected),
+                binding.btnFilterShopping, Pair.create(R.color.shopping, R.color.shopping_selected),
+                binding.btnFilterProfessional, Pair.create(R.color.professional, R.color.professional_selected),
+                binding.btnFilterPerformance, Pair.create(R.color.performance, R.color.performance_selected),
+                binding.btnFilterActivism, Pair.create(R.color.activism, R.color.activism_selected),
+                binding.btnFilterReligion, Pair.create(R.color.religion, R.color.religion_selected),
+                binding.btnFilterMisc, Pair.create(R.color.misc, R.color.misc_selected));
+
+        updateFilterColors(binding.btnFilterAll);
+
         binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
         binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
 
         // filter buttons change marker visibility
         binding.btnFilterAll.setOnClickListener((View v) -> {
-            updateFilterColors("All");
+            updateFilterColors(v);
 
             for (Marker mark : eventMarkers) {
                 mark.setVisible(true);
             }
         });
         binding.btnFilterFood.setOnClickListener((View v) -> {
-            String filterTag = "Food";
-            updateFilterColors(filterTag);
-            updateMarkerVisibility(filterTag);
+            updateFilterColors(v);
+            updateMarkerVisibility("Food");
         });
         binding.btnFilterSocial.setOnClickListener((View v) -> {
-            String filterTag = "Social";
-            updateFilterColors(filterTag);
-            updateMarkerVisibility(filterTag);
+            updateFilterColors(v);
+            updateMarkerVisibility("Social");
         });
         binding.btnFilterShopping.setOnClickListener((View v) -> {
-            String filterTag = "Shopping";
-            updateFilterColors(filterTag);
-            updateMarkerVisibility(filterTag);
+            updateFilterColors(v);
+            updateMarkerVisibility("Shopping");
         });
         binding.btnFilterProfessional.setOnClickListener((View v) -> {
-            String filterTag = "Professional";
-            updateFilterColors(filterTag);
-            updateMarkerVisibility(filterTag);
+            updateFilterColors(v);
+            updateMarkerVisibility("Professional");
         });
         binding.btnFilterPerformance.setOnClickListener((View v) -> {
-            String filterTag = "Performance";
-            updateFilterColors(filterTag);
-            updateMarkerVisibility(filterTag);
+            updateFilterColors(v);
+            updateMarkerVisibility("Performance");
         });
         binding.btnFilterActivism.setOnClickListener((View v) -> {
-            String filterTag = "Activism";
-            updateFilterColors(filterTag);
-            updateMarkerVisibility(filterTag);
+            updateFilterColors(v);
+            updateMarkerVisibility("Activism");
         });
         binding.btnFilterReligion.setOnClickListener((View v) -> {
-            String filterTag = "Religion";
-            updateFilterColors(filterTag);
-            updateMarkerVisibility(filterTag);
+            updateFilterColors(v);
+            updateMarkerVisibility("Religion");
         });
         binding.btnFilterMisc.setOnClickListener((View v) -> {
-            String filterTag = "Miscellaneous";
-            updateFilterColors(filterTag);
-            updateMarkerVisibility(filterTag);
+            updateFilterColors(v);
+            updateMarkerVisibility("Miscellaneous");
         });
 
         // got it button
@@ -413,118 +422,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void updateFilterColors(String selected_filter) {
-        if (selected_filter.equals("All")) {
-            binding.btnFilterAll.setBackgroundColor(getColor(R.color.all_selected));
-
-            binding.btnFilterFood.setBackgroundColor(getColor(R.color.food));
-            binding.btnFilterSocial.setBackgroundColor(getColor(R.color.social));
-            binding.btnFilterShopping.setBackgroundColor(getColor(R.color.shopping));
-            binding.btnFilterProfessional.setBackgroundColor(getColor(R.color.professional));
-            binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance));
-            binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism));
-            binding.btnFilterReligion.setBackgroundColor(getColor(R.color.religion));
-            binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc));
-        } else if (selected_filter.equals("Food")) {
-            binding.btnFilterFood.setBackgroundColor(getColor(R.color.food_selected));
-
-            binding.btnFilterAll.setBackgroundColor(getColor(R.color.all));
-            binding.btnFilterSocial.setBackgroundColor(getColor(R.color.social));
-            binding.btnFilterShopping.setBackgroundColor(getColor(R.color.shopping));
-            binding.btnFilterProfessional.setBackgroundColor(getColor(R.color.professional));
-            binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance));
-            binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism));
-            binding.btnFilterReligion.setBackgroundColor(getColor(R.color.religion));
-            binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc));
-
-        } else if (selected_filter.equals("Social")) {
-            binding.btnFilterSocial.setBackgroundColor(getColor(R.color.social_selected));
-
-            binding.btnFilterAll.setBackgroundColor(getColor(R.color.all));
-            binding.btnFilterFood.setBackgroundColor(getColor(R.color.food));
-            binding.btnFilterShopping.setBackgroundColor(getColor(R.color.shopping));
-            binding.btnFilterProfessional.setBackgroundColor(getColor(R.color.professional));
-            binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance));
-            binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism));
-            binding.btnFilterReligion.setBackgroundColor(getColor(R.color.religion));
-            binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc));
-        } else if (selected_filter.equals("Shopping")) {
-            binding.btnFilterShopping.setBackgroundColor(getColor(R.color.shopping_selected));
-
-            binding.btnFilterAll.setBackgroundColor(getColor(R.color.all));
-            binding.btnFilterFood.setBackgroundColor(getColor(R.color.food));
-            binding.btnFilterSocial.setBackgroundColor(getColor(R.color.social));
-            binding.btnFilterProfessional.setBackgroundColor(getColor(R.color.professional));
-            binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance));
-            binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism));
-            binding.btnFilterReligion.setBackgroundColor(getColor(R.color.religion));
-            binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc));
-        } else if (selected_filter.equals("Professional")) {
-            binding.btnFilterProfessional.setBackgroundColor(getColor(R.color.professional_selected));
-
-            binding.btnFilterAll.setBackgroundColor(getColor(R.color.all));
-            binding.btnFilterFood.setBackgroundColor(getColor(R.color.food));
-            binding.btnFilterSocial.setBackgroundColor(getColor(R.color.social));
-            binding.btnFilterShopping.setBackgroundColor(getColor(R.color.shopping));
-            binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance));
-            binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism));
-            binding.btnFilterReligion.setBackgroundColor(getColor(R.color.religion));
-            binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc));
-        } else if (selected_filter.equals("Performance")) {
-            binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance_selected));
-
-            binding.btnFilterAll.setBackgroundColor(getColor(R.color.all));
-            binding.btnFilterFood.setBackgroundColor(getColor(R.color.food));
-            binding.btnFilterSocial.setBackgroundColor(getColor(R.color.social));
-            binding.btnFilterShopping.setBackgroundColor(getColor(R.color.shopping));
-            binding.btnFilterProfessional.setBackgroundColor(getColor(R.color.professional));
-            binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism));
-            binding.btnFilterReligion.setBackgroundColor(getColor(R.color.religion));
-            binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc));
-        } else if (selected_filter.equals("Activism")) {
-            binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism_selected));
-
-            binding.btnFilterAll.setBackgroundColor(getColor(R.color.all));
-            binding.btnFilterFood.setBackgroundColor(getColor(R.color.food));
-            binding.btnFilterSocial.setBackgroundColor(getColor(R.color.social));
-            binding.btnFilterShopping.setBackgroundColor(getColor(R.color.shopping));
-            binding.btnFilterProfessional.setBackgroundColor(getColor(R.color.professional));
-            binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance));
-            binding.btnFilterReligion.setBackgroundColor(getColor(R.color.religion));
-            binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc));
-        } else if (selected_filter.equals("Religion")) {
-            binding.btnFilterReligion.setBackgroundColor(getColor(R.color.religion_selected));
-
-            binding.btnFilterAll.setBackgroundColor(getColor(R.color.all));
-            binding.btnFilterFood.setBackgroundColor(getColor(R.color.food));
-            binding.btnFilterSocial.setBackgroundColor(getColor(R.color.social));
-            binding.btnFilterShopping.setBackgroundColor(getColor(R.color.shopping));
-            binding.btnFilterProfessional.setBackgroundColor(getColor(R.color.professional));
-            binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance));
-            binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism));
-            binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc));
-        } else if (selected_filter.equals("Miscellaneous")) {
-            binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc_selected));
-
-            binding.btnFilterAll.setBackgroundColor(getColor(R.color.all));
-            binding.btnFilterFood.setBackgroundColor(getColor(R.color.food));
-            binding.btnFilterSocial.setBackgroundColor(getColor(R.color.social));
-            binding.btnFilterShopping.setBackgroundColor(getColor(R.color.shopping));
-            binding.btnFilterProfessional.setBackgroundColor(getColor(R.color.professional));
-            binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance));
-            binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism));
-            binding.btnFilterReligion.setBackgroundColor(getColor(R.color.religion));
-        } else {
-            binding.btnFilterAll.setBackgroundColor(getColor(R.color.all));
-            binding.btnFilterFood.setBackgroundColor(getColor(R.color.food));
-            binding.btnFilterSocial.setBackgroundColor(getColor(R.color.social));
-            binding.btnFilterShopping.setBackgroundColor(getColor(R.color.shopping));
-            binding.btnFilterProfessional.setBackgroundColor(getColor(R.color.professional));
-            binding.btnFilterPerformance.setBackgroundColor(getColor(R.color.performance));
-            binding.btnFilterActivism.setBackgroundColor(getColor(R.color.activism));
-            binding.btnFilterReligion.setBackgroundColor(getColor(R.color.religion));
-            binding.btnFilterMisc.setBackgroundColor(getColor(R.color.misc));
-        }
+    private void updateFilterColors(View clickedView) {
+        filterButtonColors.forEach((btn, colorPair) -> {
+            if (btn == clickedView) {
+                btn.setBackgroundColor(getColor(colorPair.second));
+            } else {
+                btn.setBackgroundColor(getColor(colorPair.first));
+            }
+        });
     }
 
     @SuppressLint("MissingPermission")
