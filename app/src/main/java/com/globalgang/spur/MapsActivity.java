@@ -39,6 +39,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -73,7 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ProfileView
     }
 
-    private Integer currentlyViewedEventId;
+    private Integer currentlyViewedEventId = -1;
     private Marker selectedMarker = null;
 
     private double locLat = 0.0;
@@ -294,9 +295,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(MapsActivity.this, "Thanks for adding an event! +50 points", Toast.LENGTH_SHORT).show();
 
             addEvent(e);
-
-            currentState = AppState.EventDetails;
-            updateVisibility();
+            Event resolvedEvent = events.getByNameLocation(e.title, e.latitude, e.longitude);
+            selectMarkerById(resolvedEvent.id);
+            populateEventInfo(resolvedEvent);
         });
 
         //clicking on confirm button should add points to user
@@ -443,14 +444,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    private void showHideView(View v, boolean visible, int x, int y, boolean fade) {
+        if (visible) {
+            v.animate()
+                    .translationX(0)
+                    .translationY(0)
+                    .alpha(1)
+                    .scaleX(1)
+                    .scaleY(1)
+                    .withStartAction(() -> {
+                       v.setVisibility(View.VISIBLE);
+                    });
+        } else {
+            v.animate()
+                    .translationX(x)
+                    .translationY(y)
+                    .alpha(fade? 0f : 1f)
+                    .scaleX(fade? 0.8f : 1f)
+                    .scaleY(fade? 0.8f: 1f)
+                    .withEndAction(() -> {
+                        v.setVisibility(View.GONE);
+                    });
+        }
+    }
+
     private void updateVisibility() {
         if (currentState == AppState.EventDetails) {
-            binding.eventView.setVisibility(View.VISIBLE);
-            binding.filterScrollView.setVisibility(View.GONE);
+            showHideView(binding.filterScrollView, false, 0, -200, false);
+            showHideView(binding.eventView, true, 0, 1500, false);
 
             mMap.setPadding(0, 0, 0, 850);
         } else {
-            binding.eventView.setVisibility(View.GONE);
+            showHideView(binding.filterScrollView, true, 0, 200, false);
+            showHideView(binding.eventView, false, 0, 1500, false);
 
             mMap.setPadding(0, 135, 0, 0);
         }
@@ -463,45 +489,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 myEdit.commit();
                 currentState = AppState.PointsPopup;
             }
-
-            binding.filterScrollView.setVisibility(View.VISIBLE);
-            binding.navi.setVisibility(View.VISIBLE);
-            binding.btnAddEvent.setVisibility(View.VISIBLE);
         }
 
         if (currentState == AppState.ReportPopup) {
-            binding.reportPopup.setVisibility(View.VISIBLE);
+            showHideView(binding.reportPopup, true, 0, 0, true);
         } else {
-            binding.reportPopup.setVisibility(View.GONE);
+            showHideView(binding.reportPopup, false, 0, 0, true);
         }
 
         if (currentState == AppState.Reporting) {
-            binding.reportingPrimaryLL.setVisibility(View.VISIBLE);
-            binding.filterScrollView.setVisibility(View.GONE);
-            binding.navi.setVisibility(View.GONE);
-            binding.btnAddEvent.setVisibility(View.GONE);
+            showHideView(binding.reportingPrimaryLL, true, 0, 0, true);
+
+            showHideView(binding.navi, false, 0, 200, false);
+            showHideView(binding.btnAddEvent, false, 0, 500, false);
         } else {
-            binding.reportingPrimaryLL.setVisibility(View.GONE);
+            showHideView(binding.reportingPrimaryLL, false, 0, 0, true);
+
+            showHideView(binding.btnAddEvent, true, 0, 500, false);
+            showHideView(binding.navi, true, 0, 200, false);
         }
 
         // update to profile view
         if (currentState == AppState.ProfileView) {
-            // profile state, show layout as visible
-            binding.filterScrollView.setVisibility(View.GONE);
-            binding.btnAddEvent.setVisibility(View.GONE);
-            binding.profileView.setVisibility(View.VISIBLE);
-            binding.navi.setVisibility(View.VISIBLE);
+            showHideView(binding.profileView, true, 1500, 0, false);
         } else {
-            binding.profileView.setVisibility(View.GONE);
+            showHideView(binding.profileView, false, 1500, 0, false);
         }
 
         //popup describing points system (should popup everytime user logs in?)
         if (currentState == AppState.PointsPopup) {
-            binding.pointsPopup.setVisibility(View.VISIBLE);
+            showHideView(binding.pointsPopup, true, 0, 1500, false);
         } else {
-            binding.pointsPopup.setVisibility(View.GONE);
+            showHideView(binding.pointsPopup, false, 0, 1500, false);
         }
-
     }
 
     // helper function to calculate distance in miles from current location to an event
@@ -551,107 +571,74 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // hide placeholders if nearby events fewer than 5
     private void getNearbyEvents() {
         LinkedHashMap<Integer, Float> sortedMap = getSortedMap();
-        binding.popupEvent1.setVisibility(View.GONE);
-        binding.eventDist1.setVisibility(View.GONE);
-        binding.popupEvent2.setVisibility(View.GONE);
-        binding.eventDist2.setVisibility(View.GONE);
-        binding.popupEvent3.setVisibility(View.GONE);
-        binding.eventDist3.setVisibility(View.GONE);
-        binding.popupEvent4.setVisibility(View.GONE);
-        binding.eventDist4.setVisibility(View.GONE);
-        binding.popupEvent5.setVisibility(View.GONE);
-        binding.eventDist5.setVisibility(View.GONE);
+
+        List<Button> popupEvents = List.of(
+                binding.popupEvent1,
+                binding.popupEvent2,
+                binding.popupEvent3,
+                binding.popupEvent4,
+                binding.popupEvent5
+        );
+
+        List<Button> eventDists = List.of(
+                binding.eventDist1,
+                binding.eventDist2,
+                binding.eventDist3,
+                binding.eventDist4,
+                binding.eventDist5
+        );
+
+        popupEvents.forEach((v) -> {v.setVisibility(View.GONE);});
+        eventDists.forEach((v) -> {v.setVisibility(View.GONE);});
+
         if (sortedMap.size() == 0) {
             currentState = AppState.Reporting;
             updateVisibility();
         } else {
-            int i = 1; // counter of events < 0.1 mi
+            int i = 0; // counter of events < 0.1 mi
             DecimalFormat df = new DecimalFormat("#.## mi");
             for (Map.Entry<Integer, Float> entry : sortedMap.entrySet()) {
+                if (i >= 5) break;
+
                 int event_id = entry.getKey();
                 Event event = events.getById(event_id);
                 String event_title = event.title;
                 float dist = entry.getValue();
-                if (i == 1) {
-                    binding.popupEvent1.setText(event_title);
-                    binding.eventDist1.setText(df.format(dist));
-                    binding.popupEvent1.setVisibility(View.VISIBLE);
-                    binding.eventDist1.setVisibility(View.VISIBLE);
-                    binding.popupEvent1.setOnClickListener((View v) -> {
-                        currentState = AppState.EventDetails;
-                        populateEventInfo(event);
-                        updateVisibility();
-                    });
-                    binding.eventDist1.setOnClickListener((View v) -> {
-                        currentState = AppState.EventDetails;
-                        populateEventInfo(event);
-                        updateVisibility();
-                    });
-                } else if (i == 2) {
-                    binding.popupEvent2.setText(event_title);
-                    binding.eventDist2.setText(df.format(dist));
-                    binding.popupEvent2.setVisibility(View.VISIBLE);
-                    binding.eventDist2.setVisibility(View.VISIBLE);
-                    binding.popupEvent2.setOnClickListener((View v) -> {
-                        currentState = AppState.EventDetails;
-                        populateEventInfo(event);
-                        updateVisibility();
-                    });
-                    binding.eventDist2.setOnClickListener((View v) -> {
-                        currentState = AppState.EventDetails;
-                        populateEventInfo(event);
-                        updateVisibility();
-                    });
-                } else if (i == 3) {
-                    binding.popupEvent3.setText(event_title);
-                    binding.eventDist3.setText(df.format(dist));
-                    binding.popupEvent3.setVisibility(View.VISIBLE);
-                    binding.eventDist3.setVisibility(View.VISIBLE);
-                    binding.popupEvent3.setOnClickListener((View v) -> {
-                        currentState = AppState.EventDetails;
-                        populateEventInfo(event);
-                        updateVisibility();
-                    });
-                    binding.eventDist3.setOnClickListener((View v) -> {
-                        currentState = AppState.EventDetails;
-                        populateEventInfo(event);
-                        updateVisibility();
-                    });
-                } else if (i == 4) {
-                    binding.popupEvent4.setText(event_title);
-                    binding.eventDist4.setText(df.format(dist));
-                    binding.popupEvent4.setVisibility(View.VISIBLE);
-                    binding.eventDist4.setVisibility(View.VISIBLE);
-                    binding.popupEvent4.setOnClickListener((View v) -> {
-                        currentState = AppState.EventDetails;
-                        populateEventInfo(event);
-                        updateVisibility();
-                    });
-                    binding.eventDist4.setOnClickListener((View v) -> {
-                        currentState = AppState.EventDetails;
-                        populateEventInfo(event);
-                        updateVisibility();
-                    });
-                } else if (i == 5) {
-                    binding.popupEvent5.setText(event_title);
-                    binding.eventDist5.setText(df.format(dist));
-                    binding.popupEvent5.setVisibility(View.VISIBLE);
-                    binding.eventDist5.setVisibility(View.VISIBLE);
-                    binding.popupEvent5.setOnClickListener((View v) -> {
-                        currentState = AppState.EventDetails;
-                        populateEventInfo(event);
-                        updateVisibility();
-                    });
-                    binding.eventDist5.setOnClickListener((View v) -> {
-                        currentState = AppState.EventDetails;
-                        populateEventInfo(event);
-                        updateVisibility();
-                    });
-                } else {
-                    // only need to consider the top 5 nearby events
-                    break;
-                }
+
+                Button popupEvent = popupEvents.get(i);
+                Button eventDist = eventDists.get(i);
+
+                popupEvent.setText(event_title);
+                eventDist.setText(df.format(dist));
+
+                popupEvent.setVisibility(View.VISIBLE);
+                eventDist.setVisibility(View.VISIBLE);
+
+                popupEvent.setOnClickListener((View v) -> {
+                    selectMarkerById(event.id);
+                    populateEventInfo(event);
+                });
+                eventDist.setOnClickListener((View v) -> {
+                    selectMarkerById(event.id);
+                    populateEventInfo(event);
+                });
                 i++;
+            }
+        }
+    }
+
+    private void selectMarkerById(int id) {
+        if (selectedMarker != null && currentlyViewedEventId != -1) {
+            String tag = events.getById(currentlyViewedEventId).primaryTag;
+            selectedMarker.setIcon(getEventMarkerBitmap(tag, false));
+        }
+        selectedMarker = null;
+
+        for (Marker m : eventMarkers) {
+            if ((int) m.getTag() == id) {
+                m.setIcon(getEventMarkerBitmap(events.getById((int) m.getTag()).primaryTag, true));
+                selectedMarker = m;
+                break;
             }
         }
     }
@@ -661,7 +648,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             events.insertAll(e);
         }
 
-        populateEventInfo(e);
         displayEventMarker(e);
     }
 
@@ -878,6 +864,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             binding.tag3.setVisibility(View.GONE);
         }
         currentlyViewedEventId = e.id;
+
+        currentState = AppState.EventDetails;
+        updateVisibility();
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                new LatLng(e.latitude, e.longitude), 16f
+        ));
     }
 
     private BitmapDescriptor getEventMarkerBitmap(String tag, boolean selected) {
@@ -1089,7 +1081,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         CheckedTagNames.clear();
     }
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -1105,7 +1096,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         mMap.setOnMapClickListener((LatLng loc) -> {
-            if (selectedMarker != null) {
+            if (selectedMarker != null && currentlyViewedEventId != -1) {
                 String tag = events.getById(currentlyViewedEventId).primaryTag;
                 selectedMarker.setIcon(getEventMarkerBitmap(tag, false));
             }
@@ -1118,20 +1109,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMarkerClickListener((Marker m) -> {
             Event event = events.getById((int) m.getTag());
 
-            if (selectedMarker != null) {
-                String tag = events.getById(currentlyViewedEventId).primaryTag;
-                selectedMarker.setIcon(getEventMarkerBitmap(tag, false));
-            }
-            m.setIcon(getEventMarkerBitmap(event.primaryTag, true));
-
+            selectMarkerById(event.id);
             populateEventInfo(event);
-
-            currentState = AppState.EventDetails;
-            updateVisibility();
-
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(event.latitude, event.longitude), 16f
-            ));
 
             selectedMarker = m;
             return true;
