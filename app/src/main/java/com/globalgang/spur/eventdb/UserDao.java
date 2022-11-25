@@ -21,6 +21,9 @@ public interface UserDao {
     @Query("SELECT EXISTS(SELECT * FROM user where userId LIKE :userId)")
     Boolean isUserExists(String userId);
 
+    @Query("SELECT * FROM user ORDER BY points desc")
+    List<User> getAllUsers();
+
     @Insert
     void insertUser(User user);
 

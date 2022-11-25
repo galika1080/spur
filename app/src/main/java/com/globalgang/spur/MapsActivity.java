@@ -165,6 +165,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //init user profile
         populateUserInfo(USER_NAME);
 
+        //populate top reporters leaderboard
+        populateReporterLeaderboardInfo();
+
         // init the map from filter button to colors, enabling updateFilterColors() to work
         filterButtonColors = Map.of(
                 binding.btnFilterAll, Pair.create(R.color.all, R.color.all_selected),
@@ -248,12 +251,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         binding.reportingSubmitButton.setOnClickListener((View v) -> {
             isAllFieldsCheckedReporting = CheckAllFields();
+            if(!isAllFieldsCheckedReporting) return;
             isAllTagsCheckedReporting = CheckAllTags();
+            if(!isAllTagsCheckedReporting) return;
             isPrimaryTagPartofCheckedTags = CheckPrimaryTagForErrorHandling();
+            if(!isPrimaryTagPartofCheckedTags) return;
+            /*
             if (!isAllFieldsCheckedReporting || !isAllTagsCheckedReporting || !isPrimaryTagPartofCheckedTags) {
                 return;
             }
-
+            */
             Event e = new Event();
             updateKnownLocation();
 
@@ -293,6 +300,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             addPoints(USER_NAME, 50);
             populateUserInfo(USER_NAME);
+            populateReporterLeaderboardInfo();
             Toast.makeText(MapsActivity.this, "Thanks for adding an event! +50 points", Toast.LENGTH_SHORT).show();
 
             addEvent(e);
@@ -333,6 +341,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //if you had not previously already selected check then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
+                    populateReporterLeaderboardInfo();
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
                     //if never confirmed before, give points
                     addPoints(reporterId, 5);
@@ -380,6 +389,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //if you had not previously already selected x then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
+                    populateReporterLeaderboardInfo();
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
                 } else {
                     //do nothing if already refuted and pressing x again
@@ -1083,6 +1093,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.username.setText(u.userId);
         binding.pointsField.setText(Integer.toString(u.points));
         //TODO: LEVEL, PROGRESS BAR
+    }
+
+    private void populateReporterLeaderboardInfo(){
+        List<User> users_list = new ArrayList<User>();
+        users_list = users.getAllUsers();
+        /*
+        System.out.println(users_list);
+        for(int i = 0;i<users_list.size();i++){
+            User temp_u = users_list.get(i);
+            System.out.println(temp_u.userId);
+            System.out.println(temp_u.points);
+            binding.topReporter1Name.setText(temp_u.userId);
+        }
+        */
+        binding.topReporter1Name.setText(users_list.get(0).userId);
+        binding.topReporter1Points.setText(users_list.get(0).points + " points");
+        binding.topReporter2Name.setText(users_list.get(1).userId);
+        binding.topReporter2Points.setText(users_list.get(1).points + " points");
+        binding.topReporter3Name.setText(users_list.get(2).userId);
+        binding.topReporter3Points.setText(users_list.get(2).points + " points");
+        binding.topReporter4Name.setText(users_list.get(3).userId);
+        binding.topReporter4Points.setText(users_list.get(3).points + " points");
+        binding.topReporter5Name.setText(users_list.get(4).userId);
+        binding.topReporter5Points.setText(users_list.get(4).points + " points");
     }
 
     public void addPoints(String userId, int pts){
