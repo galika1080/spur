@@ -306,6 +306,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                //get current event from event id
                 Event current_event = events.getById(currentlyViewedEventId);
+                String reporterId = events.getById(currentlyViewedEventId).author;
 
                 float[] distanceResults = new float[]{-1.0f};
                 Location.distanceBetween(current_event.latitude, current_event.longitude, locLat, locLong, distanceResults);
@@ -321,13 +322,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     events.setIsRefuted(currentlyViewedEventId, false);
                     //remove 1 from refute count
                     events.updateDislikes(currentlyViewedEventId, -1);
+                    if (!current_event.firstConfirmed) {
+                        //if never confirmed before, give points
+                        addPoints(reporterId, 5);
+                        events.setFirstConfirmed(currentlyViewedEventId, true);
+                    }
 
                 } else if (!current_event.isConfirmed) {
                     //if you had not previously already selected check then give person points (voting for first time on event)
                     addPoints(USER_NAME, 10);
                     populateUserInfo(USER_NAME);
                     Toast.makeText(MapsActivity.this, "Thanks for your feedback! +10 points", Toast.LENGTH_SHORT).show();
-
+                    //if never confirmed before, give points
+                    addPoints(reporterId, 5);
+                    events.setFirstConfirmed(currentlyViewedEventId, true);
                 } else {
                     //do nothing if already checked and pressing check again
                     Toast.makeText(MapsActivity.this, "You have already confirmed this event", Toast.LENGTH_SHORT).show();
@@ -336,8 +344,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 events.setIsConfirmed(currentlyViewedEventId, true);
 
-                String reporterId = events.getById(currentlyViewedEventId).author;
-                addPoints(reporterId, 5);
 
                 //increase confirm count
                 events.updateLikes(currentlyViewedEventId, 1);
@@ -1124,7 +1130,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Event exampleEvent1 = new Event();
         exampleEvent1.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 10);
         exampleEvent1.author = "userGuy123";
-        exampleEvent1.authorPoints = 344;
+        exampleEvent1.authorPoints = 350;
         if (!users.isUserExists(exampleEvent1.author)) {
             User exampleUser1 = new User();
             exampleUser1.userId = exampleEvent1.author;
@@ -1144,7 +1150,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Event exampleEvent2 = new Event();
         exampleEvent2.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 4);
         exampleEvent2.author = "anotherUser";
-        exampleEvent2.authorPoints = 0;
+        exampleEvent2.authorPoints = 200;
         if (!users.isUserExists(exampleEvent2.author)) {
             User exampleUser2 = new User();
             exampleUser2.userId = exampleEvent2.author;
@@ -1152,8 +1158,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             users.insertUser(exampleUser2);
         }
         exampleEvent2.description = "Tons of yummy baked goods!";
-        exampleEvent2.title = "Bake sale on the quad";
+        exampleEvent2.title = "Amnesty Bake Sale";
         exampleEvent2.primaryTag = "Food";
+        exampleEvent2.secondaryTag = "Activism";
         exampleEvent2.latitude = 40.108308; exampleEvent2.longitude = -88.227017;
         exampleEvent2.numDislikes = 3;
         exampleEvent2.numLikes = 26;
@@ -1161,7 +1168,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Event exampleEvent3 = new Event();
         exampleEvent3.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 48);
         exampleEvent3.author = "anotherUser";
-        exampleEvent3.authorPoints = 0;
+        exampleEvent3.authorPoints = 200;
         exampleEvent3.description = "Great tacos and such";
         exampleEvent3.title = "La Paloma Food Truck";
         exampleEvent3.primaryTag = "Food";
@@ -1172,7 +1179,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Event exampleEvent4 = new Event();
         exampleEvent4.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 1);
         exampleEvent4.author = "anotherUser";
-        exampleEvent4.authorPoints = 0;
+        exampleEvent4.authorPoints = 200;
         exampleEvent4.description = "Grainger giving out free merch at their booth";
         exampleEvent4.writtenLocation = "First floor CIF";
         exampleEvent4.title = "Grainger free merch";
@@ -1193,6 +1200,80 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         exampleEvent5.numDislikes = 0;
         exampleEvent5.numLikes = 4;
 
+
+        Event exampleEvent6 = new Event();
+        exampleEvent6.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 5);
+        exampleEvent6.author = "PasserbyJane";
+        exampleEvent6.authorPoints = 150;
+        if (!users.isUserExists(exampleEvent6.author)) {
+            User exampleUser6 = new User();
+            exampleUser6.userId = exampleEvent6.author;
+            exampleUser6.points = exampleEvent6.authorPoints;
+            users.insertUser(exampleUser6);
+        }
+        exampleEvent6.description = "Christian preachers handing out pamphlets.";
+        exampleEvent6.writtenLocation = "On the corner of Wright/Green, near the Alma";
+        exampleEvent6.title = "Union preaching";
+        exampleEvent6.primaryTag = "Religion";
+        exampleEvent6.latitude = 40.1098; exampleEvent6.longitude = -88.2283;
+        exampleEvent6.numDislikes = 10;
+        exampleEvent6.numLikes = 40;
+
+        Event exampleEvent7 = new Event();
+        exampleEvent7.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 2);
+        exampleEvent7.author = "PasserbyJane";
+        exampleEvent7.authorPoints = 150;
+        exampleEvent7.description = "Fresh fruits and veggies being sold on the quad!";
+        exampleEvent7.writtenLocation = "North side quad";
+        exampleEvent7.title = "Farmers market popup";
+        exampleEvent7.primaryTag = "Shopping";
+        exampleEvent7.secondaryTag = "Food";
+        exampleEvent7.latitude = 40.1090; exampleEvent7.longitude = -88.2272;
+        exampleEvent7.numDislikes = 0;
+        exampleEvent7.numLikes = 15;
+
+        Event exampleEvent8 = new Event();
+        exampleEvent8.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 1);
+        exampleEvent8.author = "UIUCTheatreClub";
+        exampleEvent8.authorPoints = 50;
+        if (!users.isUserExists(exampleEvent8.author)) {
+            User exampleUser8 = new User();
+            exampleUser8.userId = exampleEvent8.author;
+            exampleUser8.points = exampleEvent8.authorPoints;
+            users.insertUser(exampleUser8);
+        }
+        exampleEvent8.description = "Join us for our production of Freaky Friday now!";
+        exampleEvent8.writtenLocation = "Lincoln hall auditorium";
+        exampleEvent8.title = "UIUC Freaky Friday Production";
+        exampleEvent8.primaryTag = "Performance";
+        exampleEvent8.latitude = 40.1066; exampleEvent8.longitude = -88.2282;
+        exampleEvent8.numDislikes = 0;
+        exampleEvent8.numLikes = 25;
+
+        Event exampleEvent9 = new Event();
+        exampleEvent9.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 0);
+        exampleEvent9.author = "PasserbyJane";
+        exampleEvent9.authorPoints = 150;
+        exampleEvent9.description = "Protest on the quad for Dreamers";
+        exampleEvent9.writtenLocation = "Foellinger ";
+        exampleEvent9.title = "Protest for DACA rights";
+        exampleEvent9.primaryTag = "Activism";
+        exampleEvent9.latitude = 40.1059; exampleEvent9.longitude = -88.2272;
+        exampleEvent9.numDislikes = 1;
+        exampleEvent9.numLikes = 100;
+
+        Event exampleEvent10 = new Event();
+        exampleEvent10.lastConfirmed = System.currentTimeMillis() - (1000 * 60 * 5);
+        exampleEvent10.author = "anotherUser";
+        exampleEvent10.authorPoints = 200;
+        exampleEvent10.description = "Moving -- giving away furniture: Coffee table, couch, bar stools";
+        exampleEvent10.writtenLocation = "Freer Hall, 906 S Goodwin Ave, Urbana";
+        exampleEvent10.title = "Giving away free furniture";
+        exampleEvent10.primaryTag = "Miscellaneous";
+        exampleEvent10.latitude = 40.1048; exampleEvent10.longitude = -88.2229;
+        exampleEvent10.numDislikes = 3;
+        exampleEvent10.numLikes = 5;
+
         if (events.getByNameLocation(exampleEvent1.title, exampleEvent1.latitude, exampleEvent1.longitude) == null) {
             events.insertAll(exampleEvent1);
         }
@@ -1207,6 +1288,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         if (events.getByNameLocation(exampleEvent5.title, exampleEvent5.latitude, exampleEvent5.longitude) == null) {
             events.insertAll(exampleEvent5);
+        }
+        if (events.getByNameLocation(exampleEvent6.title, exampleEvent6.latitude, exampleEvent6.longitude) == null) {
+            events.insertAll(exampleEvent6);
+        }
+        if (events.getByNameLocation(exampleEvent7.title, exampleEvent7.latitude, exampleEvent7.longitude) == null) {
+            events.insertAll(exampleEvent7);
+        }
+        if (events.getByNameLocation(exampleEvent8.title, exampleEvent8.latitude, exampleEvent8.longitude) == null) {
+            events.insertAll(exampleEvent8);
+        }
+        if (events.getByNameLocation(exampleEvent9.title, exampleEvent9.latitude, exampleEvent9.longitude) == null) {
+            events.insertAll(exampleEvent9);
+        }
+        if (events.getByNameLocation(exampleEvent10.title, exampleEvent10.latitude, exampleEvent10.longitude) == null) {
+            events.insertAll(exampleEvent10);
         }
 
         googleMap.setMyLocationEnabled(true);
