@@ -71,7 +71,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Reporting,
         ReportPopup,
         PointsPopup,
-        ProfileView
+        ProfileView,
+        TopReportersLeaderBoard
     }
 
     private Integer currentlyViewedEventId = -1;
@@ -236,12 +237,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        // yes and no buttons on "heads up, nearby events" popup
         binding.popupButtonYes.setOnClickListener((View v) -> {
             onClear();
-            currentState = AppState.Reporting; // @TODO: add layout for reporting
+            currentState = AppState.Reporting;
             updateVisibility();
         });
 
         binding.popupButtonNo.setOnClickListener((View v) -> {
-            currentState = AppState.FullscreenMap; // @TODO: add layout for reporting
+            currentState = AppState.FullscreenMap;
             updateVisibility();
         });
 
@@ -407,6 +408,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        //clicking on Top Reporters Leaderboard button will take you to Top Reporters Leaderboard screen
+        binding.topReportersLeaderboardButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                currentState = AppState.TopReportersLeaderBoard;
+                updateVisibility();
+            }
+        });
+
+
         //clicking on events button will take you to map screen
         binding.eventButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -521,6 +532,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             showHideView(binding.profileView, false, 1500, 0, false);
         }
+
+
+        // update to top reporters leaderboard view
+        if (currentState == AppState.TopReportersLeaderBoard) {
+            showHideView(binding.leaderboardPopup, true, 1500, 0, false);
+        } else {
+            showHideView(binding.leaderboardPopup, false, 1500, 0, false);
+        }
+
+
 
         //popup describing points system (should popup everytime user logs in?)
         if (currentState == AppState.PointsPopup) {

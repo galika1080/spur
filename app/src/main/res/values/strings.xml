@@ -39,5 +39,7 @@
     <string name="last_confirmed_message">Last confirmed:\ </string>
     <string name="reporter_message">Reported by:</string>
 
+    <string name="Leaderboard_title">Top Reporters Leaderboard!</string>
+
 </resources>
 

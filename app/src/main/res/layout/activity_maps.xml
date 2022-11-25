@@ -7,7 +7,7 @@
     android:textAlignment="center"
     android:theme="@style/Theme.Material3.Light">
 
-    <!--popup event XML details starts here-->
+    <!--nearby event popup event XML details starts here-->
     <RelativeLayout
         android:id="@+id/report_popup"
         android:layout_width="wrap_content"
@@ -1145,8 +1145,185 @@
                     android:text="Level 3"></TextView>
             </LinearLayout>
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/top_reporters_leaderboard_initial_click"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progress_horizontal">
+
+            <Button
+                android:id="@+id/top_reporters_leaderboard_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="50dp"
+                android:backgroundTint="@color/black"
+                android:text="Top Reporters Leaderboard"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
     </RelativeLayout>
     <!--View Profile ends from here-->
+
+    <!--View Top Reporters Leaderboard starts from here-->
+    <RelativeLayout
+        android:id="@+id/leaderboard_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/border_box"
+        android:clickable="true"
+        android:elevation="30dp"
+        android:padding="15dp"
+        android:visibility="gone">
+
+        <!-- Leaderboard Title -->
+        <TextView
+            android:id="@+id/leaderboard_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="@string/Leaderboard_title"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <!-- Existing Event 1 -->
+        <Button
+            android:id="@+id/top_reporter_1_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/leaderboard_title"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="Dummy Reporter 1"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/top_reporter_1_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/leaderboard_title"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/grey"
+            android:gravity="right|center_vertical"
+            android:text="0 points"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <!-- Existing Event 2 -->
+        <Button
+            android:id="@+id/top_reporter_2_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_reporter_1_Name"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="Dummy Reporter 2"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/top_reporter_2_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_reporter_1_Name"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/grey"
+            android:gravity="right|center_vertical"
+            android:text="0 points"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <!-- Existing Event 3 -->
+        <Button
+            android:id="@+id/top_reporter_3_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_reporter_2_Name"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="Dummy Reporter 3"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/top_reporter_3_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_reporter_2_Name"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/grey"
+            android:gravity="right|center_vertical"
+            android:text="0 points"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <!-- Existing Event 4 -->
+        <Button
+            android:id="@+id/top_reporter_4_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_reporter_3_Name"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="Dummy Reporter 4"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/top_reporter_4_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_reporter_3_Name"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/grey"
+            android:gravity="right|center_vertical"
+            android:text="0 points"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <!-- Existing Event 4 -->
+        <Button
+            android:id="@+id/top_reporter_5_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_reporter_4_Name"
+            android:backgroundTint="@color/grey"
+            android:gravity="left|center_vertical"
+            android:text="Dummy Reporter 5"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/top_reporter_5_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_reporter_4_Name"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/grey"
+            android:gravity="right|center_vertical"
+            android:text="0 points"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <!--View Top Reporters Leaderboard ends here-->
 
     <!-- Points Popup Begins Here-->
     <LinearLayout
