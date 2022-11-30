@@ -723,6 +723,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
 
+        updateKnownLocation();
+
         float[] distanceResults = new float[]{-1.0f};
         Location.distanceBetween(e.latitude, e.longitude, locLat, locLong, distanceResults);
 
@@ -1093,9 +1095,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.username.setText(u.userId);
         binding.pointsField.setText(Integer.toString(u.points) + " points");
         //TODO: LEVEL, PROGRESS BAR
-        int currLevel = (u.points / 50 == 0) ? 1 : u.points;
+        int currLevel = (u.points / 50) + 1;
         int pts = u.points % 50;
-        int nxtLevelPts = (currLevel + 1) * 50;
+        int nxtLevelPts = currLevel * 50;
         Log.d("exp", Integer.toString(pts));
         binding.determinateBar.setProgress(pts);
         binding.currLevel.setText(Integer.toString(currLevel ));
