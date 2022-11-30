@@ -414,6 +414,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 currentState = AppState.ProfileView;
                 binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
                 binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
+                populateUserInfo(USER_NAME);
                 updateVisibility();
             }
         });
@@ -1093,15 +1094,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.username.setText(u.userId);
         binding.pointsField.setText(Integer.toString(u.points) + " points");
         //TODO: LEVEL, PROGRESS BAR
-        int currLevel = u.points / 50;
+        int currLevel = (u.points / 50 == 0) ? 1 : u.points;
         int pts = u.points % 50;
         int nxtLevelPts = (currLevel + 1) * 50;
-
-        binding.determinateBar.setProgress(pts/50);
-        binding.currLevel.setText(Integer.toString(currLevel));
+        Log.d("exp", Integer.toString(pts));
+        binding.determinateBar.setProgress(pts);
+        binding.currLevel.setText(Integer.toString(currLevel ));
         binding.nextLevel.setText(Integer.toString(currLevel + 1));
         binding.currPoints.setText(Integer.toString(u.points));
         binding.nextPoints.setText(Integer.toString(nxtLevelPts));
+        binding.levelField.setText("Level " + Integer.toString(currLevel));
     }
 
     private void populateReporterLeaderboardInfo(){
