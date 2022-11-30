@@ -1107,27 +1107,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void populateReporterLeaderboardInfo(){
         List<User> users_list = new ArrayList<User>();
         users_list = users.getAllUsers();
-        /*
-        System.out.println(users_list);
-        for(int i = 0;i<users_list.size();i++){
-            User temp_u = users_list.get(i);
-            System.out.println(temp_u.userId);
-            System.out.println(temp_u.points);
-            binding.topReporter1Name.setText(temp_u.userId);
-        }
-        */
+
         binding.topReporter1Name.setText(users_list.get(0).userId);
         binding.topReporter1Points.setText(users_list.get(0).points + " points");
-        /*
-        binding.topReporter2Name.setText(users_list.get(1).userId);
-        binding.topReporter2Points.setText(users_list.get(1).points + " points");
-        binding.topReporter3Name.setText(users_list.get(2).userId);
-        binding.topReporter3Points.setText(users_list.get(2).points + " points");
-        binding.topReporter4Name.setText(users_list.get(3).userId);
-        binding.topReporter4Points.setText(users_list.get(3).points + " points");
-        binding.topReporter5Name.setText(users_list.get(4).userId);
-        binding.topReporter5Points.setText(users_list.get(4).points + " points");
-         */
+
+
+        if(users_list.size() > 1){
+            binding.topReporter2Name.setText(users_list.get(1).userId);
+            binding.topReporter2Points.setText(users_list.get(1).points + " points");
+        }
+        if(users_list.size() > 2){
+            binding.topReporter3Name.setText(users_list.get(2).userId);
+            binding.topReporter3Points.setText(users_list.get(2).points + " points");
+        }
+        if(users_list.size() > 3){
+            binding.topReporter4Name.setText(users_list.get(3).userId);
+            binding.topReporter4Points.setText(users_list.get(3).points + " points");
+        }
+        if(users_list.size() > 4){
+            binding.topReporter5Name.setText(users_list.get(4).userId);
+            binding.topReporter5Points.setText(users_list.get(4).points + " points");
+        }
+
     }
 
     public void addPoints(String userId, int pts){
