@@ -1013,44 +1013,89 @@
             </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/username"
+        <LinearLayout
+            android:id="@+id/userInfo"
+            android:layout_below="@id/profilePic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/profilePic"
-            android:gravity="center"
-            android:text="Rick" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_below="@id/profilePic"
+                android:gravity="center"
+                android:text="Nick Name: Rick"
+                android:layout_weight="1"
+                android:layout_gravity="center">
+            </TextView>
+
+            <TextView
+                android:id="@+id/userId"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_below="@id/profilePic"
+                android:gravity="center"
+                android:text="UserId: rick123"
+                android:layout_weight="1"
+                android:layout_gravity="center">
+            </TextView>
+
+            <TextView
+                android:id="@+id/userDate"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_below="@id/profilePic"
+                android:gravity="center"
+                android:text="Date Joined: Dec 20, 2022"
+                android:layout_weight="1"
+                android:layout_gravity="center">
+            </TextView>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/pointsAndLevel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/username"
-            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/userInfo"
+            android:layout_marginTop="10dp"
             android:baselineAligned="false"
-            android:orientation="horizontal">
+            android:layout_marginBottom="20dp">
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:layout_weight="1">
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="50dp">
 
-                <TextView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/pointsField"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_marginLeft="40dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/white"
+                    android:clickable="false"
                     android:gravity="center"
-                    android:text="20"></TextView>
-
-                <TextView
-                    android:id="@+id/pointsLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/pointsField"
-                    android:gravity="center"
-                    android:text="Points"></TextView>
-
+                    android:text="20 pts"
+                    android:textAllCaps="false"
+                    android:textColor="@color/grey"
+                    android:textSize="13sp"
+                    app:icon="@drawable/points_star"
+                    app:iconGravity="textStart"
+                    app:iconPadding="5dp"
+                    app:iconSize="25dp"
+                    app:iconTint="@color/grey"
+                    app:strokeColor="@color/white"
+                    />
             </RelativeLayout>
 
             <RelativeLayout
@@ -1061,17 +1106,10 @@
                 <TextView
                     android:id="@+id/levelField"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="2"></TextView>
-
-                <TextView
-                    android:id="@+id/levelLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/levelField"
-                    android:gravity="center"
-                    android:text="Level"></TextView>
+                    android:layout_height="40dp"
+                    android:text="Level 2"
+                    android:gravity="center">
+                </TextView>
             </RelativeLayout>
         </LinearLayout>
 
@@ -1079,7 +1117,8 @@
             android:id="@+id/progress_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pointsAndLevel">
+            android:layout_below="@+id/pointsAndLevel"
+            android:layout_marginTop="-60dp">
 
             <LinearLayout
                 android:id="@+id/currAndNextPoints"
