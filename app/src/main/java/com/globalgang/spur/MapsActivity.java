@@ -439,6 +439,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 updateVisibility();
             }
         });
+
+        //clicking on the profile screen takes you to the profile screen
+        binding.profileView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                currentState = AppState.ProfileView;
+                binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
+                binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
+                binding.leaderboardPopup.setVisibility(View.GONE);
+                populateUserInfo(USER_NAME);
+                updateVisibility();
+            }
+        });
     }
 
     private void updateMarkerVisibility(String filterTag) {
