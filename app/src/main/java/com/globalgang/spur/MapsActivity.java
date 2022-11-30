@@ -1111,7 +1111,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int pts = u.points % 50;
         int nxtLevelPts = currLevel * 50;
         Log.d("exp", Integer.toString(pts));
-        binding.determinateBar.setProgress(pts);
+        binding.determinateBar.setProgress(pts * 2);
         binding.currLevel.setText(Integer.toString(currLevel ));
         binding.nextLevel.setText(Integer.toString(currLevel + 1));
         binding.currPoints.setText(Integer.toString(nxtLevelPts - 50));
