@@ -1091,7 +1091,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void populateUserInfo(String userId){
         User u = users.getUserById(userId);
         binding.username.setText(u.userId);
-        binding.pointsField.setText(Integer.toString(u.points) + " pts");
+        binding.pointsField.setText(Integer.toString(u.points) + " points");
         //TODO: LEVEL, PROGRESS BAR
         int currLevel = u.points / 50;
         int pts = u.points % 50;

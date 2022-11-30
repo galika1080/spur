@@ -1039,7 +1039,8 @@
                 android:layout_height="0dp"
                 android:layout_below="@id/profilePic"
                 android:gravity="center"
-                android:text="UserId: rick123"
+                android:text="User Id: rick123"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_gravity="center">
             </TextView>
@@ -1051,7 +1052,8 @@
                 android:layout_height="0dp"
                 android:layout_below="@id/profilePic"
                 android:gravity="center"
-                android:text="Date Joined: Dec 20, 2022"
+                android:text="Date Joined: Aug 22, 2022"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_gravity="center">
             </TextView>
@@ -1085,7 +1087,7 @@
                     android:backgroundTint="@color/white"
                     android:clickable="false"
                     android:gravity="center"
-                    android:text="20 pts"
+                    android:text="0 points"
                     android:textAllCaps="false"
                     android:textColor="@color/grey"
                     android:textSize="13sp"
@@ -1107,7 +1109,7 @@
                     android:id="@+id/levelField"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:text="Level 2"
+                    android:text="Level 1"
                     android:gravity="center">
                 </TextView>
             </RelativeLayout>
