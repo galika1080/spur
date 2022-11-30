@@ -447,7 +447,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 currentState = AppState.ProfileView;
                 binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
                 binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
-                binding.leaderboardPopup.setVisibility(View.GONE);
                 populateUserInfo(USER_NAME);
                 updateVisibility();
             }
@@ -561,9 +560,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // update to top reporters leaderboard view
         if (currentState == AppState.TopReportersLeaderBoard) {
-            showHideView(binding.leaderboardPopup, true, 1500, 0, true);
+            showHideView(binding.leaderboardPopup, true, 0, 0, true);
         } else {
-            showHideView(binding.leaderboardPopup, false, 1500, 0, false);
+            showHideView(binding.leaderboardPopup, false, 0, 0, true);
         }
 
         //popup describing points system (should popup everytime user logs in?)
@@ -1115,7 +1114,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.determinateBar.setProgress(pts);
         binding.currLevel.setText(Integer.toString(currLevel ));
         binding.nextLevel.setText(Integer.toString(currLevel + 1));
-        binding.currPoints.setText(Integer.toString(u.points));
+        binding.currPoints.setText(Integer.toString(nxtLevelPts - 50));
         binding.nextPoints.setText(Integer.toString(nxtLevelPts));
         binding.levelField.setText("Level " + Integer.toString(currLevel));
     }
