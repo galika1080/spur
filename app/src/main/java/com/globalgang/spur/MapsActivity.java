@@ -1101,7 +1101,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding.determinateBar.setProgress(pts);
         binding.currLevel.setText(Integer.toString(currLevel ));
         binding.nextLevel.setText(Integer.toString(currLevel + 1));
-        binding.currPoints.setText(Integer.toString(u.points));
+        binding.currPoints.setText(Integer.toString(nxtLevelPts - 50));
         binding.nextPoints.setText(Integer.toString(nxtLevelPts));
         binding.levelField.setText("Level " + Integer.toString(currLevel));
     }
