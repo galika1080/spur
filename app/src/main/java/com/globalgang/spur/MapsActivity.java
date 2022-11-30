@@ -439,6 +439,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 updateVisibility();
             }
         });
+
+        //clicking on the profile screen takes you to the profile screen
+        binding.profileView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                currentState = AppState.ProfileView;
+                binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
+                binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
+                populateUserInfo(USER_NAME);
+                updateVisibility();
+            }
+        });
     }
 
     private void updateMarkerVisibility(String filterTag) {
@@ -547,9 +559,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // update to top reporters leaderboard view
         if (currentState == AppState.TopReportersLeaderBoard) {
-            showHideView(binding.leaderboardPopup, true, 1500, 0, true);
+            showHideView(binding.leaderboardPopup, true, 0, 0, true);
         } else {
-            showHideView(binding.leaderboardPopup, false, 1500, 0, false);
+            showHideView(binding.leaderboardPopup, false, 0, 0, true);
         }
 
         //popup describing points system (should popup everytime user logs in?)

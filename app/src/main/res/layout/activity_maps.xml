@@ -1033,19 +1033,6 @@
             </TextView>
 
             <TextView
-                android:id="@+id/userId"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_below="@id/profilePic"
-                android:gravity="center"
-                android:text="User Id: rick123"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:layout_gravity="center">
-            </TextView>
-
-            <TextView
                 android:id="@+id/userDate"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
@@ -1242,6 +1229,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
             android:text="Dummy Reporter 1"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -1255,6 +1243,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="0 points"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -1268,6 +1257,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
             android:text="Dummy Reporter 2"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -1281,6 +1271,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="0 points"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -1294,6 +1285,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
             android:text="Dummy Reporter 3"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -1307,6 +1299,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="0 points"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -1320,6 +1313,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
             android:text="Dummy Reporter 4"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -1333,6 +1327,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="0 points"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -1346,6 +1341,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="left|center_vertical"
             android:text="Dummy Reporter 5"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -1359,6 +1355,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="0 points"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
