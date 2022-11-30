@@ -538,7 +538,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         // update to profile view
-        if (currentState == AppState.ProfileView) {
+        if (currentState == AppState.ProfileView || currentState == AppState.TopReportersLeaderBoard) {
             showHideView(binding.profileView, true, 1500, 0, false);
         } else {
             showHideView(binding.profileView, false, 1500, 0, false);
@@ -547,12 +547,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // update to top reporters leaderboard view
         if (currentState == AppState.TopReportersLeaderBoard) {
-            showHideView(binding.leaderboardPopup, true, 1500, 0, false);
+            showHideView(binding.leaderboardPopup, true, 1500, 0, true);
         } else {
             showHideView(binding.leaderboardPopup, false, 1500, 0, false);
         }
-
-
 
         //popup describing points system (should popup everytime user logs in?)
         if (currentState == AppState.PointsPopup) {

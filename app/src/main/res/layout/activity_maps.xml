@@ -1218,7 +1218,7 @@
         android:layout_centerInParent="true"
         android:background="@drawable/border_box"
         android:clickable="true"
-        android:elevation="30dp"
+        android:elevation="60dp"
         android:padding="15dp"
         android:visibility="gone">
 
