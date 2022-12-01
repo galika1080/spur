@@ -574,6 +574,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             showHideView(binding.navi, false, 0, 200, false);
             showHideView(binding.btnAddEvent, false, 0, 500, false);
             showHideView(binding.filterScrollView, false, 0, -200, false);
+            updatePrimaryTagDropDownSpinner();
         } else {
             showHideView(binding.reportingPrimaryLL, false, 0, 0, true);
 
