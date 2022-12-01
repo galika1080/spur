@@ -63,6 +63,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="@string/popup_event_dist"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -89,6 +90,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="@string/popup_event_dist"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -115,6 +117,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="@string/popup_event_dist"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -141,6 +144,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="@string/popup_event_dist"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -167,6 +171,7 @@
             android:backgroundTint="@color/grey"
             android:gravity="right|center_vertical"
             android:text="@string/popup_event_dist"
+            android:clickable="false"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -1027,7 +1032,8 @@
                 android:layout_height="0dp"
                 android:layout_below="@id/profilePic"
                 android:gravity="center"
-                android:text="Nick Name: Rick"
+                android:text="rick"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_gravity="center">
             </TextView>
@@ -1040,7 +1046,6 @@
                 android:layout_below="@id/profilePic"
                 android:gravity="center"
                 android:text="Date Joined: Aug 22, 2022"
-                android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_gravity="center">
             </TextView>
@@ -1178,15 +1183,14 @@
             android:id="@+id/top_reporters_leaderboard_initial_click"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:layout_below="@+id/progress_horizontal">
 
             <Button
                 android:id="@+id/top_reporters_leaderboard_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
                 android:layout_marginTop="50dp"
-                android:layout_marginRight="50dp"
                 android:backgroundTint="@color/black"
                 android:text="Top Reporters Leaderboard"
                 android:textAllCaps="false"
