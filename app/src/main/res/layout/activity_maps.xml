@@ -789,7 +789,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:text="@string/event_name"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
         <EditText
             android:id="@+id/reporting_event_name_text_input"
@@ -798,7 +799,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="left"
-            android:maxLength="40" />
+            android:maxLength="40"
+            android:hint="Max 40 char."/>
 
         <TextView
             android:id="@+id/reporting_add_description_label"
@@ -817,7 +819,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="left"
-            android:maxLength="140" />
+            android:maxLength="140"
+            android:hint="Max 140 char."/>
 
         <TextView
             android:id="@+id/reporting_location_label"
@@ -826,7 +829,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:text="Location Description (Max 50 char.)"
+            android:text="Location Description"
             android:textSize="15sp" />
 
         <EditText
@@ -836,7 +839,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="left"
-            android:maxLength="50" />
+            android:maxLength="50"
+            android:hint="Max 50 char."/>
 
 
         <TextView
