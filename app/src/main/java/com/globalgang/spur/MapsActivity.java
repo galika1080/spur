@@ -170,9 +170,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Obtain the dropdown id for reporting screen
         Spinner spinnerTags = findViewById(R.id.reporting_spinner_for_primary_tag_dropdown);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags_array, R.layout.reporting_spinner_backgroud_color);
-        adapter.setDropDownViewResource(R.layout.reporting_custom_spinner_dropdrown_text_colour);
-        spinnerTags.setAdapter(adapter);
+        String[] defaultTagList = getResources().getStringArray(R.array.tags_array);
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.reporting_spinner_backgroud_color, defaultTagList);
+        dataAdapter.setDropDownViewResource(R.layout.reporting_custom_spinner_dropdrown_text_colour);
+        spinnerTags.setAdapter(dataAdapter);
+        spinnerTags.setSelection(0);
 
         // points popup as a shared pref
         SharedPreferences sharedPreferences = getSharedPreferences("sharedPref",MODE_PRIVATE);
@@ -1051,25 +1054,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         System.out.println(CheckboxCounterTracker);
     }
-    /*
-    private List<String> isCheckedOrNotTagNames(boolean isChecked) {
-        String TagName1 = "";
-        String TagName2 = "";
-        TagName1 = binding.reportingCheckBox1.getText().toString();
-        TagName2 = binding.reportingCheckBox2.getText().toString();
-        //List<String> CheckedTagNames = new ArrayList<>();
-        if (isChecked) {
-            CheckedTagNames.add(TagName1);
-            CheckedTagNames.add(TagName2);
-        }
-        else {
-            CheckedTagNames.remove(TagName1);
-            CheckedTagNames.remove(TagName2);
-        }
-        System.out.println(CheckedTagNames);
-        return CheckedTagNames;
+
+    private void updatePrimaryTagDropDownSpinner(){
+        System.out.println("Inside the function");
+        Spinner dynamicSpinnerTags = findViewById(R.id.reporting_spinner_for_primary_tag_dropdown);
+        ArrayAdapter<String> dynamicAdapter = new ArrayAdapter<String>(this,R.layout.reporting_spinner_backgroud_color,CheckedTagNames);
+        dynamicAdapter.setDropDownViewResource(R.layout.reporting_custom_spinner_dropdrown_text_colour);
+        dynamicSpinnerTags.setAdapter(dynamicAdapter);
     }
-    */
+
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -1081,6 +1074,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox1.getText().toString());}
                 else {CheckedTagNames.remove(binding.reportingCheckBox1.getText().toString());}
                 System.out.println(CheckedTagNames);
+                updatePrimaryTagDropDownSpinner();
                 break;
 
             case R.id.reporting_checkBox2:
@@ -1088,6 +1082,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  if(checked) CheckedTagNames.add(binding.reportingCheckBox2.getText().toString());
                  else {CheckedTagNames.remove(binding.reportingCheckBox2.getText().toString());}
                  System.out.println(CheckedTagNames);
+                 updatePrimaryTagDropDownSpinner();
                  break;
 
 
@@ -1096,6 +1091,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  if(checked) {CheckedTagNames.add(binding.reportingCheckBox3.getText().toString());}
                  else {CheckedTagNames.remove(binding.reportingCheckBox3.getText().toString());}
                  System.out.println(CheckedTagNames);
+                 updatePrimaryTagDropDownSpinner();
                  break;
 
 
@@ -1104,6 +1100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  if(checked) {CheckedTagNames.add(binding.reportingCheckBox4.getText().toString());}
                  else {CheckedTagNames.remove(binding.reportingCheckBox4.getText().toString());}
                  System.out.println(CheckedTagNames);
+                 updatePrimaryTagDropDownSpinner();
                  break;
 
             case R.id.reporting_checkBox5:
@@ -1111,12 +1108,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  if(checked) {CheckedTagNames.add(binding.reportingCheckBox5.getText().toString());}
                  else {CheckedTagNames.remove(binding.reportingCheckBox5.getText().toString());}
                  System.out.println(CheckedTagNames);
+                 updatePrimaryTagDropDownSpinner();
                  break;
 
             case R.id.reporting_checkBox6:
                  isCheckedOrNotCounter(checked);
                  if(checked) {CheckedTagNames.add(binding.reportingCheckBox6.getText().toString());}
                  else {CheckedTagNames.remove(binding.reportingCheckBox6.getText().toString());}
+                 updatePrimaryTagDropDownSpinner();
                  System.out.println(CheckedTagNames);
                  break;
 
@@ -1125,6 +1124,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  if(checked) {CheckedTagNames.add(binding.reportingCheckBox7.getText().toString());}
                  else {CheckedTagNames.remove(binding.reportingCheckBox7.getText().toString());}
                  System.out.println(CheckedTagNames);
+                 updatePrimaryTagDropDownSpinner();
                  break;
 
             case R.id.reporting_checkBox8:
@@ -1132,6 +1132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  if(checked) {CheckedTagNames.add(binding.reportingCheckBox8.getText().toString());}
                  else {CheckedTagNames.remove(binding.reportingCheckBox8.getText().toString());}
                  System.out.println(CheckedTagNames);
+                 updatePrimaryTagDropDownSpinner();
                  break;
         }
     }
