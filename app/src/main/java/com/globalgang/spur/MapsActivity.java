@@ -51,8 +51,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+    private Stack<AppState> backStack;
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
@@ -100,10 +102,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private List<String> CheckedTagNames = new ArrayList<>();
 
+    @Override
+    public void onBackPressed() {
+        if (!backStack.empty()) backStack.pop();
+
+        if (backStack.empty()) {
+            currentState = AppState.FullscreenMap;
+            updateVisibility();
+            return;
+        }
+
+        AppState lastState = backStack.pop();
+        currentState = lastState;
+        updateVisibility();
+    }
+
     @SuppressLint({"MissingPermission"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        backStack = new Stack<>();
         eventMarkers = new ArrayList<>();
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
@@ -412,8 +430,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view){
                 currentState = AppState.ProfileView;
-                binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
-                binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
                 populateUserInfo(USER_NAME);
                 updateVisibility();
             }
@@ -434,8 +450,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view){
                 currentState = AppState.FullscreenMap;
-                binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
-                binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
                 updateVisibility();
             }
         });
@@ -509,6 +523,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void updateVisibility() {
+        if (backStack.empty() || currentState != backStack.peek()) {
+            backStack.push(currentState);
+        }
+
+        if (currentState == AppState.FullscreenMap) {
+            backStack.clear();
+
+            if (selectedMarker != null && currentlyViewedEventId != -1) {
+                String tag = events.getById(currentlyViewedEventId).primaryTag;
+                selectedMarker.setIcon(getEventMarkerBitmap(tag, false));
+            }
+            selectedMarker = null;
+        }
+
         if (currentState == AppState.EventDetails) {
             showHideView(binding.filterScrollView, false, 0, -200, false);
             showHideView(binding.eventView, true, 0, 1500, false);
@@ -552,8 +580,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // update to profile view
         if (currentState == AppState.ProfileView || currentState == AppState.TopReportersLeaderBoard) {
+            binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
+            binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
+
             showHideView(binding.profileView, true, 1500, 0, false);
         } else {
+            binding.eventButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi_selected)));
+            binding.profileButton.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.navi)));
+
             showHideView(binding.profileView, false, 1500, 0, false);
         }
 
