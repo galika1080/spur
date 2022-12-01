@@ -1473,7 +1473,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         googleMap.setMyLocationEnabled(true);
 
-        events.getAll().forEach(this::addEvent);
+        List<Event> storedEvents = events.getAll();
+        for (Event e : storedEvents) {
+            long threshold = System.currentTimeMillis() - (1000 * 60 * 60);
+            if (e.lastConfirmed < threshold) {
+                events.delete(e);
+            } else {
+                this.addEvent(e);
+            }
+        }
 
         currentState = AppState.PointsPopup;
         updateVisibility();
