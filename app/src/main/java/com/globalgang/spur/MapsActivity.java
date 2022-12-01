@@ -1074,11 +1074,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 isCheckedOrNotCounter(checked);
                 if(checked) {
                     CheckedTagNames.add(binding.reportingCheckBox1.getText().toString());
-                    binding.reportingCheckBox1.setButtonTintList(ColorStateList.valueOf(getColor(R.color.food)));
                 }
                 else {
                     CheckedTagNames.remove(binding.reportingCheckBox1.getText().toString());
-                    binding.reportingCheckBox1.setButtonTintList(ColorStateList.valueOf(getColor(R.color.food)));
                 }
                 System.out.println(CheckedTagNames);
                 updatePrimaryTagDropDownSpinner();
@@ -1088,11 +1086,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  isCheckedOrNotCounter(checked);
                  if(checked) {
                      CheckedTagNames.add(binding.reportingCheckBox2.getText().toString());
-                     binding.reportingCheckBox2.setButtonTintList(ColorStateList.valueOf(getColor(R.color.social)));
                  }
                  else {
                      CheckedTagNames.remove(binding.reportingCheckBox2.getText().toString());
-                     binding.reportingCheckBox2.setButtonTintList(ColorStateList.valueOf(getColor(R.color.social)));
                  }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
@@ -1103,11 +1099,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  isCheckedOrNotCounter(checked);
                  if(checked) {
                      CheckedTagNames.add(binding.reportingCheckBox3.getText().toString());
-                     binding.reportingCheckBox3.setButtonTintList(ColorStateList.valueOf(getColor(R.color.shopping)));
                  }
                  else {
                      CheckedTagNames.remove(binding.reportingCheckBox3.getText().toString());
-                     binding.reportingCheckBox3.setButtonTintList(ColorStateList.valueOf(getColor(R.color.shopping)));
                  }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
@@ -1118,11 +1112,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  isCheckedOrNotCounter(checked);
                  if(checked) {
                      CheckedTagNames.add(binding.reportingCheckBox4.getText().toString());
-                     binding.reportingCheckBox4.setButtonTintList(ColorStateList.valueOf(getColor(R.color.professional)));
                  }
                  else {
                      CheckedTagNames.remove(binding.reportingCheckBox4.getText().toString());
-                     binding.reportingCheckBox4.setButtonTintList(ColorStateList.valueOf(getColor(R.color.professional)));
                  }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
@@ -1132,11 +1124,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  isCheckedOrNotCounter(checked);
                  if(checked) {
                      CheckedTagNames.add(binding.reportingCheckBox5.getText().toString());
-                     binding.reportingCheckBox5.setButtonTintList(ColorStateList.valueOf(getColor(R.color.performance)));
                  }
                  else {
                      CheckedTagNames.remove(binding.reportingCheckBox5.getText().toString());
-                     binding.reportingCheckBox5.setButtonTintList(ColorStateList.valueOf(getColor(R.color.performance)));
                  }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
@@ -1146,11 +1136,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  isCheckedOrNotCounter(checked);
                  if(checked) {
                      CheckedTagNames.add(binding.reportingCheckBox6.getText().toString());
-                     binding.reportingCheckBox6.setButtonTintList(ColorStateList.valueOf(getColor(R.color.activism)));
                  }
                  else {
                      CheckedTagNames.remove(binding.reportingCheckBox6.getText().toString());
-                     binding.reportingCheckBox6.setButtonTintList(ColorStateList.valueOf(getColor(R.color.activism)));
                  }
                  updatePrimaryTagDropDownSpinner();
                  System.out.println(CheckedTagNames);
@@ -1160,11 +1148,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  isCheckedOrNotCounter(checked);
                  if(checked) {
                      CheckedTagNames.add(binding.reportingCheckBox7.getText().toString());
-                     binding.reportingCheckBox7.setButtonTintList(ColorStateList.valueOf(getColor(R.color.religion)));
                  }
                  else {
                      CheckedTagNames.remove(binding.reportingCheckBox7.getText().toString());
-                     binding.reportingCheckBox7.setButtonTintList(ColorStateList.valueOf(getColor(R.color.religion)));
                  }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
@@ -1174,11 +1160,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                  isCheckedOrNotCounter(checked);
                  if(checked) {
                      CheckedTagNames.add(binding.reportingCheckBox8.getText().toString());
-                     binding.reportingCheckBox8.setButtonTintList(ColorStateList.valueOf(getColor(R.color.misc)));
                  }
                  else {
                      CheckedTagNames.remove(binding.reportingCheckBox8.getText().toString());
-                     binding.reportingCheckBox8.setButtonTintList(ColorStateList.valueOf(getColor(R.color.misc)));
                  }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
