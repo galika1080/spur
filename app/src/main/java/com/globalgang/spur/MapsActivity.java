@@ -1071,16 +1071,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         switch(view.getId()) {
             case R.id.reporting_checkBox1:
                 isCheckedOrNotCounter(checked);
-                if(checked) {CheckedTagNames.add(binding.reportingCheckBox1.getText().toString());}
-                else {CheckedTagNames.remove(binding.reportingCheckBox1.getText().toString());}
+                if(checked) {
+                    CheckedTagNames.add(binding.reportingCheckBox1.getText().toString());
+                    binding.reportingCheckBox1.setButtonTintList(ColorStateList.valueOf(getColor(R.color.food)));
+                }
+                else {
+                    CheckedTagNames.remove(binding.reportingCheckBox1.getText().toString());
+                    binding.reportingCheckBox1.setButtonTintList(ColorStateList.valueOf(getColor(R.color.food)));
+                }
                 System.out.println(CheckedTagNames);
                 updatePrimaryTagDropDownSpinner();
                 break;
 
             case R.id.reporting_checkBox2:
                  isCheckedOrNotCounter(checked);
-                 if(checked) CheckedTagNames.add(binding.reportingCheckBox2.getText().toString());
-                 else {CheckedTagNames.remove(binding.reportingCheckBox2.getText().toString());}
+                 if(checked) {
+                     CheckedTagNames.add(binding.reportingCheckBox2.getText().toString());
+                     binding.reportingCheckBox2.setButtonTintList(ColorStateList.valueOf(getColor(R.color.social)));
+                 }
+                 else {
+                     CheckedTagNames.remove(binding.reportingCheckBox2.getText().toString());
+                     binding.reportingCheckBox2.setButtonTintList(ColorStateList.valueOf(getColor(R.color.social)));
+                 }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
                  break;
@@ -1088,8 +1100,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             case R.id.reporting_checkBox3:
                  isCheckedOrNotCounter(checked);
-                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox3.getText().toString());}
-                 else {CheckedTagNames.remove(binding.reportingCheckBox3.getText().toString());}
+                 if(checked) {
+                     CheckedTagNames.add(binding.reportingCheckBox3.getText().toString());
+                     binding.reportingCheckBox3.setButtonTintList(ColorStateList.valueOf(getColor(R.color.shopping)));
+                 }
+                 else {
+                     CheckedTagNames.remove(binding.reportingCheckBox3.getText().toString());
+                     binding.reportingCheckBox3.setButtonTintList(ColorStateList.valueOf(getColor(R.color.shopping)));
+                 }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
                  break;
@@ -1097,40 +1115,70 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             case R.id.reporting_checkBox4:
                  isCheckedOrNotCounter(checked);
-                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox4.getText().toString());}
-                 else {CheckedTagNames.remove(binding.reportingCheckBox4.getText().toString());}
+                 if(checked) {
+                     CheckedTagNames.add(binding.reportingCheckBox4.getText().toString());
+                     binding.reportingCheckBox4.setButtonTintList(ColorStateList.valueOf(getColor(R.color.professional)));
+                 }
+                 else {
+                     CheckedTagNames.remove(binding.reportingCheckBox4.getText().toString());
+                     binding.reportingCheckBox4.setButtonTintList(ColorStateList.valueOf(getColor(R.color.professional)));
+                 }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
                  break;
 
             case R.id.reporting_checkBox5:
                  isCheckedOrNotCounter(checked);
-                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox5.getText().toString());}
-                 else {CheckedTagNames.remove(binding.reportingCheckBox5.getText().toString());}
+                 if(checked) {
+                     CheckedTagNames.add(binding.reportingCheckBox5.getText().toString());
+                     binding.reportingCheckBox5.setButtonTintList(ColorStateList.valueOf(getColor(R.color.performance)));
+                 }
+                 else {
+                     CheckedTagNames.remove(binding.reportingCheckBox5.getText().toString());
+                     binding.reportingCheckBox5.setButtonTintList(ColorStateList.valueOf(getColor(R.color.performance)));
+                 }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
                  break;
 
             case R.id.reporting_checkBox6:
                  isCheckedOrNotCounter(checked);
-                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox6.getText().toString());}
-                 else {CheckedTagNames.remove(binding.reportingCheckBox6.getText().toString());}
+                 if(checked) {
+                     CheckedTagNames.add(binding.reportingCheckBox6.getText().toString());
+                     binding.reportingCheckBox6.setButtonTintList(ColorStateList.valueOf(getColor(R.color.activism)));
+                 }
+                 else {
+                     CheckedTagNames.remove(binding.reportingCheckBox6.getText().toString());
+                     binding.reportingCheckBox6.setButtonTintList(ColorStateList.valueOf(getColor(R.color.activism)));
+                 }
                  updatePrimaryTagDropDownSpinner();
                  System.out.println(CheckedTagNames);
                  break;
 
             case R.id.reporting_checkBox7:
                  isCheckedOrNotCounter(checked);
-                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox7.getText().toString());}
-                 else {CheckedTagNames.remove(binding.reportingCheckBox7.getText().toString());}
+                 if(checked) {
+                     CheckedTagNames.add(binding.reportingCheckBox7.getText().toString());
+                     binding.reportingCheckBox7.setButtonTintList(ColorStateList.valueOf(getColor(R.color.religion)));
+                 }
+                 else {
+                     CheckedTagNames.remove(binding.reportingCheckBox7.getText().toString());
+                     binding.reportingCheckBox7.setButtonTintList(ColorStateList.valueOf(getColor(R.color.religion)));
+                 }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
                  break;
 
             case R.id.reporting_checkBox8:
                  isCheckedOrNotCounter(checked);
-                 if(checked) {CheckedTagNames.add(binding.reportingCheckBox8.getText().toString());}
-                 else {CheckedTagNames.remove(binding.reportingCheckBox8.getText().toString());}
+                 if(checked) {
+                     CheckedTagNames.add(binding.reportingCheckBox8.getText().toString());
+                     binding.reportingCheckBox8.setButtonTintList(ColorStateList.valueOf(getColor(R.color.misc)));
+                 }
+                 else {
+                     CheckedTagNames.remove(binding.reportingCheckBox8.getText().toString());
+                     binding.reportingCheckBox8.setButtonTintList(ColorStateList.valueOf(getColor(R.color.misc)));
+                 }
                  System.out.println(CheckedTagNames);
                  updatePrimaryTagDropDownSpinner();
                  break;

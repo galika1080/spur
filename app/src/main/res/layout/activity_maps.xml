@@ -872,8 +872,9 @@
                 android:layout_marginTop="6dp"
                 android:onClick="onCheckboxClicked"
                 android:text="Food"
+                android:buttonTint="@color/food"
                 android:textSize="10sp"
-                app:icon="@drawable/funkycarpet" />
+                />
 
             <CheckBox
                 android:id="@+id/reporting_checkBox2"
@@ -883,7 +884,8 @@
                 android:layout_column="0"
                 android:layout_marginTop="6dp"
                 android:onClick="onCheckboxClicked"
-                android:text="Shopping"
+                android:text="Social"
+                android:buttonTint="@color/social"
                 android:textSize="10sp" />
 
             <CheckBox
@@ -894,7 +896,8 @@
                 android:layout_column="0"
                 android:layout_marginTop="6dp"
                 android:onClick="onCheckboxClicked"
-                android:text="Activism"
+                android:text="Shopping"
+                android:buttonTint="@color/shopping"
                 android:textSize="10sp" />
 
             <CheckBox
@@ -905,7 +908,8 @@
                 android:layout_column="0"
                 android:layout_marginTop="6dp"
                 android:onClick="onCheckboxClicked"
-                android:text="Social"
+                android:text="Professional"
+                android:buttonTint="@color/professional"
                 android:textSize="10sp" />
 
             <CheckBox
@@ -916,7 +920,8 @@
                 android:layout_column="1"
                 android:layout_marginTop="6dp"
                 android:onClick="onCheckboxClicked"
-                android:text="Religion"
+                android:text="Performance"
+                android:buttonTint="@color/performance"
                 android:textSize="10sp" />
 
             <CheckBox
@@ -927,7 +932,8 @@
                 android:layout_column="1"
                 android:layout_marginTop="6dp"
                 android:onClick="onCheckboxClicked"
-                android:text="Professional"
+                android:text="Activism"
+                android:buttonTint="@color/activism"
                 android:textSize="10sp" />
 
             <CheckBox
@@ -938,7 +944,8 @@
                 android:layout_column="1"
                 android:layout_marginTop="6dp"
                 android:onClick="onCheckboxClicked"
-                android:text="Performance"
+                android:text="Religion"
+                android:buttonTint="@color/religion"
                 android:textSize="10sp" />
 
             <CheckBox
@@ -950,6 +957,7 @@
                 android:layout_marginTop="6dp"
                 android:onClick="onCheckboxClicked"
                 android:text="Miscellaneous"
+                android:buttonTint="@color/misc"
                 android:textSize="10sp" />
         </GridLayout>
 
