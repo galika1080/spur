@@ -34,7 +34,7 @@
     <string name="points_event_confirmed">+5 for every confirmation your event gets</string>
     <string name="points_understood">Got it!</string>
 
-    <string name="location_field">Location Description:\ </string>
+    <string name="location_field">Location:\ </string>
     <string name="confirmation_message">Is this event happening right now?</string>
     <string name="last_confirmed_message">Last confirmed:\ </string>
     <string name="reporter_message">Reported by:</string>
